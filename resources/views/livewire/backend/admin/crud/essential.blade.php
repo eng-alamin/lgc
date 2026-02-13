@@ -53,6 +53,7 @@
                                 <th class="min-w-125px">File</th>
                                 <th class="min-w-125px">Icon</th>
                                 <th class="min-w-125px">Title</th>
+                                <th class="min-w-125px">Sub Title</th>
                                 <th class="min-w-125px">Date Added</th>
                                 <th class="text-end min-w-70px">Actions</th>
                             </tr>
@@ -70,12 +71,9 @@
                                         <img src="{{asset($item->file)}}" alt="file">
                                     </div>
                                 </td>
-                                <td>
-                                    <div class="symbol symbol-25px symbol-lg-50px symbol-fixed position-relative">
-                                        <img src="{{asset($item->icon)}}" alt="icon">
-                                    </div>
-                                </td>
+                                <td>{!! $item->icon !!}</td>
                                 <td>{{$item->title}}</td>
+                                <td>{{$item->subtitle}}</td>
                                 <td>{{ \Carbon\Carbon::parse($item->updated_at)->diffForHumans() }}</td>
                                 <td class="text-end">
                                     <a href="#" class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
@@ -119,13 +117,18 @@
                                 </div>
                                 <div class="fv-row mb-7">
                                     <label class="required fs-6 fw-semibold mb-2">Icon</label>
-                                    <input type="file" wire:model="icon" name="icon" />
+                                    <input type="text" wire:model="icon" name="icon" class="form-control form-control-solid" placeholder="Enter icon" />
                                     @error('icon') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="fv-row mb-7">
                                     <label class="required fs-6 fw-semibold mb-2">Title</label>
                                     <input type="text" wire:model="title" name="title" class="form-control form-control-solid" placeholder="Enter Title" />
                                     @error('title') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                                <div class="fv-row mb-7">
+                                    <label class="required fs-6 fw-semibold mb-2">Sub Title</label>
+                                    <input type="text" wire:model="subtitle" name="subtitle" class="form-control form-control-solid" placeholder="Enter Sub Title" />
+                                    @error('subtitle') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="fv-row mb-7">
                                     <label class="required fs-6 fw-semibold mb-2">Description</label>
@@ -165,20 +168,20 @@
                                     <input type="file" wire:model="newfile" name="newfile"/>
                                     @error('newfile') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
-                                <div class="me-7 mb-4">
-                                    <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
-                                        <img src="{{asset($icon)}}" alt="icon">
-                                    </div>
-                                </div>
                                 <div class="fv-row mb-7">
-                                    <label class="required fs-6 fw-semibold mb-2">New Icon</label> <br>
-                                    <input type="file" wire:model="newicon" name="newicon"/>
-                                    @error('newicon') <span class="text-danger">{{ $message }}</span> @enderror
+                                    <label class="required fs-6 fw-semibold mb-2">Icon</label>
+                                    <input type="text" wire:model="icon" name="icon" class="form-control form-control-solid" placeholder="Enter icon" />
+                                    @error('icon') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="fv-row mb-7">
                                     <label class="required fs-6 fw-semibold mb-2">Title</label>
                                     <input type="text" wire:model="title" name="title" class="form-control form-control-solid" placeholder="Enter Title" />
                                     @error('title') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                                <div class="fv-row mb-7">
+                                    <label class="required fs-6 fw-semibold mb-2">Sub Title</label>
+                                    <input type="text" wire:model="subtitle" name="subtitle" class="form-control form-control-solid" placeholder="Enter Sub Title" />
+                                    @error('subtitle') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="fv-row mb-7">
                                     <label class="required fs-6 fw-semibold mb-2">Description</label>

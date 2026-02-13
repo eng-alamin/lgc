@@ -33,12 +33,12 @@
                                             <img src="{{asset('assets/frontend/assets/img/services/icon-1.png')}}" alt="icon">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 9 9" fill="none"> <path d="M9 9C3 9 0.5 3 0 0V9H9Z"></path> </svg>
                                         </div>
-                                        <h4 class="wptb-item--title"><a href="service-details.html">{{$item->title}}</a></h4>
+                                        <h4 class="wptb-item--title"><a href="{{ route('essential.detail', $item->id) }}">{{$item->title}}</a></h4>
                                         <div class="wptb-line-paper"></div>
-                                        <p class="wptb-item--description">{{$item->description}}</p>
+                                        <p class="wptb-item--description">{{$item->subtitle}}</p>
                                         
                                         <div class="wptb-item--button">
-                                            <a class="btn--readmore" href="service-details.html">
+                                            <a class="btn--readmore" href="{{ route('essential.detail', $item->id) }}">
                                                 <span class="btn-readmore--text"> View More </span> <span class="btn-readmore--icon"> <i class="bi bi-arrow-right"></i> </span>
                                             </a>
                                         </div>

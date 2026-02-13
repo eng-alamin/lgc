@@ -576,19 +576,17 @@
 
     
     <!-- Funfacts -->
-    @php 
-        $funfact = $sections->where('type', 'funfact')->first(); 
-        $funfactjson = json_decode($funfact->json, true);
-    @endphp
+    @php $funfact = $sections->where('type', 'funfact')->first(); @endphp
+    @php $json_funfact = json_decode($funfact->json ?? '[]', true); @endphp
     <div class="wptb-funfacts-one position-absolute start-0 end-0 transform-top-reverse">
         <div class="container">
             <div class="wptb-funfacts--inner">
                 <div class="row">
-                    @foreach ($funfactjson as $item)
+                    @foreach ($json_funfact as $item)
                         <div class="col-md-3 col-sm-6">
                             <div class="wptb-counter1 style1 wow skewIn">
                                 <div class="wptb-item--inner">
-                                    <div class="wptb-item--value"><span class="odometer" data-count="{{ $item['value'] }}"></span><span class="suffix">+</span></div>
+                                    <div class="wptb-item--value"><span class="odometer" data-count="{{ preg_replace('/[^0-9]/', '', $item['value']) }}"></span><span class="suffix">{{ preg_replace('/[0-9]/', '', $item['value']) }}</span></div>
                                     <div class="wptb-item--text">{{ $item['text'] }}</div>
                                 </div>
                             </div>

@@ -69,6 +69,7 @@ class Visa extends Component
         $this->validate([
             'file' => 'required',
             'icon' => 'required',
+            'title' => 'required',
             'subtitle' => 'required',
             'description' => 'required',
         ]);
@@ -130,6 +131,7 @@ class Visa extends Component
             }
 
             $update->icon = $this->icon;
+             $update->title = $this->title;
             $update->subtitle = $this->subtitle;
             $update->description = $this->description;
             $update->save();

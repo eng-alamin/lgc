@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('essentials', function (Blueprint $table) {
             $table->id();
             $table->string('file')->nullable();
-            $table->string('icon')->nullable();
+            $table->longText('icon')->nullable();
             $table->string('title')->nullable();
+            $table->string('subtitle')->nullable();
             $table->longText('description')->nullable();
             $table->timestamps();
         });

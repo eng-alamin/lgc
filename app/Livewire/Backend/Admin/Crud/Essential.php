@@ -17,8 +17,8 @@ class Essential extends Component
     public $file;
     public $newfile;
     public $icon;
-    public $newicon;
     public $title;
+    public $subtitle;
     public $description;
 
     public $essential_id;
@@ -46,6 +46,7 @@ class Essential extends Component
         $this->file = '';
         $this->icon = '';
         $this->title = '';
+        $this->subtitle = '';
         $this->description = '';
     }
 
@@ -59,6 +60,7 @@ class Essential extends Component
             'file' => 'required',
             'icon' => 'required',
             'title' => 'required',
+            'subtitle' => 'required',
             'description' => 'required',
         ]);
     }
@@ -69,6 +71,7 @@ class Essential extends Component
             'file' => 'required',
             'icon' => 'required',
             'title' => 'required',
+            'subtitle' => 'required',
             'description' => 'required',
         ]);
 
@@ -80,13 +83,9 @@ class Essential extends Component
                 $fileData = '/storage/'.$path;
                 $store->file = $fileData;
             }
-            if($this->icon) {
-                $iconName = Carbon::now()->timestamp . '.' . $this->icon->getClientOriginalExtension();
-                $path = $this->icon->storeAs('essentials', $iconName, 'public');
-                $iconData = '/storage/'.$path;
-                $store->icon = $iconData;
-            }
+            $store->icon = $this->icon;
             $store->title = $this->title;
+            $store->subtitle = $this->subtitle;
             $store->description = $this->description;
             $store->save();
 
@@ -103,6 +102,7 @@ class Essential extends Component
         $this->file = $edit->file;
         $this->icon = $edit->icon;
         $this->title = $edit->title;
+        $this->subtitle = $edit->subtitle;
         $this->description = $edit->description;
     }
 
@@ -110,6 +110,7 @@ class Essential extends Component
     {
         $this->validate([
             'title' => 'required',
+            'subtitle' => 'required',
             'description' => 'required',
         ]);
 
@@ -130,21 +131,9 @@ class Essential extends Component
                 $update->file = '/storage/' . $path;
             }
 
-            if ($this->newicon) {
-                if ($update->icon) {
-                    $oldIcon = str_replace('/storage/', '', $update->icon);
-
-                    if (Storage::disk('public')->exists($oldIcon)) {
-                        Storage::disk('public')->delete($oldIcon);
-                    }
-                }
-
-                $iconName = Carbon::now()->timestamp . '.' . $this->newicon->getClientOriginalExtension();
-                $path = $this->newicon->storeAs('essentials', $iconName, 'public');
-                $update->icon = '/storage/' . $path;
-            }
-
+            $update->icon = $this->icon;
             $update->title = $this->title;
+            $update->subtitle = $this->subtitle;
             $update->description = $this->description;
             $update->save();
 
@@ -175,13 +164,6 @@ class Essential extends Component
 
                 if (Storage::disk('public')->exists($filePath)) {
                     Storage::disk('public')->delete($filePath);
-                }
-            }
-            if ($data->icon) {
-                $iconPath = str_replace('/storage/', '', $data->icon);
-
-                if (Storage::disk('public')->exists($iconPath)) {
-                    Storage::disk('public')->delete($iconPath);
                 }
             }
 
@@ -224,12 +206,6 @@ class Essential extends Component
                     $filePath = str_replace('/storage/', '', $item->file);
                     if (Storage::disk('public')->exists($filePath)) {
                         Storage::disk('public')->delete($filePath);
-                    }
-                }
-                if ($item->icon) {
-                    $iconPath = str_replace('/storage/', '', $item->icon);
-                    if (Storage::disk('public')->exists($iconPath)) {
-                        Storage::disk('public')->delete($iconPath);
                     }
                 }
             }

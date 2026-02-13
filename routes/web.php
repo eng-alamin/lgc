@@ -58,6 +58,7 @@ Route::get('/', \App\Livewire\Frontend\Home::class)->name('home');
 Route::get('dashboard', \App\Livewire\Frontend\Home::class)->name('dashboard');
 Route::get('workprocess', \App\Livewire\Frontend\Workprocess::class)->name('workprocess');
 Route::get('essentials', \App\Livewire\Frontend\Essential::class)->name('essential');
+Route::get('essential/detail/{id}', \App\Livewire\Frontend\EssentialDetail::class)->name('essential.detail');
 Route::get('visa', \App\Livewire\Frontend\Visa::class)->name('visa');
 Route::get('visa/detail/{id}', \App\Livewire\Frontend\VisaDetail::class)->name('visa.detail');
 Route::get('contact', \App\Livewire\Frontend\Contact::class)->name('contact');
@@ -65,11 +66,6 @@ Route::get('blog', \App\Livewire\Frontend\Blog::class)->name('blog');
 
 Route::get('about', \App\Livewire\Frontend\About::class)->name('about');
 Route::get('appointment', \App\Livewire\Frontend\Appointment::class)->name('appointment');
-
-// Auth/
-// Route::get('login', \App\Livewire\Frontend\Auth\Login::class)->name('login');
-// Route::get('signup', \App\Livewire\Frontend\Auth\Signup::class)->name('signup');
-
 
 
 
