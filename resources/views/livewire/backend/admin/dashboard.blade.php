@@ -44,7 +44,7 @@
                         <!--begin::Title-->
                         <div class="card-title d-flex flex-column">
                             <!--begin::Amount-->
-                            <span class="fs-2hx fw-bold text-dark me-2 lh-1 ls-n2">357</span>
+                            <span class="fs-2hx fw-bold text-dark me-2 lh-1 ls-n2">35</span>
                             <!--end::Amount-->
                             <!--begin::Subtitle-->
                             <span class="text-gray-400 pt-1 fw-semibold fs-6">Clients</span>
