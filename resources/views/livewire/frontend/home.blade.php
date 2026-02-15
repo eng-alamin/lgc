@@ -29,19 +29,19 @@
                             <div class="wptb-image-single d-none d-lg-flex wow skewIn">
                                 <div class="wptb-item--inner">
                                     <div class="wptb-item--image">
-                                        <img src="{{ asset($item->file1) }}" alt="{{ $item->title }}">
+                                        <img src="{{ asset($item->file1) }}" alt="{!! $item->title !!}">
                                     </div>
                                 </div>
                             </div>
 
                             <div class="wptb-item-layer wptb-item-layer-one">
-                                <img src="{{ asset($item->file2) }}" alt="{{ $item->title }}">
+                                <img src="{{ asset($item->file2) }}" alt="{!! $item->title !!}">
                             </div>
                             <div class="wptb-item-layer wptb-item-layer-two">
                                 <img src="{{ asset($item->file3) }}" alt="{{ $item->title }}">
                             </div>
                             <div class="wptb-item-layer wptb-item-layer-three">
-                                <img src="{{ asset($item->file4) }}" alt="{{ $item->title }}">
+                                <img src="{{ asset($item->file4) }}" alt="{!! $item->title !!}">
                             </div>
                         </div>
                     </div>
