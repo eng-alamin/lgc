@@ -131,7 +131,7 @@
                             <div class="wptb-image-box1 wow fadeInLeft">
                                 <div class="wptb-item--inner">
                                     <div class="wptb-item--image">
-                                        <a href="service-details.html" class="wptb-item-link"><img src="{{ asset($item->file) }}" alt="img"></a>
+                                        <a href="#" class="wptb-item-link"><img src="{{ asset($item->file) }}" alt="img"></a>
                                     </div>
                                     <div class="wptb-item--holder">
                                         <div class="wptb-item--icon">
@@ -139,12 +139,12 @@
                                             <img src="{{ asset('assets/frontend/assets/img/services/icon-1.png') }}" alt="icon">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 9 9" fill="none"> <path d="M9 9C3 9 0.5 3 0 0V9H9Z"></path> </svg>
                                         </div>
-                                        <h4 class="wptb-item--title"><a href="service-details.html">{{$item->title}}</a></h4>
+                                        <h4 class="wptb-item--title"><a href="#">{{$item->title}}</a></h4>
                                         <div class="wptb-line-paper"></div>
                                         <p class="wptb-item--description"> {{$item->description}}</p>
                                         
                                         <div class="wptb-item--button">
-                                            <a class="btn--readmore" href="service-details.html">
+                                            <a class="btn--readmore" href="#">
                                                 <span class="btn-readmore--text"> View More </span> <span class="btn-readmore--icon"> <i class="bi bi-arrow-right"></i> </span>
                                             </a>
                                         </div>
@@ -301,7 +301,7 @@
                     <h2 class="wptb-country-tab--title">
                         <span>{{$item->name}}</span> 
                         <div class="wptb-item-featured">
-                            <img src="{{ asset($item->image) }}" alt="{{$item->title}}">
+                            <img src="{{ asset($item->image) }}" alt="{!! $item->title !!}">
                         </div>
                     </h2>
                     <div class="wptb-country-tab--details">
