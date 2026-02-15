@@ -50,11 +50,15 @@
 
                     <div class="row">
                         <div class="col-xl-5 mb-5 mb-xl-0">
-                            <h3 class="text-two"> We are shaping your dream future</h3>
-                            <p class="text-two">Indignation and dislike men who are so beguiled and of pleasure of the moment so blinded</p>
+                            @php
+                                use Illuminate\Support\Facades\DB;
+                                $footer = DB::table('sections')->where('type', 'footer')->first();
+                            @endphp
+                            <h3 class="text-two">{{ $footer->title ?? '' }}</h3>
+                            <p class="text-two">{{ $footer->description ?? '' }}</p>
                     
 
-                            <a href="#" class="btn mt-4">
+                            <a href="{{$footer->link}}" class="btn mt-4">
                                 <span class="btn-wrap">
                                     <span class="text-first">Get Consultancy</span>
                                     <span class="text-second">Get Consultancy</span>
@@ -68,11 +72,11 @@
                                     <div class="footer-widget footer-links">
                                         <div class="footer-nav">
                                             <ul>
+                                                <li class="menu-item"><a href="{{ route('home') }}"><i class="bi bi-circle-fill"></i> Home </a></li>
                                                 <li class="menu-item"><a href="{{ route('about') }}"><i class="bi bi-circle-fill"></i> About Company</a></li>
-                                                <li class="menu-item"><a href="timeline.html"><i class="bi bi-circle-fill"></i> Our Experience</a></li>
-                                                <li class="menu-item"><a href="case.html"><i class="bi bi-circle-fill"></i> Case Studies</a></li>
+                                                {{-- <li class="menu-item"><a href="timeline.html"><i class="bi bi-circle-fill"></i> Our Experience</a></li> --}}
+                                                <li class="menu-item"><a href="{{route('casestudies')}}"><i class="bi bi-circle-fill"></i> Case Studies</a></li>
                                                 <li class="menu-item"><a href="{{ route('appointment') }}"><i class="bi bi-circle-fill"></i> Get Appointment</a></li>
-                                                <li class="menu-item"><a href="{{ route('contact') }}"><i class="bi bi-circle-fill"></i> Contact Us</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -82,11 +86,10 @@
                                     <div class="footer-widget footer-links">
                                         <div class="footer-nav">
                                             <ul>
-                                                <li class="menu-item"><a href="{{ route('home') }}"><i class="bi bi-circle-fill"></i> Home</a></li>
                                                 <li class="menu-item"><a href="{{ route('workprocess') }}"><i class="bi bi-circle-fill"></i> Work Process</a></li>
                                                 <li class="menu-item"><a href="{{ route('essential') }}"><i class="bi bi-circle-fill"></i> Essentials</a></li>
                                                 <li class="menu-item"><a href="{{ route('visa') }}"><i class="bi bi-circle-fill"></i> Visa</a></li>
-                                                <li class="menu-item"><a href="{{ route('blog') }}"><i class="bi bi-circle-fill"></i> Blog</a></li>
+                                                <li class="menu-item"><a href="{{ route('blogs') }}"><i class="bi bi-circle-fill"></i> Blogs</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -96,11 +99,10 @@
                                     <div class="footer-widget footer-links">
                                         <div class="footer-nav">
                                             <ul>
-                                                <li class="menu-item"><a href="#"><i class="bi bi-circle-fill"></i> Top Universities</a></li>
-                                                <li class="menu-item"><a href="#"><i class="bi bi-circle-fill"></i> Top Courses</a></li>
-                                                <li class="menu-item"><a href="#"><i class="bi bi-circle-fill"></i> Top Countries</a></li>
-                                                <li class="menu-item"><a href="#"><i class="bi bi-circle-fill"></i> Affiliate Programs </a></li>
-                                                <li class="menu-item"><a href="#"><i class="bi bi-circle-fill"></i> Meet Our Team</a></li>
+                                                <li class="menu-item"><a href="{{ route('universities') }}"><i class="bi bi-circle-fill"></i> Top Universities</a></li>
+                                                <li class="menu-item"><a href="{{ route('courses') }}"><i class="bi bi-circle-fill"></i> Top Courses</a></li>
+                                                <li class="menu-item"><a href="{{ route('teams') }}"><i class="bi bi-circle-fill"></i> Meet Our Team</a></li>
+                                                <li class="menu-item"><a href="{{ route('contact') }}"><i class="bi bi-circle-fill"></i> Contact Us</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -116,7 +118,7 @@
                 <div class="container">
                     <div class="footer-bottom-inner">
                         <div class="copyright">
-                            <p>&copy;copyright {{ date('Y') }} <a href="https://letsgochinaofficial.com/" class="text-capitalize">Let's Go China</a>. All rights reserved</p>
+                            <p>&copy;copyright {{ date('Y') }} <a href="https://monarchysolutions.com/" class="text-capitalize">Monarchy Solutions</a>. All rights reserved</p>
                         </div>
                         <div class="footer-nav-bottom">
                             <ul>

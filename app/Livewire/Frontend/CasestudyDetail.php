@@ -3,32 +3,32 @@
 namespace App\Livewire\Frontend;
 
 use Livewire\Component;
-use App\Models\Essential as EssentialModel;
+use App\Models\Casestudy as CasestudyModel;
 use App\Models\Section;
 use App\Models\Faq;
 
-class EssentialDetail extends Component
+class CasestudyDetail extends Component
 {
-    public $essential;
+    public $case;
 
     public function mount($id)
     {
-        $this->essential = EssentialModel::find($id);
+        $this->case = CasestudyModel::find($id);
     }
 
     public function render()
     {
         $sections = Section::get();
-        $essentials = EssentialModel::get();
+        $cases = CasestudyModel::get();
         $faqs = Faq::get();
 
-        return view('livewire.frontend.essential-detail',[
-             'essentials' => $essentials,
+        return view('livewire.frontend.casestudy-detail',[
+             'cases' => $cases,
              'sections' => $sections,
              'faqs' => $faqs,
         ])
         ->layout('layouts.frontend.app', [
-            'title' => "Essential Details | Let's Go China"
+            'title' => "Case Study Details | Let's Go China"
         ]);
     }
 }

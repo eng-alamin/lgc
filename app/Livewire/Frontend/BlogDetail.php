@@ -3,32 +3,32 @@
 namespace App\Livewire\Frontend;
 
 use Livewire\Component;
-use App\Models\Essential as EssentialModel;
+use App\Models\Blog as BlogModel;
 use App\Models\Section;
 use App\Models\Faq;
 
-class EssentialDetail extends Component
+class BlogDetail extends Component
 {
-    public $essential;
+    public $blog;
 
     public function mount($id)
     {
-        $this->essential = EssentialModel::find($id);
+        $this->blog = BlogModel::find($id);
     }
 
     public function render()
     {
         $sections = Section::get();
-        $essentials = EssentialModel::get();
+        $latest_blogs = BlogModel::latest()->get();
         $faqs = Faq::get();
 
-        return view('livewire.frontend.essential-detail',[
-             'essentials' => $essentials,
+        return view('livewire.frontend.blog-detail',[
              'sections' => $sections,
+             'latest_blogs' => $latest_blogs,
              'faqs' => $faqs,
         ])
         ->layout('layouts.frontend.app', [
-            'title' => "Essential Details | Let's Go China"
+            'title' => "Blog Details | Let's Go China"
         ]);
     }
 }

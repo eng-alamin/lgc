@@ -1,27 +1,12 @@
-<!-- Details Content -->
+<div>
+    <!-- Details Content -->
     <section class="blog-details mt-5">
         <div class="container">
             <div class="row">
                     
                 <!-- Service Navigation List -->
                 <div class="col-lg-4 col-md-5 pe-md-5">
-                    <div class="sidebar mt-5">
-                        <div class="sidenav">
-                            <ul class="side_menu">
-                                @foreach ($essentials as $item)
-                                    <li class="menu-item {{ str_contains(request()->url(), 'essential/detail/'.$item->id) ? 'active' : '' }}">
-                                        <a href="{{ route('essential.detail', $item->id) }}" class="d-flex align-items-center justify-content-between">
-                                            <span>
-                                                {!! $item->icon !!}
-                                                {{$item->title}}
-                                            </span>
-                                            <i class="bi bi-chevron-right"></i>
-                                        </a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>                             
-
+                    <div class="sidebar mt-5">                           
                         <div class="wptb-banner2 mr-top-30"> 
                             <div class="wptb-banner-inner"> 
                                 <a class="wptb-item--link" href="tel:23456781199"></a>
@@ -41,19 +26,18 @@
                                         </svg>
                                     </div>
                                 <div class="wptb-content">
-                                    <div class="wptb-item--title">Visa &amp; Immigration</div>
+                                    <div class="wptb-item--title">Visa &amp; Let's Go China</div>
                                     <div class="wptb-item-contact-info">
                                             <div class="wptb-item--icon"> 
                                                 <i class="bi bi-telephone-fill"></i>
                                             </div> 
                                             <span class="wptb-item--desc">Need Help? Book Lab Visit</span>
-                                            <h5 class="wptb-item--number">+234 567 811 99</h5>
+                                            <h5 class="wptb-item--number">{{config('setting.phone')}}</h5>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
 
@@ -61,10 +45,10 @@
                     <div class="blog-details-inner">
                         <div class="post-content">
                             <div class="post-header mt-0">
-                                <h1 class="post-title">{{$essential->title}}</h1>
+                                <h1 class="post-title">{{ strip_tags($case->title) }}</h1>
                             </div>
                             <div class="fulltext">
-                                {!! $essential->description !!}
+                                {!! $case->description !!}
 
                                 <div class="wptb-accordion wptb-accordion2 wow fadeInUp">
                                     @forelse ($faqs as $item)
@@ -239,3 +223,4 @@
         </div>
     </section>
 <!-- End Details Content -->
+</div>

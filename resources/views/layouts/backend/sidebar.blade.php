@@ -230,11 +230,35 @@
                                 </a>
                             </div>
                             <div class="menu-item">
-                                <a class="menu-link {{ str_contains(request()->url(), 'admin/crud/teams') == true ? 'active' : '' }}" href="{{route('admin.crud.team')}}">
+                                <a class="menu-link {{ str_contains(request()->url(), 'admin/crud/teams') == true ? 'active' : '' }}" href="{{route('admin.crud.teams')}}">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
                                     <span class="menu-title">Teams</span>
+                                </a>
+                            </div>
+                            <div class="menu-item">
+                                <a class="menu-link {{ str_contains(request()->url(), 'admin/crud/casestudies') == true ? 'active' : '' }}" href="{{route('admin.crud.casestudies')}}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Case Studies</span>
+                                </a>
+                            </div>
+                            <div class="menu-item">
+                                <a class="menu-link {{ str_contains(request()->url(), 'admin/crud/universities') == true ? 'active' : '' }}" href="{{route('admin.crud.universities')}}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Universities</span>
+                                </a>
+                            </div>
+                            <div class="menu-item">
+                                <a class="menu-link {{ str_contains(request()->url(), 'admin/crud/courses') == true ? 'active' : '' }}" href="{{route('admin.crud.courses')}}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Courses</span>
                                 </a>
                             </div>
                         </div>
@@ -349,6 +373,14 @@
                                 </a>
                             </div>
                             <div class="menu-item">
+                                <a class="menu-link {{ str_contains(request()->url(), 'admin/section/casestudies') == true ? 'active' : '' }}" href="{{route('admin.section.casestudies')}}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Case Studies</span>
+                                </a>
+                            </div>
+                            <div class="menu-item">
                                 <a class="menu-link {{ str_contains(request()->url(), 'admin/section/contact') == true ? 'active' : '' }}" href="{{route('admin.section.contact')}}">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
@@ -362,6 +394,30 @@
                                         <span class="bullet bullet-dot"></span>
                                     </span>
                                     <span class="menu-title">Subscriber</span>
+                                </a>
+                            </div>
+                            <div class="menu-item">
+                                <a class="menu-link {{ str_contains(request()->url(), 'admin/section/university') == true ? 'active' : '' }}" href="{{route('admin.section.university')}}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">University</span>
+                                </a>
+                            </div>
+                            <div class="menu-item">
+                                <a class="menu-link {{ str_contains(request()->url(), 'admin/section/course') == true ? 'active' : '' }}" href="{{route('admin.section.course')}}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Course</span>
+                                </a>
+                            </div>
+                            <div class="menu-item">
+                                <a class="menu-link {{ str_contains(request()->url(), 'admin/section/footer') == true ? 'active' : '' }}" href="{{route('admin.section.footer')}}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Footer Section</span>
                                 </a>
                             </div>
                         </div>

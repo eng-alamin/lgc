@@ -54,7 +54,7 @@
                 </div>
             </div>
 
-            <div class="wptb-pagination-wrap text-center">
+            {{-- <div class="wptb-pagination-wrap text-center">
                 <ul class="pagination">
                     <li><a class="disabled page-number previous" href="#"><i class="bi bi-chevron-left"></i></a></li>
                     <li><span class="page-number current">1</span></li>
@@ -64,7 +64,7 @@
                     <li><a class="page-number" href="#">9</a></li>
                     <li><a class="page-number next" href="#"><i class="bi bi-chevron-right"></i></a></li>
                 </ul>
-            </div>
+            </div> --}}
         </div>
     </section>
 

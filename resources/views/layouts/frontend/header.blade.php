@@ -35,6 +35,15 @@
                             </span>
                         </a>
                     </div>
+
+                     <ul class="info-list">
+                        @guest
+                            <li><a href="{{ route('login') }}">Signup / Signin</a></li>
+                        @else
+                            <li><a href="{{ url(auth()->user()->getRedirectRoute()) }}">{{auth()->user()->name}}</a></li>
+                        @endguest
+                    </ul>
+
                 </div>
             </div>
         </div>
@@ -67,8 +76,8 @@
                             <li class="menu-item {{ request()->routeIs('visa') ? 'active' : '' }}">
                                 <a href="{{ route('visa') }}">Visa</a>
                             </li>
-                            <li class="menu-item {{ request()->routeIs('blog') ? 'active' : '' }}">
-                                <a href="{{ route('blog') }}">Blog</a>
+                            <li class="menu-item {{ request()->routeIs('blogs') ? 'active' : '' }}">
+                                <a href="{{ route('blogs') }}">Blogs</a>
                             </li>
                             <li class="menu-item {{ request()->routeIs('contact') ? 'active' : '' }}">
                                 <a href="{{ route('contact') }}">Contact</a>

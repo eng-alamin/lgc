@@ -12,7 +12,7 @@
                                 <div class="wptb-blog-grid1 style2 active highlight wow fadeInLeft">
                                     <div class="wptb-item--inner">
                                         <div class="wptb-item--image">
-                                            <a href="blog-details.html" class="wptb-item-link"><img src="{{ asset($item->file) }}" alt="{{$item->title}}"></a>
+                                            <a href="{{ route('blog.detail', $item->id) }}" class="wptb-item-link"><img src="{{ asset($item->file) }}" alt="{{$item->title}}"></a>
                                         </div>
                                         <div class="wptb-item--holder">
                                             <div class="wptb-item--meta">
@@ -20,11 +20,11 @@
                                                 <div class="wptb-item-comment"><a href="#comments">0</a></div>
                                             </div>
                                             
-                                            <h5 class="wptb-item--title"><a href="blog-details.html">{{$item->title}}</a></h5>
+                                            <h5 class="wptb-item--title"><a href="{{ route('blog.detail', $item->id) }}">{{$item->title}}</a></h5>
                                             <p class="wptb-item--description">  {{$item->short_description}} </p>
                                             
                                             <div class="wptb-item--button"> 
-                                                <a class="btn--readmore" href="blog-details.html"> 
+                                                <a class="btn--readmore" href="{{ route('blog.detail', $item->id) }}"> 
                                                     <span class="btn-readmore--text"> Read More </span> 
                                                     <span class="btn-readmore--icon"> <i class="bi bi-arrow-right"></i> </span> 
                                                 </a>
@@ -38,12 +38,9 @@
                                 <p class="wptb-item--description">No Data Found</p>
                             </div>
                         @endforelse
-
-
- 
                     </div>
 
-                    <div class="wptb-pagination-wrap text-center">
+                    {{-- <div class="wptb-pagination-wrap text-center">
                         <ul class="pagination">
                             <li><a class="disabled page-number previous" href="#"><i class="bi bi-chevron-left"></i></a></li>
                             <li><span class="page-number current">1</span></li>
@@ -53,7 +50,7 @@
                             <li><a class="page-number" href="#">9</a></li>
                             <li><a class="page-number next" href="#"><i class="bi bi-chevron-right"></i></a></li>
                         </ul>
-                    </div>
+                    </div> --}}
                 </div>
 
                 <!-- Sidebar  -->
@@ -71,7 +68,7 @@
                         </div>
                         <!-- end widget -->
 
-                        <div class="widget widget_block widget_custom">
+                        {{-- <div class="widget widget_block widget_custom">
                             <h2 class="widget-title">About Author</h2>
                             <div class="sidebar_author">
                                 <img src="{{ asset('assets/frontend/assets/img/blog/author-2.jpg') }}" alt="img">
@@ -86,7 +83,7 @@
                                     </ul>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                         <!-- end widget -->
 
                         <div class="widget widget_block">
@@ -98,7 +95,7 @@
                                             <img src="{{ asset('assets/frontend/assets/img/blog/8.jpg') }}" alt="img">
                                         </div>
                                         <div class="latest-posts-content">
-                                            <h5><a href="blog-details.html">How consultation in business is affecting new ventures</a></h5>
+                                            <h5><a href="{{ route('blog.detail', $item->id) }}">How consultation in business is affecting new ventures</a></h5>
                                             <h6>January 11, 2023</h6>
                                         </div>
                                     </li>
@@ -107,7 +104,7 @@
                                             <img src="{{ asset('assets/frontend/assets/img/blog/9.jpg') }}" alt="img">
                                         </div>
                                         <div class="latest-posts-content">
-                                            <h5><a href="blog-details.html">Challenges of consultation new Business Firms</a></h5>
+                                            <h5><a href="{{ route('blog.detail', $item->id) }}">Challenges of consultation new Business Firms</a></h5>
                                             <h6>January 01, 2023</h6>
                                         </div>
                                     </li>
@@ -116,7 +113,7 @@
                                             <img src="{{ asset('assets/frontend/assets/img/blog/10.jpg') }}" alt="img">
                                         </div>
                                         <div class="latest-posts-content">
-                                            <h5><a href="blog-details.html">Changes in recent consultancy styles now a days</a></h5>
+                                            <h5><a href="{{ route('blog.detail', $item->id) }}">Changes in recent consultancy styles now a days</a></h5>
                                             <h6>January 21, 2023</h6>
                                         </div>
                                     </li>

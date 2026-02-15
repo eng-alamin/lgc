@@ -133,5 +133,34 @@ class SectionSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+        Section::create([
+            'type' => 'case',
+            'name' => 'Case Studies',
+            'title' => "Our Successful Case Studies",
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+         Section::create([
+            'type' => 'university',
+            'name' => 'Top Universities',
+            'title' => "Brief Overview of our <br> Amazing journey",
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+         Section::create([
+            'type' => 'course',
+            'name' => 'Top Course',
+            'title' => "Brief Overview of our <br> Amazing journey",
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+         Section::create([
+            'type' => 'footer',
+            'title' => "We are shaping your dream future",
+            'description' => "Indignation and dislike men who are so beguiled and of pleasure of the moment so blinded",
+            'link' => "#",
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
     }
 }

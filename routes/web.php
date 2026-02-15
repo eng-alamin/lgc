@@ -62,10 +62,16 @@ Route::get('essential/detail/{id}', \App\Livewire\Frontend\EssentialDetail::clas
 Route::get('visa', \App\Livewire\Frontend\Visa::class)->name('visa');
 Route::get('visa/detail/{id}', \App\Livewire\Frontend\VisaDetail::class)->name('visa.detail');
 Route::get('contact', \App\Livewire\Frontend\Contact::class)->name('contact');
-Route::get('blog', \App\Livewire\Frontend\Blog::class)->name('blog');
+Route::get('blogs', \App\Livewire\Frontend\Blog::class)->name('blogs');
+Route::get('blog/detail/{id}', \App\Livewire\Frontend\BlogDetail::class)->name('blog.detail');
+Route::get('casestudies', \App\Livewire\Frontend\Casestudy::class)->name('casestudies');
+Route::get('casestudies/detail/{id}', \App\Livewire\Frontend\CasestudyDetail::class)->name('casestudies.detail');
 
 Route::get('about', \App\Livewire\Frontend\About::class)->name('about');
 Route::get('appointment', \App\Livewire\Frontend\Appointment::class)->name('appointment');
+Route::get('teams', \App\Livewire\Frontend\Team::class)->name('teams');
+Route::get('universities', \App\Livewire\Frontend\University::class)->name('universities');
+Route::get('courses', \App\Livewire\Frontend\Course::class)->name('courses');
 
 
 
@@ -87,7 +93,11 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin/crud/workprocess', \App\Livewire\Backend\Admin\Crud\Workprocess::class)->name('admin.crud.workprocess');
     Route::get('admin/crud/visa', \App\Livewire\Backend\Admin\Crud\Visa::class)->name('admin.crud.visa');
 
-    Route::get('admin/crud/teams', \App\Livewire\Backend\Admin\Crud\Team::class)->name('admin.crud.team');
+    Route::get('admin/crud/casestudies', \App\Livewire\Backend\Admin\Crud\Casestudy::class)->name('admin.crud.casestudies');
+
+    Route::get('admin/crud/teams', \App\Livewire\Backend\Admin\Crud\Team::class)->name('admin.crud.teams');
+    Route::get('admin/crud/universities', \App\Livewire\Backend\Admin\Crud\University::class)->name('admin.crud.universities');
+    Route::get('admin/crud/courses', \App\Livewire\Backend\Admin\Crud\Course::class)->name('admin.crud.courses');
 
 
 
@@ -111,6 +121,8 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::patch('admin/section/testimonial/update/{id}', [App\Livewire\Backend\Admin\Section\Testimonial::class, 'sectionUpdate'])->name('admin.section.testimonial.update');
     Route::get('admin/section/team', \App\Livewire\Backend\Admin\Section\Team::class)->name('admin.section.team');
     Route::patch('admin/section/team/update/{id}', [App\Livewire\Backend\Admin\Section\Team::class, 'sectionUpdate'])->name('admin.section.team.update');
+    Route::get('admin/section/casestudies', \App\Livewire\Backend\Admin\Section\Casestudy::class)->name('admin.section.casestudies');
+    Route::patch('admin/section/casestudies/update/{id}', [App\Livewire\Backend\Admin\Section\Casestudy::class, 'sectionUpdate'])->name('admin.section.casestudies.update');
     Route::get('admin/section/blog', \App\Livewire\Backend\Admin\Section\Blog::class)->name('admin.section.blog');
     Route::patch('admin/section/blog/update/{id}', [App\Livewire\Backend\Admin\Section\Blog::class, 'sectionUpdate'])->name('admin.section.blog.update');
     Route::get('admin/section/intro', \App\Livewire\Backend\Admin\Section\Intro::class)->name('admin.section.intro');
@@ -119,6 +131,12 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::patch('admin/section/contact/update/{id}', [App\Livewire\Backend\Admin\Section\Contact::class, 'sectionUpdate'])->name('admin.section.contact.update');
     Route::get('admin/section/subscriber', \App\Livewire\Backend\Admin\Section\Subscriber::class)->name('admin.section.subscriber');
     Route::patch('admin/section/subscriber/update/{id}', [App\Livewire\Backend\Admin\Section\Subscriber::class, 'sectionUpdate'])->name('admin.section.subscriber.update');
+    Route::get('admin/section/university', \App\Livewire\Backend\Admin\Section\University::class)->name('admin.section.university');
+    Route::patch('admin/section/university/update/{id}', [App\Livewire\Backend\Admin\Section\university::class, 'sectionUpdate'])->name('admin.section.university.update');
+    Route::get('admin/section/course', \App\Livewire\Backend\Admin\Section\Course::class)->name('admin.section.course');
+    Route::patch('admin/section/course/update/{id}', [App\Livewire\Backend\Admin\Section\Course::class, 'sectionUpdate'])->name('admin.section.course.update');
+    Route::get('admin/section/footer', \App\Livewire\Backend\Admin\Section\Footer::class)->name('admin.section.footer');
+    Route::patch('admin/section/footer/update/{id}', [App\Livewire\Backend\Admin\Section\Footer::class, 'sectionUpdate'])->name('admin.section.footer.update');
 
     Route::get('admin/appointments', App\Livewire\Backend\Admin\Appointment::class)->name('admin.appointments');
     Route::get('admin/contacts', App\Livewire\Backend\Admin\Contact::class)->name('admin.contacts');
