@@ -2,7 +2,7 @@
     <!--begin::Logo-->
     <div class="app-sidebar-logo px-6" id="kt_app_sidebar_logo">
         <!--begin::Logo image-->
-        <a href="#">
+        <a href="{{route('home')}}">
             <img alt="Logo" src="{{asset('assets/backend/media/logos/default-dark.png')}}" class="h-25px app-sidebar-logo-default" />
             <img alt="Logo" src="{{asset('assets/backend/media/logos/default-small.png')}}" class="h-20px app-sidebar-logo-minimize" />
         </a>

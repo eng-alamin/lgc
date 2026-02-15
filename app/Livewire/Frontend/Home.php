@@ -59,27 +59,16 @@ class Home extends Component
     public $phone;
     public $address;
 
-    private function resetInputFields()
-    {
-        $this->date = '';
-        $this->service = '';
-        $this->name = '';
-        $this->email = '';
-        $this->phone = '';
-        $this->address = '';
-    }
-
-
     public function appointment()
     {
         $this->validate([
-        'date' => 'required',
-        'service' => 'required',
-        'name' => 'required|string|max:255',
-        'email' => 'required|email',
-        'phone' => 'nullable|string|max:20',
-        'address' => 'nullable|string',
-    ]);
+            'date' => 'required',
+            'service' => 'required',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email',
+            'phone' => 'nullable|string|max:20',
+            'address' => 'nullable|string',
+        ]);
 
         AppointmentModel::create([
             'date' => $this->date,
@@ -90,8 +79,7 @@ class Home extends Component
             'address' => $this->address,
         ]);
 
-        $this->resetInputFields();
-        session()->flash('success', 'Appointment request submitted successfully!');
+        return redirect()->route('home')->with('success', 'Appointment request submitted successfully!');
     }
 }
 

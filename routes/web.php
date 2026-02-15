@@ -73,6 +73,7 @@ Route::get('teams', \App\Livewire\Frontend\Team::class)->name('teams');
 Route::get('universities', \App\Livewire\Frontend\University::class)->name('universities');
 Route::get('courses', \App\Livewire\Frontend\Course::class)->name('courses');
 
+Route::get('search', \App\Livewire\Frontend\Search::class)->name('search');
 
 
 // Admin

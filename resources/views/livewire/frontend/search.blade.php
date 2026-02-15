@@ -2,40 +2,53 @@
     <!-- Blog Grid -->
     <section class="mt-5">
         <div class="container mt-5">
+            <div class="wptb-heading">
+                <div class="wptb-item--inner text-center">
+                    <h6 class="wptb-item--subtitle">
+                        Search Results for: "{{ $q }}"
+                    </h6>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-lg-8 col-md-7">
                     <div class="row">
-                        @forelse ($data as $item)
-                            <div class="col-md-6 col-sm-6">
-                                <div class="wptb-blog-grid1 style2 active highlight wow fadeInLeft">
-                                    <div class="wptb-item--inner">
-                                        <div class="wptb-item--image">
-                                            <a href="{{ route('blog.detail', $item->id) }}" class="wptb-item-link"><img src="{{ asset($item->file) }}" alt="{{$item->title}}"></a>
-                                        </div>
-                                        <div class="wptb-item--holder">
-                                            <div class="wptb-item--meta">
-                                                <div class="wptb-item--date">{{ \Carbon\Carbon::parse($item->created_at)->format('F d, Y') }}</div>
-                                                <div class="wptb-item-comment"><a href="#comments">0</a></div>
+                        @if($data->count())
+                            @forelse ($data as $item)
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="wptb-blog-grid1 style2 active highlight wow fadeInLeft">
+                                        <div class="wptb-item--inner">
+                                            <div class="wptb-item--image">
+                                                <a href="{{ route('blog.detail', $item->id) }}" class="wptb-item-link"><img src="{{ asset($item->file) }}" alt="{{$item->title}}"></a>
                                             </div>
-                                            
-                                            <h5 class="wptb-item--title"><a href="{{ route('blog.detail', $item->id) }}">{{$item->title}}</a></h5>
-                                            <p class="wptb-item--description">  {{$item->short_description}} </p>
-                                            
-                                            <div class="wptb-item--button"> 
-                                                <a class="btn--readmore" href="{{ route('blog.detail', $item->id) }}"> 
-                                                    <span class="btn-readmore--text"> Read More </span> 
-                                                    <span class="btn-readmore--icon"> <i class="bi bi-arrow-right"></i> </span> 
-                                                </a>
+                                            <div class="wptb-item--holder">
+                                                <div class="wptb-item--meta">
+                                                    <div class="wptb-item--date">{{ \Carbon\Carbon::parse($item->created_at)->format('F d, Y') }}</div>
+                                                    <div class="wptb-item-comment"><a href="#comments">0</a></div>
+                                                </div>
+                                                
+                                                <h5 class="wptb-item--title"><a href="{{ route('blog.detail', $item->id) }}">{{$item->title}}</a></h5>
+                                                <p class="wptb-item--description">  {{$item->short_description}} </p>
+                                                
+                                                <div class="wptb-item--button"> 
+                                                    <a class="btn--readmore" href="{{ route('blog.detail', $item->id) }}"> 
+                                                        <span class="btn-readmore--text"> Read More </span> 
+                                                        <span class="btn-readmore--icon"> <i class="bi bi-arrow-right"></i> </span> 
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        @empty
+                            @empty
+                                <div class="d-flex justify-content-center align-items-center" style="height: 100px;">
+                                    <p class="wptb-item--description">No Data Found.</p>
+                                </div>
+                            @endforelse
+                        @else
                             <div class="d-flex justify-content-center align-items-center" style="height: 100px;">
-                                <p class="wptb-item--description">No Data Found</p>
-                            </div>
-                        @endforelse
+                                    <p class="wptb-item--description">No Data Found.</p>
+                                </div>
+                        @endif
                     </div>
 
                     {{-- <div class="wptb-pagination-wrap text-center">
@@ -84,7 +97,7 @@
                         </div> --}}
                         <!-- end widget -->
 
-                        <div class="widget widget_block">
+                        {{-- <div class="widget widget_block">
                             <div class="wp-block-group__inner-container">
                                 <h2 class="widget-title">Recent Posts</h2>
                                 <ul class="wp-block-latest-posts__list wp-block-latest-posts">
@@ -103,7 +116,7 @@
                                     @endforelse
                                 </ul>
                             </div>
-                        </div>
+                        </div> --}}
                         <!-- end widget -->
 
                         {{-- <div class="widget widget_block">

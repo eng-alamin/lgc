@@ -110,7 +110,7 @@
                 <div class="modal-content">
                     <form class="form" role="form" wire:submit.prevent="update">
                         <div class="modal-header">
-                            <h2 class="fw-bold">Edit Province</h2>
+                            <h2 class="fw-bold">Edit Client Logo</h2>
                             <div wire:click="close" class="btn btn-icon btn-sm btn-active-icon-primary"  data-bs-dismiss="modal">
                                 <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
                             </div>
@@ -123,8 +123,8 @@
                                     </div>
                                 </div>
                                 <div class="fv-row mb-7">
-                                    <label class="required fs-6 fw-semibold mb-2">New Client Logo</label> <br>
-                                    <input type="image" wire:model="newfile" name="newfile"/>
+                                    <label class="required fs-6 fw-semibold mb-2">New Image</label> <br>
+                                    <input type="file" wire:model="newfile" name="newfile" />
                                     @error('newfile') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>

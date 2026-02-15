@@ -93,8 +93,8 @@
                     </div>
 
                     <div class="header_search">
-                        <form class="search_form" action="https://wpthemebooster.com/demo/themeforest/html/immigway/search.php">
-                            <input type="text" name="search" class="keyword form-control" placeholder="Search..." />
+                        <form action="{{ route('search') }}" method="GET" class="search_form">
+                            <input type="text" name="q" class="keyword form-control" placeholder="Search..." />
                             <button type="submit" class="form-control-submit"><i class="bi bi-search"></i></button>
                         </form>
                     </div>

@@ -156,9 +156,9 @@
                     <div class="sidebar">
                         
                         <div class="widget widget_block widget_search">
-                            <form method="get" class="wp-block-search">
+                            <form action="{{ route('search') }}" method="get" class="wp-block-search">
                                 <div class="wp-block-search__inside-wrapper ">
-                                    <input type="search" class="wp-block-search__input" name="search" value="" placeholder="Search" required="">
+                                    <input type="search" class="wp-block-search__input" name="q" placeholder="Search" required="">
                                     <button type="submit" class="wp-block-search__button"><i class="bi bi-search"></i></button>
                                 </div>
                             </form>
