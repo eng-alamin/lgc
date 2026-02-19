@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('banners', function (Blueprint $table) {
+        Schema::create('status_histories', function (Blueprint $table) {
             $table->id();
-            $table->string('type')->nullable();
-            $table->string('file')->nullable();
-            $table->json('json')->nullable();
+            $table->string('module');   // form, visa, admission
+            $table->unsignedBigInteger('module_id'); // module id
+            $table->string('status');
+            $table->text('note')->nullable();
             $table->timestamps();
         });
     }
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('banners');
+        Schema::dropIfExists('status_histories');
     }
 };

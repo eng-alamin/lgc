@@ -131,7 +131,7 @@ class Visa extends Component
             }
 
             $update->icon = $this->icon;
-             $update->title = $this->title;
+            $update->title = $this->title;
             $update->subtitle = $this->subtitle;
             $update->description = $this->description;
             $update->save();

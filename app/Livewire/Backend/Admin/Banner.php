@@ -3,13 +3,13 @@
 namespace App\Livewire\Backend\Admin;
 
 use Livewire\Component;
-use App\Models\Bannar as BannarModel;
+use App\Models\Banner as BannerModel;
 use Illuminate\Support\Facades\Storage;
 use Livewire\WithFileUploads;
 use Carbon\Carbon;
 use File;
 
-class Bannar extends Component
+class Banner extends Component
 {
     use WithFileUploads;
 
@@ -17,8 +17,10 @@ class Bannar extends Component
     public $file;
     public $newfile;
     public $title;
+    public $description;
+    public $number;
 
-    public $bannar_id;
+    public $banner_id;
     public $delete_id;
 
     public $selectedItems = [];
@@ -27,13 +29,13 @@ class Bannar extends Component
     protected $listeners = ['deleteConfirmed' => 'delete'];
 
     public function render()
-    {    $bannars = BannarModel::get();
+    {    $data = BannerModel::get();
 
-        return view('livewire.backend.admin.bannar', [
-            'bannars' => $bannars,
+        return view('livewire.backend.admin.banner', [
+            'data' => $data,
         ])
         ->layout('layouts.backend.app', [
-            'title' => "Bannar | Let's Go China",
+            'title' => "Banners | Let's Go China",
         ]);
     }
 
@@ -42,6 +44,8 @@ class Bannar extends Component
         $this->type = '';
         $this->file = '';
         $this->title = '';
+        $this->description = '';
+        $this->number = '';
     }
 
     public function close()
@@ -53,7 +57,6 @@ class Bannar extends Component
         $this->validateOnly($name, [
             'type' => 'required',
             'file' => 'required',
-            'title' => 'required',
         ]);
     }
 
@@ -61,26 +64,23 @@ class Bannar extends Component
     {
         $this->validate([
             'type' => 'required',
-            'file' => 'required',
-            'title' => 'required',
         ]);
 
         try{
-            $store = new VisaModel();
-            $store->icon = $this->icon;
+            $store = new BannerModel();
             if($this->file) {
                 $fileName = Carbon::now()->timestamp . '.' . $this->file->getClientOriginalExtension();
-                $path = $this->file->storeAs('bannars', $fileName, 'public');
+                $path = $this->file->storeAs('banners', $fileName, 'public');
                 $fileData = '/storage/'.$path;
                 $store->file = $fileData;
             }
-            $store->icon = $this->icon;
+            $store->type = $this->type;
             $store->title = $this->title;
-            $store->subtitle = $this->subtitle;
             $store->description = $this->description;
+            $store->number = $this->number;
             $store->save();
 
-            return redirect()->route('admin.crud.visa')->with('success', 'Data is successfully saved');
+            return redirect()->route('admin.banners')->with('success', 'Data is successfully saved');
         }catch(\Exception $e){
             return redirect()->back()->with('error', 'Data store failed: ' . $e->getMessage());
         }
@@ -88,25 +88,25 @@ class Bannar extends Component
 
     public function edit($id)
     {
-        $edit = VisaModel::findOrFail($id);
-        $this->bannar_id = $id;
+        $edit = BannerModel::findOrFail($id);
+        $this->banner_id = $id;
+        $this->type = $edit->type;
         $this->file = $edit->file;
-        $this->icon = $edit->icon;
         $this->title = $edit->title;
-        $this->subtitle = $edit->subtitle;
         $this->description = $edit->description;
+        $this->number = $edit->number;
+
+        $this->dispatch('refreshSelect');
     }
 
     public function update()
     {
         $this->validate([
-            'title' => 'required',
-            'subtitle' => 'required',
-            'description' => 'required',
+            'type' => 'required',
         ]);
 
         try {
-            $update = VisaModel::findOrFail($this->bannar_id);
+            $update = BannerModel::findOrFail($this->banner_id);
 
             if ($this->newfile) {
                 if ($update->file) {
@@ -118,16 +118,17 @@ class Bannar extends Component
                 }
 
                 $fileName = Carbon::now()->timestamp . '.' . $this->newfile->getClientOriginalExtension();
-                $path = $this->newfile->storeAs('bannars', $fileName, 'public');
+                $path = $this->newfile->storeAs('banners', $fileName, 'public');
                 $update->file = '/storage/' . $path;
             }
 
-            $update->icon = $this->icon;
-            $update->subtitle = $this->subtitle;
+            $update->type = $this->type;
+            $update->title = $this->title;
             $update->description = $this->description;
+            $update->number = $this->number;
             $update->save();
 
-            return redirect()->route('admin.crud.visa')->with('success', 'Data successfully updated');
+            return redirect()->route('admin.banners')->with('success', 'Data successfully updated');
 
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Update failed: ' . $e->getMessage());
@@ -144,7 +145,7 @@ class Bannar extends Component
     public function delete()
     {
         try {
-            $data = VisaModel::find($this->delete_id);
+            $data = BannerModel::find($this->delete_id);
 
             if (!$data) {
                 return redirect()->back()->with('error', 'Data not found.');
@@ -159,7 +160,7 @@ class Bannar extends Component
 
             $data->delete();
 
-            return redirect()->route('admin.crud.visa')->with('success', 'Data successfully deleted');
+            return redirect()->route('admin.banners')->with('success', 'Data successfully deleted');
 
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Data deletion failed: ' . $e->getMessage());
@@ -170,7 +171,7 @@ class Bannar extends Component
     public function selectedItemsAll()
     {
         if ($this->selectAll) {
-            $this->selectedItems = VisaModel::latest()->limit(10)->pluck('id')->map(function ($id) {
+            $this->selectedItems = BannerModel::latest()->limit(10)->pluck('id')->map(function ($id) {
                 return (string) $id;
             })->toArray();
         } else {
@@ -189,7 +190,7 @@ class Bannar extends Component
     {
 
         try {
-            $data = VisaModel::whereIn('id', $this->selectedItems)->get();
+            $data = BannerModel::whereIn('id', $this->selectedItems)->get();
 
             foreach ($data as $item) {
                 if ($item->file) {
@@ -199,16 +200,15 @@ class Bannar extends Component
                     }
                 }
             }
-            VisaModel::whereIn('id', $this->selectedItems)->delete();
+            BannerModel::whereIn('id', $this->selectedItems)->delete();
 
             $this->selectedItems = [];
             $this->selectAll = false;
 
-            return redirect()->route('admin.crud.visa')->with('success', 'Selected data successfully deleted');
+            return redirect()->route('admin.banners')->with('success', 'Selected data successfully deleted');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Data deletion failed: ' . $e->getMessage());
         }
     }
-
 
 }

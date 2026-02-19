@@ -6,13 +6,14 @@
                     
                 <!-- Service Navigation List -->
                 <div class="col-lg-4 col-md-5 pe-md-5">
-                    <div class="sidebar mt-5">                           
+                    <div class="sidebar mt-5">    
+                        @php $detail = $banners->where('type', 'detail')->first(); @endphp                       
                         <div class="wptb-banner2 mr-top-30"> 
                             <div class="wptb-banner-inner"> 
-                                <a class="wptb-item--link" href="tel:23456781199"></a>
+                                <a class="wptb-item--link" href="tel:{{$detail->number}}"></a>
                                 <div class="wptb-item--image">
                                     <div class="wptb-item-img-primary " data-wow-delay="ms"> 
-                                        <img src="{{asset('assets/frontend/assets/img/more/banner.jpg')}}" alt="">
+                                        <img src="{{asset($detail->file)}}" alt="{{$detail->title}}">
                                     </div>
                                 </div>
                         
@@ -26,13 +27,13 @@
                                         </svg>
                                     </div>
                                 <div class="wptb-content">
-                                    <div class="wptb-item--title">Visa &amp; Let's Go China</div>
+                                    <div class="wptb-item--title">{{$detail->title}}</div>
                                     <div class="wptb-item-contact-info">
                                             <div class="wptb-item--icon"> 
                                                 <i class="bi bi-telephone-fill"></i>
                                             </div> 
-                                            <span class="wptb-item--desc">Need Help? Book Lab Visit</span>
-                                            <h5 class="wptb-item--number">{{config('setting.phone')}}</h5>
+                                            <span class="wptb-item--desc">{{$detail->description}}</span>
+                                            <h5 class="wptb-item--number">{{$detail->number}}</h5>
                                         </div>
                                     </div>
                                 </div>

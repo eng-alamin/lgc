@@ -38,24 +38,16 @@ Route::middleware('auth')->group(function () {
     Route::get('email-verification-verify/{token}', App\Livewire\Auth\EmailVerificationVerifyComponent::class)->name('email.verification.verify');
 
     Route::get('logout', [App\Livewire\Auth\LoginComponent::class, 'logout'])->name('logout');
+
+    Route::get('dashboard', \App\Livewire\Frontend\Client\DashboardComponent::class)->name('dashboard');
+    Route::get('form', \App\Livewire\Frontend\Client\FormComponent::class)->name('form');
+    Route::get('application/view/{id}', App\Livewire\Frontend\Client\ApplicationViewComponent::class)->name('application.view');
+    Route::get('profile', \App\Livewire\Frontend\Client\ProfileComponent::class)->name('profile');
+    
 });
-
-
 
 // Start Frontend
-Route::get('about-us', \App\Livewire\Frontend\Home::class)->name('front.about');
-Route::get('contact-us', \App\Livewire\Frontend\Home::class)->name('front.contact');
-Route::get('/unsubscribe/{email}', function ($email) {
-    \App\Models\Subscriber::where('email', $email)->update(['is_active' => false]);
-    return 'You have been unsubscribed.';
-});
-
-Route::get('term-condition', \App\Livewire\Frontend\Home::class)->name('front.termcondition');
-Route::get('privacy-policy', \App\Livewire\Frontend\Home::class)->name('front.privacypolicy');
-// End Frontend
-
 Route::get('/', \App\Livewire\Frontend\Home::class)->name('home');
-Route::get('dashboard', \App\Livewire\Frontend\Home::class)->name('dashboard');
 Route::get('workprocess', \App\Livewire\Frontend\Workprocess::class)->name('workprocess');
 Route::get('essentials', \App\Livewire\Frontend\Essential::class)->name('essential');
 Route::get('essential/detail/{id}', \App\Livewire\Frontend\EssentialDetail::class)->name('essential.detail');
@@ -66,14 +58,23 @@ Route::get('blogs', \App\Livewire\Frontend\Blog::class)->name('blogs');
 Route::get('blog/detail/{id}', \App\Livewire\Frontend\BlogDetail::class)->name('blog.detail');
 Route::get('casestudies', \App\Livewire\Frontend\Casestudy::class)->name('casestudies');
 Route::get('casestudies/detail/{id}', \App\Livewire\Frontend\CasestudyDetail::class)->name('casestudies.detail');
-
 Route::get('about', \App\Livewire\Frontend\About::class)->name('about');
 Route::get('appointment', \App\Livewire\Frontend\Appointment::class)->name('appointment');
 Route::get('teams', \App\Livewire\Frontend\Team::class)->name('teams');
 Route::get('universities', \App\Livewire\Frontend\University::class)->name('universities');
 Route::get('courses', \App\Livewire\Frontend\Course::class)->name('courses');
-
 Route::get('search', \App\Livewire\Frontend\Search::class)->name('search');
+
+Route::get('about-us', \App\Livewire\Frontend\Home::class)->name('front.about');
+Route::get('contact-us', \App\Livewire\Frontend\Home::class)->name('front.contact');
+Route::get('/unsubscribe/{email}', function ($email) {
+    \App\Models\Subscriber::where('email', $email)->update(['is_active' => false]);
+    return 'You have been unsubscribed.';
+});
+
+Route::get('term-condition', \App\Livewire\Frontend\Home::class)->name('front.termcondition');
+Route::get('privacy-policy', \App\Livewire\Frontend\Home::class)->name('front.privacypolicy');
+// End Frontend
 
 
 // Admin
@@ -139,6 +140,10 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin/section/footer', \App\Livewire\Backend\Admin\Section\Footer::class)->name('admin.section.footer');
     Route::patch('admin/section/footer/update/{id}', [App\Livewire\Backend\Admin\Section\Footer::class, 'sectionUpdate'])->name('admin.section.footer.update');
 
+    Route::get('admin/application/list', App\Livewire\Backend\Admin\Application\ListComponent::class)->name('admin.application.list');
+    Route::get('admin/application/add', App\Livewire\Backend\Admin\Application\AddComponent::class)->name('admin.application.add');
+    Route::get('admin/application/view/{id}', App\Livewire\Backend\Admin\Application\ViewComponent::class)->name('admin.application.view');
+    Route::get('admin/banners', App\Livewire\Backend\Admin\Banner::class)->name('admin.banners');
     Route::get('admin/appointments', App\Livewire\Backend\Admin\Appointment::class)->name('admin.appointments');
     Route::get('admin/contacts', App\Livewire\Backend\Admin\Contact::class)->name('admin.contacts');
     Route::get('admin/subscribers', App\Livewire\Backend\Admin\Subscriber::class)->name('admin.subscribers');

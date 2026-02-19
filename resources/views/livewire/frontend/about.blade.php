@@ -46,10 +46,11 @@
             <div class="row">
                 <div class="col-md-6">
                     <!-- Single Image -->
+                    @php $banner = $banners->where('type', 'about')->first(); @endphp
                     <div class="wptb-image-single wow skewIn">
                         <div class="wptb-item--inner">
                             <div class="wptb-item--image">
-                                <img src="{{ asset('assets/frontend/assets/img/1.jpg') }}" alt="img" class="image-main">
+                                <img src="{{ asset($banner->file) }}" alt="{{$banner->title}}" class="image-main">
 
                                 <div class="wptb-item-layer">
                                     <div class="wptb-icon-box1 wow fadeInLeft">
@@ -60,9 +61,9 @@
                                                 </svg>
                                             </div>
                                             <div class="wptb-item--holder">
-                                                <h5 class="wptb-item--title">Call For Consultation</h5>
+                                                <h5 class="wptb-item--title">{{$banner->title}}</h5>
                                                 <p class="wptb-item--description">
-                                                    <a href="tel:{{config('setting.phone')}}">{{config('setting.phone')}}</a>
+                                                    <a href="tel:{{$banner->number}}">{{$banner->number}}</a>
                                                 </p>
                                             </div>
                                         </div>
@@ -85,7 +86,7 @@
                                             <div class="wptb-item--img"><img src="{{ asset('assets/frontend/assets/img/visa/tourist.jpg') }}" alt="Tourist Visa"></div>
                                             <div class="wptb-item--img"><img src="{{ asset('assets/frontend/assets/img/visa/student.avif') }}" alt="Student Visa"></div>
                                             <div class="wptb-item--img"><img src="{{ asset('assets/frontend/assets/img/visa/tourist.jpg') }}" alt="Tourist"></div>
-                                            <a class="wptb-item--img wptb-item--link" href="country-list-2.html"><i class="bi bi-plus"></i></a> <span class="wptb-item--text">4 Visa</span>
+                                            <a class="wptb-item--img wptb-item--link" href="#"><i class="bi bi-plus"></i></a> <span class="wptb-item--text">4 Visa</span>
                                         </div>
                                         <span class="wptb-item--desc">We are serving for 20 Years</span>
                                     </div>

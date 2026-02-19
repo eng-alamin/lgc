@@ -40,7 +40,7 @@
 			<!--begin::Page-->
 			<div class="app-page flex-column flex-column-fluid" id="kt_app_page">
 				<!--begin::Header-->
-				<div id="kt_app_header" class="app-header" data-kt-sticky="true" data-kt-sticky-activate="{default: true, lg: true}" data-kt-sticky-name="app-header-minimize" data-kt-sticky-offset="{default: '200px', lg: '0'}" data-kt-sticky-animation="false">
+				<div id="kt_app_header" class="app-header no-print" data-kt-sticky="true" data-kt-sticky-activate="{default: true, lg: true}" data-kt-sticky-name="app-header-minimize" data-kt-sticky-offset="{default: '200px', lg: '0'}" data-kt-sticky-animation="false">
 					@include('layouts.backend.header')
 				</div>
 				<!--end::Header-->
@@ -56,7 +56,7 @@
 						<!--begin::Content wrapper-->
 						<div class="d-flex flex-column flex-column-fluid">
 							<!--begin::Toolbar-->
-							<div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
+							<div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6 no-print">
 								@include('layouts.backend.toolbar')
 							</div>
 							<!--end::Toolbar-->
@@ -70,7 +70,9 @@
 						<!--end::Content wrapper-->
 
 						<!--begin::Footer-->
-						@include('layouts.backend.footer')
+						<div id="kt_app_footer" class="app-footer no-print">
+							@include('layouts.backend.footer')
+						</div>
 						<!--end::Footer-->
 					</div>
 					<!--end:::Main-->

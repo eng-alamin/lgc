@@ -21,8 +21,40 @@
     <link rel="stylesheet" href="{{ asset('assets/frontend/assets/css/main.css') }}">
     {{-- <script src="{{ asset('js/custom.js') }}" defer></script> --}}
     
-
-    {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
+    <style>
+        .header-space {
+            margin-top: 200px;
+        }
+        @media screen and (max-width: 575px) {
+            .header-space {
+                margin-top: inherit;
+            }
+        }
+        .labell{
+            font-size: 16px;
+            padding: 6px 8px;;
+            font-family: var(--font-family-heading);
+            font-weight: var(--fw-normal);
+        }
+        .labelll{
+            font-size: 14px;
+            font-family: var(--font-family-heading);
+            font-weight: var(--fw-normal);
+        }
+         .tab-pane section{
+            width: 790px;
+        }
+        .tab-pane .card {
+            --bs-card-border-color: rgb(255 255 255 / 18%);
+        }
+        .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+            color: var(--bs-nav-pills-link-active-color);
+            background-color: #E13833;
+        }
+        .nav-link {
+            color: #E13833;
+        }
+    </style>
     @stack('styles')
     @livewireStyles
 </head>
@@ -64,7 +96,7 @@
         </div>
     </div>
 
-    @include('layouts.frontend.header')
+    @include('layouts.client.header')
 
     <!-- Mobile Responsive Menu -->
     <div class="mr_menu">
@@ -107,7 +139,7 @@
         {{ $slot }}
     </main>
 
-    @include('layouts.frontend.footer')
+    @include('layouts.client.footer')
 
     <div class="totop">
         <a href="#"><i class="bi bi-chevron-up"></i></a>

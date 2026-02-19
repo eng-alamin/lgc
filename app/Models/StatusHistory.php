@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Banner extends Model
+class StatusHistory extends Model
 {
     protected $guarded = [];
 }

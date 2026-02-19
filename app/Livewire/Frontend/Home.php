@@ -4,7 +4,7 @@ namespace App\Livewire\Frontend;
 
 use Livewire\Component;
 
-use App\Models\Section as Section;
+use App\Models\Section;
 use App\Models\Visa as VisaModel;
 use App\Models\Slider as SliderModel;
 use App\Models\Feature as FeatureModel;

@@ -1,4 +1,4 @@
-<div id="kt_app_sidebar" class="app-sidebar flex-column" data-kt-drawer="true" data-kt-drawer-name="app-sidebar" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="225px" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_app_sidebar_mobile_toggle">
+<div id="kt_app_sidebar" class="app-sidebar flex-column no-print" data-kt-drawer="true" data-kt-drawer-name="app-sidebar" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="225px" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_app_sidebar_mobile_toggle">
     <!--begin::Logo-->
     <div class="app-sidebar-logo px-6" id="kt_app_sidebar_logo">
         <!--begin::Logo image-->
@@ -50,6 +50,17 @@
                         </a>
                     </div>
 
+                    <div class="menu-item">
+                        <a class="menu-link {{ str_contains(request()->url(), 'admin/application/list') == true ? 'active' : '' }}" href="{{route('admin.application.list')}}">
+                            <span class="menu-icon">
+                                <i class="ki-duotone ki-user fs-2">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                </i>
+                            </span>
+                            <span class="menu-title">Applications</span>
+                        </a>
+                    </div>
                     <div class="menu-item">
                         <a class="menu-link {{ str_contains(request()->url(), 'admin/appointments') == true ? 'active' : '' }}" href="{{route('admin.appointments')}}">
                             <span class="menu-icon">
@@ -421,6 +432,20 @@
                                 </a>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <a class="menu-link {{ str_contains(request()->url(), 'admin/banners') == true ? 'active' : '' }}" href="{{route('admin.banners')}}">
+                            <span class="menu-icon">
+                                <i class="ki-duotone ki-menu fs-2">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                    <span class="path3"></span>
+                                    <span class="path4"></span>
+                                </i>
+                            </span>
+                            <span class="menu-title">Banners</span>
+                        </a>
                     </div>
 
                     <div class="menu-item pt-5">
