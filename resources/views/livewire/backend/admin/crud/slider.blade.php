@@ -56,8 +56,6 @@
                                 <th class="min-w-125px">Layer3</th>
                                 <th class="min-w-125px">Sub Title</th>
                                 <th class="min-w-125px">Title</th>
-                                <th class="min-w-125px">Description</th>
-                                <th class="min-w-125px">Date Added</th>
                                 <th class="text-end min-w-70px">Actions</th>
                             </tr>
                         </thead>
@@ -91,8 +89,6 @@
                                 </td>
                                 <td>{{$item->subtitle}}</td>
                                 <td>{{$item->title}}</td>
-                                <td>{{$item->description}}</td>
-                                <td>{{ \Carbon\Carbon::parse($item->updated_at)->diffForHumans() }}</td>
                                 <td class="text-end">
                                     <a href="#" class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
                                     <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
@@ -281,7 +277,7 @@
                         "lengthChange": false,
                         'columnDefs': [
                         { orderable: false, targets: 0 },
-                        { orderable: false, targets: 8 },
+                        { orderable: false, targets: 6 },
                         ],
                         'dom': `<'row'<'col-sm-12'tr>><'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
                         'language': {

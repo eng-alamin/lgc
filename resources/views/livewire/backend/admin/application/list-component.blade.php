@@ -1,10 +1,8 @@
-@section('page-title') Application @endsection
+@section('page-title') Applications @endsection
 @section('breadcrumb')
     <li class="breadcrumb-item text-muted"><a href="#" class="text-muted text-hover-primary">Home</a></li>
     <li class="breadcrumb-item"><span class="bullet bg-gray-400 w-5px h-2px"></span></li>
-    <li class="breadcrumb-item text-muted">Application</li>
-    <li class="breadcrumb-item"><span class="bullet bg-gray-400 w-5px h-2px"></span></li>
-    <li class="breadcrumb-item text-muted">List</li>
+    <li class="breadcrumb-item text-muted"> Applications</li>
 @endsection
 
 <div id="kt_app_content_container" class="app-container container-fluid">
@@ -21,7 +19,7 @@
             </div>
             <div class="card-toolbar">
                 <div class="d-flex justify-content-end">
-                    <a href="{{route('admin.application.add')}}" class="btn btn-sm btn-primary">New Application</a>
+                    <a href="{{route('admin.application.add')}}" target="_blank" class="btn btn-sm btn-primary">New Application</a>
                 </div>
             </div>
         </div>
@@ -47,55 +45,62 @@
                             <td class="d-flex align-items-center border-0">
                                 <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
                                     <a href="#">
-                                        @if($item->user?->avatar)
+                                        @if($item->client?->avatar)
                                             <div class="symbol-label">
-                                                <img src="{{asset($item->user?->avatar)}}" alt="{{$item->user?->name}}" class="w-100" />
+                                                <img src="{{asset($item->client?->avatar)}}" alt="{{$item->client?->name}}" class="w-100" />
                                             </div>
                                         @else
-                                            <div class="symbol-label fs-3 bg-light-danger text-danger"> {{substr($item->user?->name ?? 'N',0,1)}} </div>
+                                            <div class="symbol-label fs-3 bg-light-danger text-danger"> {{substr($item->client?->name ?? 'N',0,1)}} </div>
                                         @endif
                                     </a>
                                 </div>
                                 <div class="d-flex flex-column">
-                                    <a href="#" class="text-gray-800 text-hover-primary mb-1">{{$item->user?->name ?? 'N/L'}}</a>
-                                    <div>{{$item->user?->email ?? 'N/A'}}</div>
-                                    <div>{{$item->user?->phone ?? 'N/A'}}</div>
+                                    <a href="#" class="text-gray-800 text-hover-primary mb-1">{{$item->client?->name ?? 'N/L'}}</a>
+                                    <div>{{$item->client?->email ?? 'N/A'}}</div>
+                                    <div>{{$item->client?->phone ?? 'N/A'}}</div>
                                 </div>
                             </td>
                             <td>{{$item->number}}</td>
                             <td>{{$item->serial}}</td>
                             <td>{{ ucfirst($item->type) }}</td>
-                            <td>{{ \Carbon\Carbon::parse($item->created_at)->diffForHumans() }}</td>
                             <td>
-                                @if ($item->status == 'Pending')
+                                @php
+                                    $current = $item->status;
+                                    $flow = config('status_flow.application');
+                                    $allowed = $flow[$current] ?? [];
+                                @endphp
+
+                                @if ($item->status == 'pending')
                                     <a href="#" class="btn btn-sm btn-warning btn-flex btn-center btn-active-light-warning dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">{{ ucfirst($item->status) }}</a>
-                                @elseif ($item->status == 'Processing')
+                                @elseif ($item->status == 'processing')
                                     <a href="#" class="btn btn-sm btn-primary btn-flex btn-center btn-active-light-primary dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">{{ ucfirst($item->status) }}</a>
-                                @elseif ($item->status == 'Approved')
+                                @elseif ($item->status == 'approved')
                                     <a href="#" class="btn btn-sm btn-success btn-flex btn-center btn-active-light-success dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">{{ ucfirst($item->status) }}</a>
                                 @else
-                                <a href="#" class="btn btn-sm btn-danger btn-flex btn-center btn-active-light-danger dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">{{ ucfirst($item->status) }}</a>
+                                    <a href="#" class="btn btn-sm btn-danger btn-flex btn-center btn-active-light-danger dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">{{ ucfirst($item->status) }}</a>
                                 @endif
+                                
                                 <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4 dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                    <div class="menu-item px-3">
-                                        <a href="javascript:;"  wire:click="statusClick({{ $item->id }}, 'Pending')" class="menu-link px-3">Pending</a>
-                                    </div>
-                                    <div class="menu-item px-3">
-                                        <a href="javascript:;"  wire:click="statusClick({{ $item->id }}, 'Processing')" class="menu-link px-3">Processing</a>
-                                    </div>
-                                    <div class="menu-item px-3">
-                                        <a href="javascript:;"  wire:click="statusClick({{ $item->id }}, 'Approved')" class="menu-link px-3">Approved</a>
-                                    </div>
-                                    <div class="menu-item px-3">
-                                        <a href="javascript:;"  wire:click="statusClick({{ $item->id }}, 'Declined')" class="menu-link px-3">Declined</a>
-                                    </div>
+                                    @foreach (['pending','processing','approved','declined'] as $status)
+                                        <div class="menu-item px-3">
+                                            <a href="javascript:;"
+                                            class="menu-link px-3 {{ !in_array($status,$allowed) ? 'disabled text-muted' : '' }}"
+                                            wire:click="{{ in_array($status,$allowed) ? "statusClick($item->id, '$status')" : '' }}">
+                                                {{ ucfirst($status) }}
+                                            </a>
+                                        </div>
+                                    @endforeach
                                 </div>
                             </td>
+                            <td>{{ \Carbon\Carbon::parse($item->created_at)->diffForHumans() }}</td>
                             <td class="text-end">
                                 <a href="#" class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Actions</a>
                                 <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4 dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                     <div class="menu-item px-3">
-                                        <a href="{{route('admin.application.view', $item->id)}}"  class="menu-link px-3">View</a>
+                                        <a href="{{route('admin.application.edit', $item->id)}}" target="_blank" class="menu-link px-3">Edit</a>
+                                    </div>
+                                    <div class="menu-item px-3">
+                                        <a href="{{route('admin.application.view', $item->id)}}" target="_blank" class="menu-link px-3">View</a>
                                     </div>
                                     <div class="menu-item px-3">
                                         <a href="javascript:;"  wire:click="deleteConfirmation({{ $item->id }})" class="menu-link px-3">Delete</a>

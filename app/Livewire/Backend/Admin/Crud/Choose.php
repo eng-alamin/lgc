@@ -28,7 +28,8 @@ class Choose extends Component
     protected $listeners = ['deleteConfirmed' => 'delete'];
 
     public function render()
-    {    $chooses = ChooseModel::get();
+    {    
+       $chooses = ChooseModel::get();
 
         return view('livewire.backend.admin.crud.choose', [
             'chooses' => $chooses,

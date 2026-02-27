@@ -13,10 +13,12 @@ return new class extends Migration
     {
         Schema::create('forms', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
             $table->string('serial');
             $table->string('number');
-            $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
-            $table->string('type'); //Education, Medical, Business, Travel
+            $table->foreignId('client_id')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignId('agent_id')->nullable()->constrained('users')->nullOnDelete();
+            $table->string('type'); //Education, Medical, Business, Travel, Job
             $table->json('data')->nullable();
             $table->string('status')->default('draft');
             $table->text('note')->nullable(); //rejection reason / comment

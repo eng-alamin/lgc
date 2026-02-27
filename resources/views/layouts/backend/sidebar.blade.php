@@ -133,6 +133,28 @@
                             <span class="menu-title">Activities</span>
                         </a>
                     </div>
+                    <div class="menu-item">
+                        <a class="menu-link {{ str_contains(request()->url(), 'admin/commissions') == true ? 'active' : '' }}" href="{{route('admin.commissions')}}">
+                            <span class="menu-icon">
+                                <i class="ki-duotone ki-user fs-2">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                </i>
+                            </span>
+                            <span class="menu-title">Commissions</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link {{ str_contains(request()->url(), 'admin/commission/rules') == true ? 'active' : '' }}" href="{{route('admin.commission.rules')}}">
+                            <span class="menu-icon">
+                                <i class="ki-duotone ki-user fs-2">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                </i>
+                            </span>
+                            <span class="menu-title">Commission Rules</span>
+                        </a>
+                    </div>
 
                     <div class="menu-item pt-5">
                         <div class="menu-content">

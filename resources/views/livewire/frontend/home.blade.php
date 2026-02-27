@@ -29,19 +29,19 @@
                             <div class="wptb-image-single d-none d-lg-flex wow skewIn">
                                 <div class="wptb-item--inner">
                                     <div class="wptb-item--image">
-                                        <img src="{{ asset($item->file1) }}" alt="{!! $item->title !!}">
+                                        <img src="{{ asset($item->file1) }}" alt="{{ $item->subtitle }}">
                                     </div>
                                 </div>
                             </div>
 
                             <div class="wptb-item-layer wptb-item-layer-one">
-                                <img src="{{ asset($item->file2) }}" alt="{!! $item->title !!}">
+                                <img src="{{ asset($item->file2) }}" alt="{{ $item->subtitle }}">
                             </div>
                             <div class="wptb-item-layer wptb-item-layer-two">
-                                <img src="{{ asset($item->file3) }}" alt="{{ $item->title }}">
+                                <img src="{{ asset($item->file3) }}" alt="{{ $item->subtitle }}}">
                             </div>
                             <div class="wptb-item-layer wptb-item-layer-three">
-                                <img src="{{ asset($item->file4) }}" alt="{!! $item->title !!}">
+                                <img src="{{ asset($item->file4) }}" alt="{{ $item->subtitle }}">
                             </div>
                         </div>
                     </div>
@@ -141,7 +141,7 @@
                                         </div>
                                         <h4 class="wptb-item--title"><a href="#">{{$item->title}}</a></h4>
                                         <div class="wptb-line-paper"></div>
-                                        <p class="wptb-item--description"> {{$item->description}}</p>
+                                        <p class="wptb-item--description"> {{$item->subtitle}}</p>
                                         
                                         <div class="wptb-item--button">
                                             <a class="btn--readmore" href="#">
@@ -656,12 +656,35 @@
                                         <div class="row">
                                             <div class="col-md-6 col-lg-6 mb-4">
                                                 <div class="form-group" wire:ignore>
-                                                    <input type="text" wire:model="date" class="flatpickr form-control" placeholder="Select Date" required>
+                                                    <input type="text" wire:model="date" id="datepicker" class="form-control" placeholder="Select Date" required>
                                                 </div>
                                                 @error('date') <small class="text-danger">{{ $message }}</small> @enderror
                                             </div>
-
                                             <div class="col-md-6 col-lg-6 mb-4">
+                                                <div class="form-group" wire:ignore>
+                                                    <input type="text" wire:model="time" id="timepicker" class="form-control" placeholder="Select Time" required>
+                                                </div>
+                                                @error('time') <small class="text-danger">{{ $message }}</small> @enderror
+                                            </div>
+
+                                            @push('scripts')
+                                                <script>
+                                                    document.addEventListener("DOMContentLoaded", function () {
+                                                        flatpickr("#datepicker", {
+                                                            dateFormat: "Y-m-d",
+                                                            allowInput: true
+                                                        });
+                                                        flatpickr("#timepicker", {
+                                                            enableTime: true,
+                                                            noCalendar: true,
+                                                            dateFormat: "H:i",
+                                                            time_24hr: true,
+                                                        });
+                                                    });
+                                                </script>
+                                            @endpush
+
+                                            <div class="col-md-12 col-lg-12 mb-4">
                                                 <div class="form-group" wire:ignore>
                                                     <select wire:model="service" class="form-control" id="service">
                                                         <option value="">Select Service</option>
@@ -697,22 +720,8 @@
 
                                             <div class="col-md-6 col-lg-6 mb-4">
                                                 <div class="form-group">
-                                                    <input type="email" wire:model="email" class="form-control" placeholder="E-mail*" required>
-                                                    @error('email') <small class="text-danger">{{ $message }}</small> @enderror
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6 col-lg-6 mb-4">
-                                                <div class="form-group">
                                                     <input type="number" wire:model="phone" class="form-control" placeholder="Phone No">
                                                     @error('phone') <small class="text-danger">{{ $message }}</small> @enderror
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="col-md-6 col-lg-6 mb-4">
-                                                <div class="form-group">
-                                                    <input type="text" wire:model="address" class="form-control" placeholder="Address">
-                                                    @error('address') <small class="text-danger">{{ $message }}</small> @enderror
                                                 </div>
                                             </div>
 

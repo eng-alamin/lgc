@@ -53,6 +53,7 @@ class Home extends Component
     }
 
     public $date;
+    public $time;
     public $service;
     public $name;
     public $email;
@@ -64,19 +65,18 @@ class Home extends Component
         $this->validate([
             'date' => 'required',
             'service' => 'required',
-            'name' => 'required|string|max:255',
-            'email' => 'required|email',
-            'phone' => 'nullable|string|max:20',
-            'address' => 'nullable|string',
         ]);
 
+        if (!auth()->check()) {
+            return redirect()->route('login');
+        }
+
         AppointmentModel::create([
-            'date' => $this->date,
+            'client_id' => auth()->id(),
+            'appointment_date' => $this->date,
+            'appointment_time' => $this->time,
+            'type' => 'online',
             'service' => $this->service,
-            'name' => $this->name,
-            'email' => $this->email,
-            'phone' => $this->phone,
-            'address' => $this->address,
         ]);
 
         return redirect()->route('home')->with('success', 'Appointment request submitted successfully!');

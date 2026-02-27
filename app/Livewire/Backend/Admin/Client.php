@@ -24,7 +24,7 @@ class Client extends Component
 
     public function render()
     {
-        $data = User::where('type', 'user')->latest()->get();
+        $data = User::where('type', 'client')->latest()->get();
 
         return view('livewire.backend.admin.client', [
             'data' => $data,

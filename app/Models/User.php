@@ -49,21 +49,34 @@ class User extends Authenticatable implements MustVerifyEmail
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'data' => 'array',
         ];
     }
 
     public function getRedirectRoute()
     {
         return match((string)$this->type) {
-            'user' => 'dashboard',
+            'client' => 'dashboard',
             'agent' => 'agent/dashboard',
+            'receptionist' => 'receptionist/dashboard',
             'admin' => 'admin/dashboard',
+            'coo' => 'coo/dashboard',
+            'cfo' => 'cfo/dashboard',
+            'ceo' => 'ceo/dashboard',
             'super_admin' => 'admin/dashboard',
         };
     }
     public function isOnline(): bool
     {
         return Cache::has('user-is-online:' . $this->id);
+    }
+    public function isAgent()
+    {
+        return $this->type === 'agent';
+    }
+    public function isReceptionist()
+    {
+        return $this->type === 'receptionist';
     }
     public function isAdmin()
     {

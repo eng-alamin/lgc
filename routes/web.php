@@ -142,6 +142,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
 
     Route::get('admin/application/list', App\Livewire\Backend\Admin\Application\ListComponent::class)->name('admin.application.list');
     Route::get('admin/application/add', App\Livewire\Backend\Admin\Application\AddComponent::class)->name('admin.application.add');
+    Route::get('admin/application/edit/{id}', App\Livewire\Backend\Admin\Application\EditComponent::class)->name('admin.application.edit');
     Route::get('admin/application/view/{id}', App\Livewire\Backend\Admin\Application\ViewComponent::class)->name('admin.application.view');
     Route::get('admin/banners', App\Livewire\Backend\Admin\Banner::class)->name('admin.banners');
     Route::get('admin/appointments', App\Livewire\Backend\Admin\Appointment::class)->name('admin.appointments');
@@ -150,6 +151,8 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin/clients', App\Livewire\Backend\Admin\Client::class)->name('admin.clients');
     Route::get('admin/employees', App\Livewire\Backend\Admin\Employee::class)->name('admin.employees');
     Route::get('admin/activities', App\Livewire\Backend\Admin\Activity::class)->name('admin.activities');
+    Route::get('admin/commissions', App\Livewire\Backend\Admin\CommissionComponent::class)->name('admin.commissions');
+    Route::get('admin/commission/rules', App\Livewire\Backend\Admin\CommissionRuleComponent::class)->name('admin.commission.rules');
 
     // Setting
     Route::get('admin/setting/app', App\Livewire\Backend\Admin\Setting\App::class)->name('admin.setting.app');
@@ -173,6 +176,73 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::post('admin/account/setting/deactivate', [App\Livewire\Backend\Admin\Account\Setting::class, 'deactivate'])->name('admin.account.setting.deactivate');
     Route::get('admin/account/activity', App\Livewire\Backend\Admin\Account\Activity::class)->name('admin.account.activity');
 
+});
+
+//CEO
+Route::get('ceo/dashboard', \App\Livewire\Backend\Ceo\DashboardComponent::class)->name('ceo.dashboard');
+
+//Receptionist
+Route::group(['middleware' => ['auth', 'receptionist']], function () {
+    Route::get('receptionist/dashboard', \App\Livewire\Backend\Receptionist\DashboardComponent::class)->name('receptionist.dashboard');
+    Route::get('receptionist/clients', \App\Livewire\Backend\Receptionist\ClientComponent::class)->name('receptionist.clients');
+    Route::get('receptionist/agents', \App\Livewire\Backend\Receptionist\AgentComponent::class)->name('receptionist.agents');
+    Route::get('receptionist/application/list', App\Livewire\Backend\Receptionist\Application\ListComponent::class)->name('receptionist.application.list');
+    Route::get('receptionist/application/add', App\Livewire\Backend\Receptionist\Application\AddComponent::class)->name('receptionist.application.add');
+    Route::get('receptionist/application/edit/{id}', App\Livewire\Backend\Receptionist\Application\EditComponent::class)->name('receptionist.application.edit');
+    Route::get('receptionist/application/view/{id}', App\Livewire\Backend\Receptionist\Application\ViewComponent::class)->name('receptionist.application.view');
+        Route::get('receptionist/application/print/{id}', function($id){
+        $application = \App\Models\Form::with('invoice.client')->findOrFail($id);
+        return view('livewire.backend.receptionist.application.print-component', compact('application'));
+    })->name('receptionist.application.print');
+    Route::get('receptionist/appointments', \App\Livewire\Backend\Receptionist\AppointmentComponent::class)->name('receptionist.appointments');
+    Route::get('receptionist/calendars', \App\Livewire\Backend\Receptionist\CalendarComponent::class)->name('receptionist.calendars');
+    Route::get('receptionist/contacts', \App\Livewire\Backend\Receptionist\ContactComponent::class)->name('receptionist.contacts');
+    Route::get('receptionist/calllogs', \App\Livewire\Backend\Receptionist\CallLogComponent::class)->name('receptionist.calllogs');
+    Route::get('receptionist/followups', \App\Livewire\Backend\Receptionist\followUpComponent::class)->name('receptionist.followups');
+    Route::get('receptionist/documents', \App\Livewire\Backend\Receptionist\DocumentComponent::class)->name('receptionist.documents');
+    Route::get('receptionist/invoices', \App\Livewire\Backend\Receptionist\InvoiceComponent::class)->name('receptionist.invoices');
+    Route::get('receptionist/invoices/print/{id}', function($id){
+        $invoice = \App\Models\Invoice::with('form.client')->findOrFail($id);
+        return view('livewire.backend.receptionist.invoice-print-component', compact('invoice'));
+    })->name('receptionist.invoices.print');
+
+    Route::get('receptionist/account/overview', App\Livewire\Backend\Receptionist\Account\Overview::class)->name('receptionist.account.overview');
+    Route::get('receptionist/account/setting', App\Livewire\Backend\Receptionist\Account\Setting::class)->name('receptionist.account.setting');
+    Route::patch('receptionist/account/setting/update/{id}', [App\Livewire\Backend\Receptionist\Account\Setting::class, 'updateSetting'])->name('receptionist.account.setting.update');
+    Route::put('receptionist/account/setting/email/update', [App\Livewire\Backend\Receptionist\Account\Setting::class, 'updateEmail'])->name('receptionist.account.setting.email.update');
+    Route::put('receptionist/account/setting/password/update', [App\Livewire\Backend\Receptionist\Account\Setting::class, 'updatePassword'])->name('receptionist.account.setting.password.update');
+    Route::post('receptionist/account/setting/deactivate', [App\Livewire\Backend\Receptionist\Account\Setting::class, 'deactivate'])->name('receptionist.account.setting.deactivate');
+    Route::get('receptionist/account/activity', App\Livewire\Backend\Receptionist\Account\Activity::class)->name('receptionist.account.activity');
+});
+
+//Agent
+Route::group(['middleware' => ['auth', 'agent']], function () {
+    Route::get('agent/dashboard', \App\Livewire\Backend\Agent\DashboardComponent::class)->name('agent.dashboard');
+    Route::get('agent/clients', \App\Livewire\Backend\Agent\ClientComponent::class)->name('agent.clients');
+    Route::get('agent/application/list', App\Livewire\Backend\Agent\Application\ListComponent::class)->name('agent.application.list');
+    Route::get('agent/application/add', App\Livewire\Backend\Agent\Application\AddComponent::class)->name('agent.application.add');
+    Route::get('agent/application/edit/{id}', App\Livewire\Backend\Agent\Application\EditComponent::class)->name('agent.application.edit');
+    Route::get('agent/application/view/{id}', App\Livewire\Backend\Agent\Application\ViewComponent::class)->name('agent.application.view');
+        Route::get('agent/application/print/{id}', function($id){
+        $application = \App\Models\Form::with('invoice.client')->findOrFail($id);
+        return view('livewire.backend.agent.application.print-component', compact('application'));
+    })->name('agent.application.print');
+        
+    Route::get('agent/invoices', \App\Livewire\Backend\Agent\InvoiceComponent::class)->name('agent.invoices');
+    Route::get('agent/invoices/print/{id}', function($id){
+        $invoice = \App\Models\Invoice::with('form.client')->findOrFail($id);
+        return view('livewire.backend.agent.invoice-print-component', compact('invoice'));
+    })->name('agent.invoices.print');
+    Route::get('agent/followups', \App\Livewire\Backend\Agent\followUpComponent::class)->name('agent.followups');
+    Route::get('agent/documents', \App\Livewire\Backend\Agent\DocumentComponent::class)->name('agent.documents');
+
+    Route::get('agent/account/overview', App\Livewire\Backend\Agent\Account\Overview::class)->name('agent.account.overview');
+    Route::get('agent/account/setting', App\Livewire\Backend\Agent\Account\Setting::class)->name('agent.account.setting');
+    Route::patch('agent/account/setting/update/{id}', [App\Livewire\Backend\Agent\Account\Setting::class, 'updateSetting'])->name('agent.account.setting.update');
+    Route::put('agent/account/setting/email/update', [App\Livewire\Backend\Agent\Account\Setting::class, 'updateEmail'])->name('agent.account.setting.email.update');
+    Route::put('agent/account/setting/password/update', [App\Livewire\Backend\Agent\Account\Setting::class, 'updatePassword'])->name('agent.account.setting.password.update');
+    Route::post('agent/account/setting/deactivate', [App\Livewire\Backend\Agent\Account\Setting::class, 'deactivate'])->name('agent.account.setting.deactivate');
+    Route::get('agent/account/activity', App\Livewire\Backend\Agent\Account\Activity::class)->name('agent.account.activity');
 });
 
 
