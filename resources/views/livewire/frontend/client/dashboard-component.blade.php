@@ -2,41 +2,6 @@
     <div class="header-space"></div>
 
     <div class="container">
-        <div class="row g-4">
-            <div class="col-md-3">
-                <div class="card shadow text-center">
-                    <div class="card-body">
-                        <h6>Total Applications</h6>
-                        <h3 class="text-primary">{{ $form_total }}</h3>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card shadow text-center">
-                    <div class="card-body">
-                        <h6>In Process</h6>
-                        <h3 class="text-warning">{{ $form_process }}</h3>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card shadow text-center">
-                    <div class="card-body">
-                        <h6>Approved</h6>
-                        <h3 class="text-success">{{ $form_approved }}</h3>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card shadow text-center">
-                    <div class="card-body">
-                        <h6>Rejected</h6>
-                        <h3 class="text-danger">{{ $form_rejected }}</h3>
-                    </div>
-                </div>
-            </div>
-
-        </div>
 
         <div class="d-flex align-items-start p-5">
                 <div class="nav flex-column align-items-start nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">

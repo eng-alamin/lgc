@@ -9,7 +9,7 @@ class ProfileComponent extends Component
 {
     public function render()
     {
-        $data = Form::where('user_id', auth()->id())->first();
+        $data = Form::where('client_id', auth()->id())->first();
 
         return view('livewire.frontend.client.profile-component',[
             'data' => $data,

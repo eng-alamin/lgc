@@ -38,10 +38,10 @@
                 <!--begin::Card body-->
                 <div class="card-body d-flex flex-column align-items-center pt-0">
                     <div>
-                        <span class="fs-2hx fw-bold text-white me-2">{{$applicationsToday}}</span>
+                        <span class="fs-2hx fw-bold text-white me-2"> ৳ {{$total_earning_pending}}</span>
                     </div>
                     <div class="fw-bold fs-6 text-white opacity-75">
-                        <span>New Applications Today</span>
+                        <span>Pending Balance</span>
                     </div>
                 </div>
                 <!--end::Card body-->
@@ -64,10 +64,10 @@
                 <!--begin::Card body-->
                 <div class="card-body d-flex flex-column align-items-center pt-0">
                     <div>
-                        <span class="fs-2hx fw-bold text-white me-2">{{$clientsToday}}</span>
+                        <span class="fs-2hx fw-bold text-white me-2"> ৳ {{$total_earning_approved}}</span>
                     </div>
                     <div class="fw-bold fs-6 text-white opacity-75">
-                        <span>Clients Today </span>
+                        <span>Now Balance </span>
                     </div>
                 </div>
                 <!--end::Card body-->
@@ -86,10 +86,10 @@
                 <!--begin::Card body-->
                 <div class="card-body d-flex flex-column align-items-center pt-0">
                     <div>
-                        <span class="fs-2hx fw-bold text-white me-2">{{$followupsToday }}</span>
+                        <span class="fs-2hx fw-bold text-white me-2"> ৳ {{$total_earning_paid }}</span>
                     </div>
                     <div class="fw-bold fs-6 text-white opacity-75">
-                        <span>Follow Ups Today</span>
+                        <span>Total Earning</span>
                     </div>
                 </div>
                 <!--end::Card body-->
@@ -155,31 +155,31 @@
                         </div>
                         <div class="col-10 col-md-5 bg-light px-6 py-8 rounded my-3 mx-5 d-flex justify-content-between align-items-center">
                             <div class="d-flex flex-column text-center">
-                                {{-- <i class="ki-duotone ki-ship fs-4x text-danger">
+                                <i class="ki-duotone ki-basket fs-4x text-danger">
                                     <span class="path1"></span>
                                     <span class="path2"></span>
                                     <span class="path3"></span>
-                                </i> --}}
-                                <a href="#" class="text-danger fs-4 fw-bold">Coming</a>
-                                {{-- <span class="badge badge-light-danger">Done</span> --}}
+                                    <span class="path4"></span>
+                                </i>
+                                <a href="#" class="text-danger fs-4 fw-bold">Total Earning</a>
+                                <span class="badge badge-light-danger">Paid</span>
                             </div>
-                            {{-- <div class="">
-                                <span class="text-danger fs-3 fw-bold">{{ $total_followup }}</span>
-                            </div> --}}
+                            <div class="">
+                                <span class="text-danger fs-3 fw-bold">{{ $total_earning }}</span>
+                            </div>
                         </div>
                         <div class="col-10 col-md-5 bg-light px-6 py-8 rounded my-3 mx-5 d-flex justify-content-between align-items-center">
                             <div class="d-flex flex-column text-center">
-                                {{-- <i class="ki-duotone ki-message-text-2 fs-4x text-warning">
+                                {{-- <i class="ki-duotone ki-chart fs-4x text-warning">
                                     <span class="path1"></span>
                                     <span class="path2"></span>
-                                    <span class="path3"></span>
                                 </i> --}}
                                 <a href="#" class="text-warning fs-4 fw-bold">Coming</a>
-                                {{-- <span class="badge badge-light-warning">Contacted</span> --}}
+                                {{-- <span class="badge badge-light-warning">Paid</span> --}}
                             </div>
-                            {{-- <div class="">
-                                <span class="text-warning fs-3 fw-bold">{{ $total_calllogs }}</span>
-                            </div> --}}
+                            <div class="">
+                                {{-- <span class="text-warning fs-3 fw-bold">{{ $total_earning_paid }}</span> --}}
+                            </div>
                         </div>
                     </div>
                 </div>

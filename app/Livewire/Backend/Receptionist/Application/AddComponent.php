@@ -244,7 +244,7 @@ class AddComponent extends Component
             $data->save();
 
             $history = new StatusHistory();
-            $history->module = 'Form';
+            $history->module = 'form';
             $history->module_id = $data->id;
             $history->status = "pending";
             $history->save();

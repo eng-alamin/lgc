@@ -51,6 +51,17 @@
                     </div>
 
                     <div class="menu-item">
+                        <a class="menu-link {{ str_contains(request()->url(), 'agent/commissions') == true ? 'active' : '' }}" href="{{route('agent.commissions')}}">
+                            <span class="menu-icon">
+                                <i class="ki-duotone ki-user fs-2">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                </i>
+                            </span>
+                            <span class="menu-title">Commissions</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
                         <a class="menu-link {{ str_contains(request()->url(), 'agent/clients') == true ? 'active' : '' }}" href="{{route('agent.clients')}}">
                             <span class="menu-icon">
                                 <i class="ki-duotone ki-user fs-2">

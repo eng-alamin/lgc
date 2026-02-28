@@ -60,7 +60,7 @@
                                     <div>{{$item->client?->phone ?? 'N/A'}}</div>
                                 </div>
                             </td>
-                            <td>{{$item->number}}</td>
+                            <td><a href="{{route('agent.commissions')}}" target="_blank">{{ $item->number ?? 'N/L' }}</a></td>
                             <td>{{$item->serial}}</td>
                             <td>{{ ucfirst($item->type) }}</td>
                             <td>

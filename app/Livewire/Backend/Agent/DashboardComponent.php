@@ -9,20 +9,22 @@ use App\Models\CallLog;
 use App\Models\FollowUp;
 use App\Models\Form;
 use App\Models\Invoice;
+use App\Models\Commission;
 use Carbon\Carbon;
 
 class DashboardComponent extends Component
 {
     public $activeOnline;
+    public $total_earning_pending;
+    public $total_earning_approved;
+    public $total_earning_paid;
     public $applicationsToday;
     public $clientsToday;
     public $followupsToday;
 
     public $total_client = 0;
     public $total_application = 0;
-    public $total_appointment = 0;
-    public $total_followup = 0;
-    public $total_calllogs = 0;
+    public $total_earning = 0;
 
     protected $listeners = [
         'refreshDashboard' => '$refresh',
@@ -59,22 +61,23 @@ class DashboardComponent extends Component
         $this->applicationsToday = Form::where('agent_id', auth()->id())->whereDate('created_at', $today)->count();
         $this->followupsToday = FollowUp::where('assigned_to', auth()->id())->whereDate('created_at', $today)->count();
 
+        $this->total_earning_pending = Commission::where('agent_id', auth()->id())->where('status', 'pending')->sum('commission_amount');
+        $this->total_earning_approved = Commission::where('agent_id', auth()->id())->where('status', 'approved')->sum('commission_amount');
+        $this->total_earning_paid = Commission::where('agent_id', auth()->id())->where('status', 'paid')->sum('commission_amount');
+
         $start = now()->subDays(30);
         $end = now();
 
         $this->total_client = User::where('agent_id', auth()->id())->where('account_status', 1)->whereDate('created_at', '>=', $start)->whereDate('created_at', '<=', $end)->count();
         $this->total_application = Form::where('agent_id', auth()->id())->where('status', 'approved')->whereDate('created_at', '>=', $start)->whereDate('created_at', '<=', $end)->count();
-        // $this->total_appointment = Appointment::where('status', 'completed')->whereDate('created_at', '>=', $start)->whereDate('created_at', '<=', $end)->count();
-        // $this->total_calllogs = CallLog::where('status', 'contacted')->whereDate('created_at', '>=', $start)->whereDate('created_at', '<=', $end)->count();
+        $this->total_earning = Commission::where('agent_id', auth()->id())->where('status', 'paid')->whereDate('created_at', '>=', $start)->whereDate('created_at', '<=', $end)->sum('commission_amount');
     }
 
     public function getEventByDate($start=null, $end=null)
     {
         $this->total_client = User::where('agent_id', auth()->id())->where('account_status', 1)->whereDate('created_at', '>=', $start)->whereDate('created_at', '<=', $end)->count();
         $this->total_application = Form::where('agent_id', auth()->id())->where('status', 'approved')->whereDate('created_at', '>=', $start)->whereDate('created_at', '<=', $end)->count();
-        // $this->total_appointment = Appointment::where('status', 'completed')->whereDate('created_at', '>=', $start)->whereDate('created_at', '<=', $end)->count();
-        // $this->total_followup = FollowUp::where('status', 'done')->whereDate('created_at', '>=', $start)->whereDate('created_at', '<=', $end)->count();
-        // $this->total_calllogs = CallLog::where('status', 'contacted')->whereDate('created_at', '>=', $start)->whereDate('created_at', '<=', $end)->count();
+        $this->total_earning = Commission::where('agent_id', auth()->id())->where('status', 'paid')->whereDate('created_at', '>=', $start)->whereDate('created_at', '<=', $end)->sum('commission_amount');
 
     }
 

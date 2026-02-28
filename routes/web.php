@@ -218,6 +218,7 @@ Route::group(['middleware' => ['auth', 'receptionist']], function () {
 //Agent
 Route::group(['middleware' => ['auth', 'agent']], function () {
     Route::get('agent/dashboard', \App\Livewire\Backend\Agent\DashboardComponent::class)->name('agent.dashboard');
+    Route::get('agent/commissions', \App\Livewire\Backend\Agent\CommissionComponent::class)->name('agent.commissions');
     Route::get('agent/clients', \App\Livewire\Backend\Agent\ClientComponent::class)->name('agent.clients');
     Route::get('agent/application/list', App\Livewire\Backend\Agent\Application\ListComponent::class)->name('agent.application.list');
     Route::get('agent/application/add', App\Livewire\Backend\Agent\Application\AddComponent::class)->name('agent.application.add');

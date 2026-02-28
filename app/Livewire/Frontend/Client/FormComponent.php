@@ -9,6 +9,8 @@ use Carbon\Carbon;
 
 class FormComponent extends Component
 {
+    public $service;
+
     public $name;
     public $gender;
     public $date_of_birth;
@@ -60,20 +62,12 @@ class FormComponent extends Component
             $this->form_number = str_pad($code->serial + 1, 3, "0", STR_PAD_LEFT);
         }
 
-        $this->educations = [
-            [
-                'degree' => '',
-                'institution' => '',
-                'year' => '',
-                'grade' => '',
-            ]
-        ];
-
         $this->checkFormAvailability();
+        $this->serviceLoad();
     }
     public function checkFormAvailability()
     {
-        $data = Form::where('user_id', auth()->id())->latest()->first();
+        $data = Form::where('client_id', auth()->id())->latest()->first();
 
         if (!$data) {
             $this->showForm = true;
@@ -97,7 +91,7 @@ class FormComponent extends Component
     }
     private function fillOldData($data)
     {
-        $this->data = Form::where('user_id', auth()->id())->latest()->first();
+        $this->data = Form::where('client_id', auth()->id())->latest()->first();
 
         $this->form_id = $data->id;
 
@@ -172,6 +166,17 @@ class FormComponent extends Component
             'visa_refusal_condition_detail',
             'educations'
         ]);
+    }
+    public function serviceLoad()
+    {
+        $this->educations = [
+            [
+                'degree' => '',
+                'institution' => '',
+                'year' => '',
+                'grade' => '',
+            ]
+        ];
     }
     public function edit()
     {
@@ -292,8 +297,8 @@ class FormComponent extends Component
             $data = new Form();
             $data->serial  = $this->form_number;
             $data->number  = 'L3G6C' . $this->form_number;
-            $data->user_id = auth()->id();
-            $data->type = "Education";
+            $data->client_id = auth()->id();
+            $data->type = "education";
             $data->data = [
                 'name' => $this->name,
                 'gender' => $this->gender,
@@ -328,13 +333,13 @@ class FormComponent extends Component
                 'visa_refusal_condition_detail' => $this->visa_refusal_condition_detail,
                 'educations' => $this->educations,
             ];
-            $data->status = "Pending";
+            $data->status = "pending";
             $data->save();
 
             $history = new StatusHistory();
-            $history->module = 'Form';
+            $history->module = 'form';
             $history->module_id = $data->id;
-            $history->status = "Pending";
+            $history->status = "pending";
             $history->save();
 
             return redirect()->route('form')->with('success', 'Form request submitted successfully!');
