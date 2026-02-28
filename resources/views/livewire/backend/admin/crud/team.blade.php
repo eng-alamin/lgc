@@ -169,7 +169,7 @@
                                 </div>
                                 <div class="fv-row mb-7">
                                     <label class="required fs-6 fw-semibold mb-2">New Image</label> <br>
-                                    <input type="image" wire:model="newimage" name="newimage"/>
+                                    <input type="file" wire:model="newimage" name="newimage"/>
                                     @error('newimage') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="fv-row mb-7">
