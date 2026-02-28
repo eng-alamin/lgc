@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Backend\Ceo;
+namespace App\Livewire\Backend\CEO;
 
 use Livewire\Component;
 use App\Models\User;

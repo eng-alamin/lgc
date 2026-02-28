@@ -179,7 +179,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
 });
 
 //CEO
-Route::get('ceo/dashboard', \App\Livewire\Backend\Ceo\DashboardComponent::class)->name('ceo.dashboard');
+Route::get('ceo/dashboard', \App\Livewire\Backend\CEO\DashboardComponent::class)->name('ceo.dashboard');
 
 //Receptionist
 Route::group(['middleware' => ['auth', 'receptionist']], function () {
@@ -198,7 +198,7 @@ Route::group(['middleware' => ['auth', 'receptionist']], function () {
     Route::get('receptionist/calendars', \App\Livewire\Backend\Receptionist\CalendarComponent::class)->name('receptionist.calendars');
     Route::get('receptionist/contacts', \App\Livewire\Backend\Receptionist\ContactComponent::class)->name('receptionist.contacts');
     Route::get('receptionist/calllogs', \App\Livewire\Backend\Receptionist\CallLogComponent::class)->name('receptionist.calllogs');
-    Route::get('receptionist/followups', \App\Livewire\Backend\Receptionist\followUpComponent::class)->name('receptionist.followups');
+    Route::get('receptionist/followups', \App\Livewire\Backend\Receptionist\FollowUpComponent::class)->name('receptionist.followups');
     Route::get('receptionist/documents', \App\Livewire\Backend\Receptionist\DocumentComponent::class)->name('receptionist.documents');
     Route::get('receptionist/invoices', \App\Livewire\Backend\Receptionist\InvoiceComponent::class)->name('receptionist.invoices');
     Route::get('receptionist/invoices/print/{id}', function($id){
@@ -233,7 +233,7 @@ Route::group(['middleware' => ['auth', 'agent']], function () {
         $invoice = \App\Models\Invoice::with('form.client')->findOrFail($id);
         return view('livewire.backend.agent.invoice-print-component', compact('invoice'));
     })->name('agent.invoices.print');
-    Route::get('agent/followups', \App\Livewire\Backend\Agent\followUpComponent::class)->name('agent.followups');
+    Route::get('agent/followups', \App\Livewire\Backend\Agent\FollowUpComponent::class)->name('agent.followups');
     Route::get('agent/documents', \App\Livewire\Backend\Agent\DocumentComponent::class)->name('agent.documents');
 
     Route::get('agent/account/overview', App\Livewire\Backend\Agent\Account\Overview::class)->name('agent.account.overview');

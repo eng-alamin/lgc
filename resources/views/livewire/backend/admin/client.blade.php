@@ -27,7 +27,7 @@
             <table class="table align-middle table-row-dashed fs-6 gy-5" id="datatable">
                 <thead>
                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
-                        <th class="w-10px pe-2">#ID</th>
+                        <th class="w-10px pe-2">SL</th>
                         <th class="min-w-125px">Name</th>
                         <th class="min-w-125px">Address</th>
                         <th class="min-w-125px">City</th>
@@ -38,9 +38,9 @@
                     </tr>
                 </thead>
                 <tbody class="fw-semibold text-gray-600">
-                    @forelse ($data as $item)
+                    @forelse ($data as $index => $item)
                     <tr>
-                        <td>#{{$item->id}}</td>
+                        <td>{{ $index + 1 }}</td>
                         <td class="d-flex align-items-center border-0">
                             <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
                                 <a href="#">
@@ -69,14 +69,12 @@
                                 <div>{{$item->phone}}</div>
                             </div>
                         </td>
-
-                        @php $data_json = json_decode($item->data) @endphp
-                        <td>
-                            @if(isset($data_json->address)) {{$data_json->address}}, @endif
+                         <td>
+                           {{$item->data['address'] ?? 'N/L'}},
                         </td>
                         <td>
-                            @if(isset($data_json->city)) {{$data_json->city}} - @endif
-                            @if(isset($data_json->postal)) {{$data_json->postal}} @endif
+                            {{$item->data['city'] ?? 'N/L'}} -
+                            {{$item->data['postal'] ?? 'N/L'}}
                         </td>
                         <td><i class="fa fa-check-circle {{$item->email_verified_at ? 'text-success' : 'text-danger'}}"></i></td>
                         <td>@if($item->last_seen) {{ \Carbon\Carbon::parse($item->last_seen)->diffForHumans() }} @else N/L @endif</td>
