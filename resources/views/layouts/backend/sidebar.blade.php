@@ -106,6 +106,18 @@
                             <span class="menu-title">Clients</span>
                         </a>
                     </div>
+
+                    <div class="menu-item">
+                        <a class="menu-link {{ str_contains(request()->url(), 'admin/agents') == true ? 'active' : '' }}" href="{{route('admin.agents')}}">
+                            <span class="menu-icon">
+                                <i class="ki-duotone ki-user fs-2">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                </i>
+                            </span>
+                            <span class="menu-title">Agents</span>
+                        </a>
+                    </div>
                     
                     <div class="menu-item">
                         <a class="menu-link {{ str_contains(request()->url(), 'admin/employees') == true ? 'active' : '' }}" href="{{route('admin.employees')}}">

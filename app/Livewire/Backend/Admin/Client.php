@@ -68,11 +68,11 @@ class Client extends Component
         ]);
 
         try{
-            $json_data = json_encode([
+            $json_data = [
                 'address' =>  $this->address,
                 'city' =>  $this->city,
                 'postal' =>  $this->postal,
-            ]);
+            ];
             $data = new User();
             $data->name = $this->name;
             $data->email = $this->email;
@@ -120,11 +120,11 @@ class Client extends Component
         try{
             $data = User::find($this->client_id);
 
-            $json_data = json_encode([
+            $json_data = [
                 'address' =>  $this->address,
                 'city' =>  $this->city,
                 'postal' =>  $this->postal,
-            ]);
+            ];
 
             $data->name = $this->name;
             $data->email = $this->email;

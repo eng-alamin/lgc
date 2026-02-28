@@ -149,6 +149,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin/contacts', App\Livewire\Backend\Admin\Contact::class)->name('admin.contacts');
     Route::get('admin/subscribers', App\Livewire\Backend\Admin\Subscriber::class)->name('admin.subscribers');
     Route::get('admin/clients', App\Livewire\Backend\Admin\Client::class)->name('admin.clients');
+    Route::get('admin/agents', App\Livewire\Backend\Admin\Agent::class)->name('admin.agents');
     Route::get('admin/employees', App\Livewire\Backend\Admin\Employee::class)->name('admin.employees');
     Route::get('admin/activities', App\Livewire\Backend\Admin\Activity::class)->name('admin.activities');
     Route::get('admin/commissions', App\Livewire\Backend\Admin\CommissionComponent::class)->name('admin.commissions');
