@@ -150,10 +150,12 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin/subscribers', App\Livewire\Backend\Admin\Subscriber::class)->name('admin.subscribers');
     Route::get('admin/clients', App\Livewire\Backend\Admin\Client::class)->name('admin.clients');
     Route::get('admin/agents', App\Livewire\Backend\Admin\Agent::class)->name('admin.agents');
-    Route::get('admin/employees', App\Livewire\Backend\Admin\Employee::class)->name('admin.employees');
     Route::get('admin/activities', App\Livewire\Backend\Admin\Activity::class)->name('admin.activities');
     Route::get('admin/commissions', App\Livewire\Backend\Admin\CommissionComponent::class)->name('admin.commissions');
     Route::get('admin/commission/rules', App\Livewire\Backend\Admin\CommissionRuleComponent::class)->name('admin.commission.rules');
+
+    Route::get('admin/employees', App\Livewire\Backend\Admin\Employee::class)->name('admin.employees');
+    // Route::get('admin/hr/employees', App\Livewire\Backend\HR\Admin\Employee\IndexComponent::class)->name('admin.hr.employees');
 
     // Setting
     Route::get('admin/setting/app', App\Livewire\Backend\Admin\Setting\App::class)->name('admin.setting.app');

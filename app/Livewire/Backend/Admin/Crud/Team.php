@@ -37,7 +37,7 @@ class Team extends Component
     public function render()
     {    $teams = TeamModel::latest()->get();
 
-        return view('livewire.backend.admin.crud.team', [
+        return view('livewire.backend.admin.crud.teams', [
             'teams' => $teams,
         ])
         ->layout('layouts.backend.app', [
@@ -96,7 +96,7 @@ class Team extends Component
             $store->social = array_filter($this->social);
             $store->save();
 
-            return redirect()->route('admin.crud.team')->with('success', 'Data is successfully saved');
+            return redirect()->route('admin.crud.teams')->with('success', 'Data is successfully saved');
         }catch(\Exception $e){
             return redirect()->back()->with('error', 'Data store failed: ' . $e->getMessage());
         }
@@ -155,7 +155,7 @@ class Team extends Component
             $update->social = array_filter($this->social);
             $update->save();
 
-            return redirect()->route('admin.crud.team')->with('success', 'Data successfully updated');
+            return redirect()->route('admin.crud.teams')->with('success', 'Data successfully updated');
 
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Update failed: ' . $e->getMessage());
@@ -187,7 +187,7 @@ class Team extends Component
 
             $data->delete();
 
-            return redirect()->route('admin.crud.team')->with('success', 'Data successfully deleted');
+            return redirect()->route('admin.crud.teams')->with('success', 'Data successfully deleted');
 
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Data deletion failed: ' . $e->getMessage());
@@ -232,7 +232,7 @@ class Team extends Component
             $this->selectedItems = [];
             $this->selectAll = false;
 
-            return redirect()->route('admin.crud.team')->with('success', 'Selected data successfully deleted');
+            return redirect()->route('admin.crud.teams')->with('success', 'Selected data successfully deleted');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Data deletion failed: ' . $e->getMessage());
         }

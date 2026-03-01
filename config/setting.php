@@ -2,7 +2,7 @@
 
 return [
     'name' => "Let's Go China",
-    'detail' => 'Here you can use rows and columns to organize your footer content. Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
+    'detail' => 'China only consultancy for students, medical & business services. Your Trusted Gateway to China.',
     'email' => 'contact@letsgochinaofficial.com',
     'phone' => '01795041057',
     'fax' => '01795041057',
