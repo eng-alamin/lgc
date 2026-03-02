@@ -154,8 +154,12 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin/commissions', App\Livewire\Backend\Admin\CommissionComponent::class)->name('admin.commissions');
     Route::get('admin/commission/rules', App\Livewire\Backend\Admin\CommissionRuleComponent::class)->name('admin.commission.rules');
 
-    Route::get('admin/employees', App\Livewire\Backend\Admin\Employee::class)->name('admin.employees');
-    // Route::get('admin/hr/employees', App\Livewire\Backend\HR\Admin\Employee\IndexComponent::class)->name('admin.hr.employees');
+    Route::get('admin/hr/employees', App\Livewire\Backend\Admin\Hr\Employee\IndexComponent::class)->name('admin.hr.employees');
+    Route::get('admin/hr/attendances', App\Livewire\Backend\Admin\Hr\AttendanceComponent::class)->name('admin.hr.attendances');
+    Route::get('admin/hr/payrolls', App\Livewire\Backend\Admin\Hr\PayrollComponent::class)->name('admin.hr.payrolls');
+    Route::get('admin/hr/leaves', App\Livewire\Backend\Admin\Hr\LeaveComponent::class)->name('admin.hr.leaves');
+    Route::get('admin/hr/leavetypes', App\Livewire\Backend\Admin\Hr\LeaveTypeComponent::class)->name('admin.hr.leavetypes');
+    Route::get('admin/hr/departments', App\Livewire\Backend\Admin\Hr\DepartmentComponent::class)->name('admin.hr.departments');
 
     // Setting
     Route::get('admin/setting/app', App\Livewire\Backend\Admin\Setting\App::class)->name('admin.setting.app');
@@ -183,6 +187,22 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
 
 //CEO
 Route::get('ceo/dashboard', \App\Livewire\Backend\CEO\DashboardComponent::class)->name('ceo.dashboard');
+
+//Employee
+Route::group(['middleware' => ['auth', 'employee']], function () {
+    Route::get('employee/dashboard', App\Livewire\Backend\Employee\DashboardComponent::class)->name('employee.dashboard');
+    Route::get('employee/attendances', App\Livewire\Backend\Employee\AttendanceComponent::class)->name('employee.attendances');
+    Route::get('employee/payrolls', App\Livewire\Backend\Employee\PayrollComponent::class)->name('employee.payrolls');
+    Route::get('employee/leaves', App\Livewire\Backend\Employee\LeaveComponent::class)->name('employee.leaves');
+    
+    Route::get('employee/account/overview', App\Livewire\Backend\Employee\Account\Overview::class)->name('employee.account.overview');
+    Route::get('employee/account/setting', App\Livewire\Backend\Employee\Account\Setting::class)->name('employee.account.setting');
+    Route::patch('employee/account/setting/update/{id}', [App\Livewire\Backend\Employee\Account\Setting::class, 'updateSetting'])->name('employee.account.setting.update');
+    Route::put('employee/account/setting/email/update', [App\Livewire\Backend\Employee\Account\Setting::class, 'updateEmail'])->name('employee.account.setting.email.update');
+    Route::put('employee/account/setting/password/update', [App\Livewire\Backend\Employee\Account\Setting::class, 'updatePassword'])->name('employee.account.setting.password.update');
+    Route::post('employee/account/setting/deactivate', [App\Livewire\Backend\Employee\Account\Setting::class, 'deactivate'])->name('employee.account.setting.deactivate');
+    Route::get('employee/account/activity', App\Livewire\Backend\Employee\Account\Activity::class)->name('employee.account.activity');
+});
 
 //Receptionist
 Route::group(['middleware' => ['auth', 'receptionist']], function () {

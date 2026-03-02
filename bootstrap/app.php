@@ -17,6 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'status' => \App\Http\Middleware\StatusMiddleware::class,
             'agent' => \App\Http\Middleware\AgentMiddleware::class,
             'receptionist' => \App\Http\Middleware\ReceptionistMiddleware::class,
+            'employee' => \App\Http\Middleware\EmployeeMiddleware::class,
             'admin' => \App\Http\Middleware\AdminMiddleware::class,
         ]);
     })

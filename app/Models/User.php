@@ -59,6 +59,7 @@ class User extends Authenticatable implements MustVerifyEmail
             'client' => 'dashboard',
             'agent' => 'agent/dashboard',
             'receptionist' => 'receptionist/dashboard',
+            'employee' => 'employee/dashboard',
             'admin' => 'admin/dashboard',
             'coo' => 'coo/dashboard',
             'cfo' => 'cfo/dashboard',
@@ -78,6 +79,10 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->type === 'receptionist';
     }
+    public function isEmployee()
+    {
+        return $this->type === 'employee';
+    }
     public function isAdmin()
     {
         return in_array($this->type, ['admin', 'super_admin']);
@@ -86,5 +91,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function isSuperAdmin()
     {
         return $this->type === 'super_admin';
+    }
+
+    public function employee()
+    {
+        return $this->hasOne(Employee::class);
     }
 }

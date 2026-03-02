@@ -118,19 +118,6 @@
                             <span class="menu-title">Agents</span>
                         </a>
                     </div>
-                    
-                    <div class="menu-item">
-                        <a class="menu-link {{ str_contains(request()->url(), 'admin/employees') == true ? 'active' : '' }}" href="{{route('admin.employees')}}">
-                            <span class="menu-icon">
-                                <i class="ki-duotone ki-address-book fs-2">
-                                    <span class="path1"></span>
-                                    <span class="path2"></span>
-                                    <span class="path3"></span>
-                                </i>
-                            </span>
-                            <span class="menu-title">Employees</span>
-                        </a>
-                    </div>
 
                     <div class="menu-item">
                         <a class="menu-link {{ str_contains(request()->url(), 'admin/activities') == true ? 'active' : '' }}" href="{{route('admin.activities')}}">
@@ -166,6 +153,74 @@
                             </span>
                             <span class="menu-title">Commission Rules</span>
                         </a>
+                    </div>
+
+                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ str_contains(request()->url(), 'admin/hr/') == true ? 'here show' : '' }}">
+                        <span class="menu-link {{ str_contains(request()->url(), 'admin/hr/') == true ? 'active' : '' }}">
+                            <span class="menu-icon">
+                                <i class="ki-duotone ki-element-plus fs-2">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                    <span class="path3"></span>
+                                    <span class="path4"></span>
+                                    <span class="path5"></span>
+                                </i>
+                            </span>
+                            <span class="menu-title">Human Resource</span>
+                            <span class="menu-arrow"></span>
+                        </span>
+
+                        <div class="menu-sub menu-sub-accordion">
+                            <div class="menu-item">
+                                <a class="menu-link {{ Route::is('admin.hr.employees') == true ? 'active' : '' }}" href="{{ route('admin.hr.employees') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Employees</span>
+                                </a>
+                            </div>
+                            <div class="menu-item">
+                                <a class="menu-link {{ Route::is('admin.hr.attendances') == true ? 'active' : '' }}" href="{{ route('admin.hr.attendances') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Attendances</span>
+                                </a>
+                            </div>
+                            <div class="menu-item">
+                                <a class="menu-link {{ Route::is('admin.hr.leaves') == true ? 'active' : '' }}" href="{{ route('admin.hr.leaves') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Leaves</span>
+                                </a>
+                            </div>
+                            <div class="menu-item">
+                                <a class="menu-link {{ Route::is('admin.hr.payrolls') == true ? 'active' : '' }}" href="{{ route('admin.hr.payrolls') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Payrolls</span>
+                                </a>
+                            </div>
+                            <div class="menu-item">
+                                <a class="menu-link {{ Route::is('admin.hr.leavetypes') == true ? 'active' : '' }}" href="{{ route('admin.hr.leavetypes') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Leave Types</span>
+                                </a>
+                            </div>
+                            <div class="menu-item">
+                                <a class="menu-link {{ Route::is('admin.hr.departments') == true ? 'active' : '' }}" href="{{ route('admin.hr.departments') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Departments</span>
+                                </a>
+                            </div>
+                        </div>
+
                     </div>
 
                     <div class="menu-item pt-5">
@@ -488,7 +543,7 @@
                         </div>
                     </div>
 
-                     <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ str_contains(request()->url(), 'admin/account') == true ? 'here show' : '' }}">
+                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ str_contains(request()->url(), 'admin/account') == true ? 'here show' : '' }}">
                         <span class="menu-link {{ str_contains(request()->url(), 'admin/account') == true ? 'active' : '' }}">
                             <span class="menu-icon">
                                 <i class="ki-duotone ki-element-plus fs-2">
