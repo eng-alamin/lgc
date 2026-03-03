@@ -52,7 +52,7 @@
                                             @endif
                                         </div>
                                         <div class="wptb-item--meta">
-                                            <h5 class="wptb-item--title"><a href="team-details.html">{{$item->name}}</a></h5>
+                                            <h5 class="wptb-item--title"><a href="#">{{$item->name}}</a></h5>
                                             <p class="wptb-item--position">{{$item->position}}</p>
                                         </div>
                                     </div>

@@ -16,7 +16,7 @@ use App\Models\Testimonial as TestimonialModel;
 use App\Models\Logo as LogoModel;
 use App\Models\Blog as BlogModel;
 use App\Models\Appointment as AppointmentModel;
-
+use App\Models\Banner;
 
 class Home extends Component
 {
@@ -33,6 +33,7 @@ class Home extends Component
         $testimonials = TestimonialModel::latest()->take(4)->get();
         $logos = LogoModel::get();
         $blogs = BlogModel::latest()->take(4)->get();
+        $banners = Banner::get();
 
         return view('livewire.frontend.home',[
             'sliders' => $sliders,
@@ -46,6 +47,7 @@ class Home extends Component
             'logos' => $logos,
             'blogs' => $blogs,
             'sections' => $sections,
+            'banners' => $banners,
         ])
         ->layout('layouts.frontend.app', [
             'title' => "Home | Let's Go China"

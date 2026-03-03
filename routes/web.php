@@ -188,6 +188,72 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
 //CEO
 Route::get('ceo/dashboard', \App\Livewire\Backend\CEO\DashboardComponent::class)->name('ceo.dashboard');
 
+// Writer
+Route::group(['middleware' => ['auth', 'writer']], function () {
+    Route::get('writer/crud/sliders', \App\Livewire\Backend\Writer\Crud\Slider::class)->name('writer.crud.slider');
+    Route::get('writer/crud/features', \App\Livewire\Backend\Writer\Crud\Feature::class)->name('writer.crud.feature');
+    Route::get('writer/crud/essentials', \App\Livewire\Backend\Writer\Crud\Essential::class)->name('writer.crud.essential');
+    Route::get('writer/crud/provinces', \App\Livewire\Backend\Writer\Crud\Province::class)->name('writer.crud.province');
+    Route::get('writer/crud/chooses', \App\Livewire\Backend\Writer\Crud\Choose::class)->name('writer.crud.choose');
+    Route::get('writer/crud/faqs', \App\Livewire\Backend\Writer\Crud\Faq::class)->name('writer.crud.faq');
+    Route::get('writer/crud/testimonials', \App\Livewire\Backend\Writer\Crud\Testimonial::class)->name('writer.crud.testimonial');
+    Route::get('writer/crud/logos', \App\Livewire\Backend\Writer\Crud\Logo::class)->name('writer.crud.logo');
+    Route::get('writer/crud/blogs', \App\Livewire\Backend\Writer\Crud\Blog::class)->name('writer.crud.blog');
+    Route::get('writer/crud/workprocess', \App\Livewire\Backend\Writer\Crud\Workprocess::class)->name('writer.crud.workprocess');
+    Route::get('writer/crud/visa', \App\Livewire\Backend\Writer\Crud\Visa::class)->name('writer.crud.visa');
+    Route::get('writer/crud/casestudies', \App\Livewire\Backend\Writer\Crud\Casestudy::class)->name('writer.crud.casestudies');
+    Route::get('writer/crud/teams', \App\Livewire\Backend\Writer\Crud\Team::class)->name('writer.crud.teams');
+    Route::get('writer/crud/universities', \App\Livewire\Backend\Writer\Crud\University::class)->name('writer.crud.universities');
+    Route::get('writer/crud/courses', \App\Livewire\Backend\Writer\Crud\Course::class)->name('writer.crud.courses');
+
+    Route::get('writer/section/feature', \App\Livewire\Backend\Writer\Section\Feature::class)->name('writer.section.feature');
+    Route::patch('writer/section/feature/update/{id}', [App\Livewire\Backend\Writer\Section\Feature::class, 'sectionUpdate'])->name('writer.section.feature.update');
+    Route::get('writer/section/essential', \App\Livewire\Backend\Writer\Section\Essential::class)->name('writer.section.essential');
+    Route::patch('writer/section/essential/update/{id}', [App\Livewire\Backend\Writer\Section\Essential::class, 'sectionUpdate'])->name('writer.section.essential.update');
+    Route::get('writer/section/about', \App\Livewire\Backend\Writer\Section\About::class)->name('writer.section.about');
+    Route::patch('writer/section/about/update/{id}', [App\Livewire\Backend\Writer\Section\about::class, 'sectionUpdate'])->name('writer.section.about.update');
+    Route::get('writer/section/choose', \App\Livewire\Backend\Writer\Section\Choose::class)->name('writer.section.choose');
+    Route::patch('writer/section/choose/update/{id}', [App\Livewire\Backend\Writer\Section\Choose::class, 'sectionUpdate'])->name('writer.section.choose.update');
+    Route::get('writer/section/funfact', \App\Livewire\Backend\Writer\Section\Funfact::class)->name('writer.section.funfact');
+    Route::patch('writer/section/funfact/update/{id}', [App\Livewire\Backend\Writer\Section\Funfact::class, 'sectionUpdate'])->name('writer.section.funfact.update');
+    Route::get('writer/section/faq', \App\Livewire\Backend\Writer\Section\Faq::class)->name('writer.section.faq');
+    Route::patch('writer/section/faq/update/{id}', [App\Livewire\Backend\Writer\Section\Faq::class, 'sectionUpdate'])->name('writer.section.faq.update');
+    Route::get('writer/section/process', \App\Livewire\Backend\Writer\Section\Process::class)->name('writer.section.process');
+    Route::patch('writer/section/process/update/{id}', [App\Livewire\Backend\Writer\Section\Process::class, 'sectionUpdate'])->name('writer.section.process.update');
+    Route::get('writer/section/visa', \App\Livewire\Backend\Writer\Section\Visa::class)->name('writer.section.visa');
+    Route::patch('writer/section/visa/update/{id}', [App\Livewire\Backend\Writer\Section\Visa::class, 'sectionUpdate'])->name('writer.section.visa.update');
+    Route::get('writer/section/testimonial', \App\Livewire\Backend\Writer\Section\Testimonial::class)->name('writer.section.testimonial');
+    Route::patch('writer/section/testimonial/update/{id}', [App\Livewire\Backend\Writer\Section\Testimonial::class, 'sectionUpdate'])->name('writer.section.testimonial.update');
+    Route::get('writer/section/team', \App\Livewire\Backend\Writer\Section\Team::class)->name('writer.section.team');
+    Route::patch('writer/section/team/update/{id}', [App\Livewire\Backend\Writer\Section\Team::class, 'sectionUpdate'])->name('writer.section.team.update');
+    Route::get('writer/section/casestudies', \App\Livewire\Backend\Writer\Section\Casestudy::class)->name('writer.section.casestudies');
+    Route::patch('writer/section/casestudies/update/{id}', [App\Livewire\Backend\Writer\Section\Casestudy::class, 'sectionUpdate'])->name('writer.section.casestudies.update');
+    Route::get('writer/section/blog', \App\Livewire\Backend\Writer\Section\Blog::class)->name('writer.section.blog');
+    Route::patch('writer/section/blog/update/{id}', [App\Livewire\Backend\Writer\Section\Blog::class, 'sectionUpdate'])->name('writer.section.blog.update');
+    Route::get('writer/section/intro', \App\Livewire\Backend\Writer\Section\Intro::class)->name('writer.section.intro');
+    Route::patch('writer/section/intro/update/{id}', [App\Livewire\Backend\Writer\Section\Intro::class, 'sectionUpdate'])->name('writer.section.intro.update');
+    Route::get('writer/section/contact', \App\Livewire\Backend\Writer\Section\Contact::class)->name('writer.section.contact');
+    Route::patch('writer/section/contact/update/{id}', [App\Livewire\Backend\Writer\Section\Contact::class, 'sectionUpdate'])->name('writer.section.contact.update');
+    Route::get('writer/section/subscriber', \App\Livewire\Backend\Writer\Section\Subscriber::class)->name('writer.section.subscriber');
+    Route::patch('writer/section/subscriber/update/{id}', [App\Livewire\Backend\Writer\Section\Subscriber::class, 'sectionUpdate'])->name('writer.section.subscriber.update');
+    Route::get('writer/section/university', \App\Livewire\Backend\Writer\Section\University::class)->name('writer.section.university');
+    Route::patch('writer/section/university/update/{id}', [App\Livewire\Backend\Writer\Section\university::class, 'sectionUpdate'])->name('writer.section.university.update');
+    Route::get('writer/section/course', \App\Livewire\Backend\Writer\Section\Course::class)->name('writer.section.course');
+    Route::patch('writer/section/course/update/{id}', [App\Livewire\Backend\Writer\Section\Course::class, 'sectionUpdate'])->name('writer.section.course.update');
+    Route::get('writer/section/footer', \App\Livewire\Backend\Writer\Section\Footer::class)->name('writer.section.footer');
+    Route::patch('writer/section/footer/update/{id}', [App\Livewire\Backend\Writer\Section\Footer::class, 'sectionUpdate'])->name('writer.section.footer.update');
+
+    Route::get('writer/banners', App\Livewire\Backend\Writer\Banner::class)->name('writer.banners');
+
+    Route::get('writer/account/overview', App\Livewire\Backend\Writer\Account\Overview::class)->name('writer.account.overview');
+    Route::get('writer/account/setting', App\Livewire\Backend\Writer\Account\Setting::class)->name('writer.account.setting');
+    Route::patch('writer/account/setting/update/{id}', [App\Livewire\Backend\Writer\Account\Setting::class, 'updateSetting'])->name('writer.account.setting.update');
+    Route::put('writer/account/setting/email/update', [App\Livewire\Backend\Writer\Account\Setting::class, 'updateEmail'])->name('writer.account.setting.email.update');
+    Route::put('writer/account/setting/password/update', [App\Livewire\Backend\Writer\Account\Setting::class, 'updatePassword'])->name('writer.account.setting.password.update');
+    Route::post('writer/account/setting/deactivate', [App\Livewire\Backend\Writer\Account\Setting::class, 'deactivate'])->name('writer.account.setting.deactivate');
+    Route::get('writer/account/activity', App\Livewire\Backend\Writer\Account\Activity::class)->name('writer.account.activity');
+});
+
 //Employee
 Route::group(['middleware' => ['auth', 'employee']], function () {
     Route::get('employee/dashboard', App\Livewire\Backend\Employee\DashboardComponent::class)->name('employee.dashboard');

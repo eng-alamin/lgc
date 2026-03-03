@@ -13,10 +13,10 @@
                                             <a href="{{ route('blog.detail', $item->id) }}" class="wptb-item-link"><img src="{{ asset($item->file) }}" alt="{{$item->title}}"></a>
                                         </div>
                                         <div class="wptb-item--holder">
-                                            <div class="wptb-item--meta">
+                                            {{-- <div class="wptb-item--meta">
                                                 <div class="wptb-item--date">{{ \Carbon\Carbon::parse($item->created_at)->format('F d, Y') }}</div>
                                                 <div class="wptb-item-comment"><a href="#comments">0</a></div>
-                                            </div>
+                                            </div> --}}
                                             
                                             <h5 class="wptb-item--title"><a href="{{ route('blog.detail', $item->id) }}">{{$item->title}}</a></h5>
                                             <p class="wptb-item--description">  {{$item->short_description}} </p>

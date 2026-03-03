@@ -69,28 +69,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="wptb-client-review2 wow fadeInLeft">
-                                    <div class="wptb-item--inner">
-                                        <div class="wptb-item--icon"><i class="bi bi-airplane"></i></div>
-                                        <h5 class="wptb-item--title">Served Client</h5>
-                                        <div class="wptb-piechart wow fadeInLeft" data-wow-delay="600ms">
-                                            <div class="wrap-meta">
-                                                <div class="wrap-meta--inner">
-                                                    <span class="wptb--rating-label">Successful</span> <span class="wptb--counter-number"> <span class="wptb--counter-value odometer" data-count="127865"></span> </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="wptb-item--images">
-                                            <div class="wptb-item--img"><img src="{{ asset('assets/frontend/assets/img/visa/student.avif') }}" alt="Student Visa"></div>
-                                            <div class="wptb-item--img"><img src="{{ asset('assets/frontend/assets/img/visa/tourist.jpg') }}" alt="Tourist Visa"></div>
-                                            <div class="wptb-item--img"><img src="{{ asset('assets/frontend/assets/img/visa/student.avif') }}" alt="Student Visa"></div>
-                                            <div class="wptb-item--img"><img src="{{ asset('assets/frontend/assets/img/visa/tourist.jpg') }}" alt="Tourist"></div>
-                                            <a class="wptb-item--img wptb-item--link" href="#"><i class="bi bi-plus"></i></a> <span class="wptb-item--text">4 Visa</span>
-                                        </div>
-                                        <span class="wptb-item--desc">We are serving for 20 Years</span>
-                                    </div>
-                                </div>
                             </div>
 
                         </div>
@@ -112,45 +90,9 @@
                             </div>
                         </div>
 
-                        <div>
+                        <div class="wptb-item--description">
                             {!! $about->description !!}
                         </div>
-
-                        {{-- <p class="wptb-item--description pb-2">Let's Go China Visa Consultancy was created to provide uniquely des igned premium services in the world of education and migration. As people are dreaming more.</p>
-                        <div class="row">
-                            <div class="col-md-6 col-12">
-                                <div class="wptb-icon-box1 wow fadeInLeft">
-                                    <div class="wptb-item--inner flex-start">
-                                        <div class="wptb-item--icon"><i class="bi bi-globe"></i></div>
-                                        <div class="wptb-item--holder">
-                                            <h5 class="wptb-item--title">Checking all Visa Eligibilities</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6 col-12">
-                                <div class="wptb-icon-box1 wow fadeInLeft">
-                                    <div class="wptb-item--inner flex-start">
-                                        <div class="wptb-item--icon"><i class="bi bi-file-earmark-text-fill"></i></div>
-                                        <div class="wptb-item--holder">
-                                            <h5 class="wptb-item--title">Approved Exam Facilitation</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="wptb-list1">
-                            <div class="wptb--item wow skewIn" data-wow-delay="700ms">
-                                <div class="wptb-item--icon"><i class="bi bi-check"></i></div>
-                                <div class="wptb-item--text">Fastest Visa form processing with expert immigration agents</div>
-                            </div>
-                            <div class="wptb--item wow skewIn" data-wow-delay="700ms">
-                                <div class="wptb-item--icon"><i class="bi bi-check"></i></div>
-                                <div class="wptb-item--text">Affiliation with Educational Institutions from over the world</div>
-                            </div>
-                        </div> --}}
 
                         <div class="wptb-item--button">
                             <a href="{{$about->link}}" class="btn">

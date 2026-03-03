@@ -59,6 +59,7 @@ class User extends Authenticatable implements MustVerifyEmail
             'client' => 'dashboard',
             'agent' => 'agent/dashboard',
             'receptionist' => 'receptionist/dashboard',
+            'writer' => 'writer/account/overview',
             'employee' => 'employee/dashboard',
             'admin' => 'admin/dashboard',
             'coo' => 'coo/dashboard',
@@ -74,6 +75,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function isAgent()
     {
         return $this->type === 'agent';
+    }
+    public function isWriter()
+    {
+        return $this->type === 'writer';
     }
     public function isReceptionist()
     {

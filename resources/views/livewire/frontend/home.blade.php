@@ -176,10 +176,11 @@
             <div class="row">
                 <div class="col-md-6">
                     <!-- Single Image -->
+                    @php $banner = $banners->where('type', 'about')->first(); @endphp
                     <div class="wptb-image-single wow skewIn">
                         <div class="wptb-item--inner">
                             <div class="wptb-item--image">
-                                <img src="{{ asset('assets/frontend/assets/img/1.jpg') }}" alt="img" class="image-main">
+                                <img src="{{ asset($banner->file) }}" alt="{{$banner->title}}" class="image-main">
 
                                 <div class="wptb-item-layer">
                                     <div class="wptb-icon-box1 wow fadeInLeft">
@@ -190,37 +191,15 @@
                                                 </svg>
                                             </div>
                                             <div class="wptb-item--holder">
-                                                <h5 class="wptb-item--title">Call For Consultation</h5>
+                                                <h5 class="wptb-item--title">{{$banner->title}}</h5>
                                                 <p class="wptb-item--description">
-                                                    <a href="tel:{{config('setting.phone')}}">{{config('setting.phone')}}</a>
+                                                    <a href="tel:{{$banner->number}}">{{$banner->number}}</a>
                                                 </p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="wptb-client-review2 wow fadeInLeft">
-                                    <div class="wptb-item--inner">
-                                        <div class="wptb-item--icon"><i class="bi bi-airplane"></i></div>
-                                        <h5 class="wptb-item--title">Served Client</h5>
-                                        <div class="wptb-piechart wow fadeInLeft" data-wow-delay="600ms">
-                                            <div class="wrap-meta">
-                                                <div class="wrap-meta--inner">
-                                                    <span class="wptb--rating-label">Successful</span> <span class="wptb--counter-number"> <span class="wptb--counter-value odometer" data-count="127865"></span> </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="wptb-item--images">
-                                            <div class="wptb-item--img"><img src="{{ asset('assets/frontend/assets/img/visa/student.avif') }}" alt="Student Visa"></div>
-                                            <div class="wptb-item--img"><img src="{{ asset('assets/frontend/assets/img/visa/tourist.jpg') }}" alt="Tourist Visa"></div>
-                                            <div class="wptb-item--img"><img src="{{ asset('assets/frontend/assets/img/visa/student.avif') }}" alt="Student Visa"></div>
-                                            <div class="wptb-item--img"><img src="{{ asset('assets/frontend/assets/img/visa/tourist.jpg') }}" alt="Tourist"></div>
-                                            <a class="wptb-item--img wptb-item--link" href="country-list-2.html"><i class="bi bi-plus"></i></a> <span class="wptb-item--text">4 Visa</span>
-                                        </div>
-                                        <span class="wptb-item--desc">We are serving for 20 Years</span>
-                                    </div>
-                                </div>
-                            </div>
+                            </div>  
 
                         </div>
                     </div>
@@ -238,45 +217,10 @@
                                     {{$about->name}}
                                 </h6>
                                 <h1 class="wptb-item--title has-line"> <span>{!! $about->title !!}</span></h1>
-                                <p class="wptb-item--description">{!! $about->description !!}</p>
                             </div>
                         </div>
-
-                        <div class="row">
-                            <div class="col-md-6 col-12">
-                                <div class="wptb-icon-box1 wow fadeInLeft">
-                                    <div class="wptb-item--inner flex-start">
-                                        <div class="wptb-item--icon"><i class="bi bi-globe"></i></div>
-                                        <div class="wptb-item--holder">
-                                            <h5 class="wptb-item--title">Checking all Visa
-                                                Eligibilities</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6 col-12">
-                                <div class="wptb-icon-box1 wow fadeInLeft">
-                                    <div class="wptb-item--inner flex-start">
-                                        <div class="wptb-item--icon"><i class="bi bi-file-earmark-text-fill"></i></div>
-                                        <div class="wptb-item--holder">
-                                            <h5 class="wptb-item--title">Approved Exam
-                                                Facilitation</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="wptb-list1">
-                            <div class="wptb--item wow skewIn" data-wow-delay="700ms">
-                                <div class="wptb-item--icon"><i class="bi bi-check"></i></div>
-                                <div class="wptb-item--text">Fastest Visa form processing with expert immigration agents</div>
-                            </div>
-                            <div class="wptb--item wow skewIn" data-wow-delay="700ms">
-                                <div class="wptb-item--icon"><i class="bi bi-check"></i></div>
-                                <div class="wptb-item--text">Affiliation with Educational Institutions from over the world</div>
-                            </div>
+                        <div class="wptb-item--description">
+                            {!! $about->description !!}
                         </div>
 
                         <div class="wptb-item--button">
