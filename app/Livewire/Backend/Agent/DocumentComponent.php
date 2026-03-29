@@ -3,13 +3,9 @@
 namespace App\Livewire\Backend\Agent;
 
 use Livewire\Component;
+use App\Models\Client;
 use App\Models\Document;
-use App\Models\User;
-
-use Illuminate\Support\Facades\Storage;
 use Livewire\WithFileUploads;
-use Carbon\Carbon;
-use File;
 
 class DocumentComponent extends Component
 {
@@ -17,21 +13,16 @@ class DocumentComponent extends Component
 
     public $file;
     public $newfile;
+
     public $client_id;
-    public $type;
-
-    public $document_id;
-    public $delete_id;
-
-    public $selectedItems = [];
-    public $selectAll = false;
-
-    protected $listeners = ['deleteConfirmed' => 'delete'];
+    public $document_type;
+    public $document_name;
+    public $notes;
 
     public function render()
     {    
-       $documents = Document::where('agent_id', auth()->id())->latest()->get();
-       $clients = User::where('type', 'client')->where('agent_id', auth()->id())->latest()->get();
+        $documents = Document::where('form_id', auth()->user()->agent->form->id)->latest()->get();
+        $clients = Client::where('agent_id', auth()->user()->agent->id)->latest()->get();
 
         return view('livewire.backend.agent.document-component', [
             'documents' => $documents,
@@ -42,96 +33,41 @@ class DocumentComponent extends Component
         ]);
     }
 
-    private function resetInputFields()
+    public function canChangeTo($currentStatus, $newStatus)
     {
-        $this->file = '';
-        $this->client_id = '';
-        $this->type = '';
-    }
+        $flow = config('status_flow.document');
 
-    public function close()
-    {
-        $this->resetInputFields();
-    }
-    public function updated($name)
-    {
-        $this->validateOnly($name, [
-            'file' => 'required',
-            'client_id' => 'required',
-            'type' => 'required',
-        ]);
-    }
-
-    public function store()
-    {
-        $this->validate([
-            'file' => 'required',
-            'client_id' => 'required',
-            'type' => 'required',
-        ]);
-        try{
-            $store = new Document();
-            if($this->file) {
-                $fileName = Carbon::now()->timestamp . '.' . $this->file->getClientOriginalExtension();
-                $path = $this->file->storeAs('documents', $fileName, 'public');
-                $fileData = '/storage/'.$path;
-                $store->file = $fileData;
-            }
-            $store->agent_id = auth()->id();
-            $store->client_id = $this->client_id;
-            $store->name = $this->type;
-            $store->save();
-
-            return redirect()->route('agent.documents')->with('success', 'Data is successfully saved');
-        }catch(\Exception $e){
-            return redirect()->back()->with('error', 'Data store failed: ' . $e->getMessage());
+        if (!isset($flow[$currentStatus])) {
+            return false;
         }
+
+        return in_array($newStatus, $flow[$currentStatus]);
     }
 
-    public function edit($id)
+    public function statusClick($id, $newStatus)
     {
-        $edit = Document::findOrFail($id);
-        $this->document_id = $id;
-        $this->file = $edit->file;
-    }
+        $document = Document::findOrFail($id);
 
-    public function update()
-    {
-        try {
-            $update = Document::findOrFail($this->document_id);
-
-            if ($this->newfile) {
-                if ($update->file) {
-                    $oldFile = str_replace('/storage/', '', $update->file);
-
-                    if (Storage::disk('public')->exists($oldFile)) {
-                        Storage::disk('public')->delete($oldFile);
-                    }
-                }
-
-                $fileName = Carbon::now()->timestamp . '.' . $this->newfile->getClientOriginalExtension();
-                $path = $this->newfile->storeAs('documents', $fileName, 'public');
-                $update->file = '/storage/' . $path;
-            }
-
-            $update->status = 'uploaded';
-            $update->save();
-
-            return redirect()->route('agent.documents')->with('success', 'Data successfully updated');
-
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Update failed: ' . $e->getMessage());
+        // Prevent invalid transition
+        if (!$this->canChangeTo($document->status, $newStatus)) {
+            session()->flash('error', 'Invalid status transition!');
+            return;
         }
-    }
 
-    public function verify($id)
-    {
-        Document::find($id)->update([
-            'status' => 'verified',
-            'verified_by' => auth()->id()
+        // Already approved check
+        if ($document->status === 'verified') {
+            session()->flash('error', 'Already Verified');
+            return;
+        }
+
+        // Update Status
+        $document->update([
+            'status' => $newStatus,
+            'verified_by' => auth()->id(),
         ]);
-
-        return redirect()->route('agent.documents')->with('success', 'Data successfully verified');
+        
+        return redirect()->route('agent.documents')->with('success', 'Document is successfully status!');
     }
+
 }
 

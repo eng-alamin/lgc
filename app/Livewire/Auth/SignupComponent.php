@@ -3,11 +3,11 @@
 namespace App\Livewire\Auth;
 
 use Livewire\Component;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Client;
 
 class SignupComponent extends Component
 {
@@ -21,7 +21,7 @@ class SignupComponent extends Component
     public function render()
     {  
         return view('livewire.auth.signup-component')
-        ->layout('layouts.auth.app', [
+        ->layout('layouts.frontend.app', [
             'title' => "Sign Up | Let's Go China",
         ]);
     }
@@ -61,6 +61,10 @@ class SignupComponent extends Component
                 'password' => Hash::make($this->password),
                 'toc'      => $this->toc,
                 'account_status' => 0, // pending
+            ]);
+
+            Client::create([
+               'user_id' => $user->id,
             ]);
 
             // Important: Event triggers email verification

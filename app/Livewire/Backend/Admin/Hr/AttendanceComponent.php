@@ -50,6 +50,16 @@ class AttendanceComponent extends Component
         ]);
     }
 
+        private function resetInputFields(){
+        $this->employee_id = '';
+        $this->delete_id = '';
+    }
+
+    public function close()
+    {
+        $this->resetInputFields();
+    }
+
     public function store()
     {
         $this->validate([

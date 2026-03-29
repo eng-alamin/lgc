@@ -17,7 +17,7 @@
             </div>
         @endif
         @if($showForm)
-            @if ($data)<div class="d-flex justify-content-end"><button type="button" class="btn btn-secondary btn-sm" wire:click="view"> View </button></div>@endif
+            @if ($this->data)<div class="d-flex justify-content-end"><button type="button" class="btn btn-secondary btn-sm" wire:click="view"> View </button></div>@endif
             
             <section class="wptb-make-appointment p-5">
                 <div class="container">
@@ -51,15 +51,15 @@
                                             <label for="" class="labell">Gender</label>
                                             <div class="wptb-radio-list d-flex align-items-center ms-5">
                                                 <div class="form-group">
-                                                    <input type="radio" wire:model="gender" value="Male">
-                                                    <label class="labelll" for="Male">Male</label>
+                                                    <input type="radio" wire:model="gender" value="male">
+                                                    <label class="labelll" for="male">Male</label>
                                                 </div>
                                                 <div class="form-group">
-                                                    <input type="radio" wire:model="gender" value="Femail">
+                                                    <input type="radio" wire:model="gender" value="femail">
                                                     <label class="labelll" for="femail">Femail</label>
                                                 </div>
                                                 <div class="form-group">
-                                                    <input type="radio" wire:model="gender" value="Other">
+                                                    <input type="radio" wire:model="gender" value="other">
                                                     <label class="labelll" for="other">Other</label>
                                                 </div>
                                             </div>
@@ -83,12 +83,12 @@
                                             <label for="" class="labell">Marital Status</label>
                                             <div class="wptb-radio-list d-flex align-items-center ms-5">
                                                 <div class="form-group">
-                                                    <input type="radio" wire:model="marital_status" value="Single">
+                                                    <input type="radio" wire:model="marital_status" value="single">
                                                     <label class="labelll" for="male">Single</label>
                                                 </div>
                                                 <div class="form-group">
-                                                    <input type="radio" wire:model="marital_status" value="Married">
-                                                    <label class="labelll" for="femail">Married</label>
+                                                    <input type="radio" wire:model="marital_status" value="married">
+                                                    <label class="labelll" for="married">Married</label>
                                                 </div>
                                             </div>
                                             @error('marital_status') <small class="text-danger">{{ $message }}</small> @enderror
@@ -176,17 +176,17 @@
                                             <label for="" class="labell">Medium of Instrution</label>
                                             <div class="wptb-radio-list d-flex align-items-center ms-5">
                                                 <div class="form-group">
-                                                    <input type="radio" wire:model="medium_of_instruction" value="English">
+                                                    <input type="checkbox" wire:model="medium_of_instruction" value="english">
                                                     <label class="labelll" for="english">English</label>
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <input type="radio" wire:model="medium_of_instruction" value="Bangla">
+                                                    <input type="checkbox" wire:model="medium_of_instruction" value="bangla">
                                                     <label class="labelll" for="bangla">Bangla</label>
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <input type="radio" wire:model="medium_of_instruction" value="Other">
+                                                    <input type="checkbox" wire:model="medium_of_instruction" value="other">
                                                     <label class="labelll" for="other">Other</label>
                                                 </div>
                                             </div>

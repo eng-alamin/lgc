@@ -10,14 +10,12 @@ class Appointment extends Model
 
     public function client()
     {
-        return $this->belongsTo(User::class, 'client_id');
+        return $this->belongsTo(Client::class);
     }
-
     public function agent()
     {
-        return $this->belongsTo(User::class, 'agent_id');
+        return $this->belongsTo(Agent::class);
     }
-
     public function creator()
     {
         return $this->belongsTo(User::class, 'created_by');

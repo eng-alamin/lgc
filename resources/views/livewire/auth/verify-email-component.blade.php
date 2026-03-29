@@ -20,7 +20,7 @@
                     <!--end::Title-->
                     <!--begin::Link-->
                     <div class="mb-11">
-                        <a href="{{route('dashboard')}}" class="btn btn-sm btn-primary">Dashboard</a>
+                        <a href="{{route('personalinfo')}}" class="btn btn-sm btn-primary">Dashboard</a>
                     </div>
                     <!--end::Link-->
                     <!--begin::Illustration-->

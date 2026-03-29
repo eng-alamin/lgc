@@ -19,15 +19,25 @@ class FollowUpComponent extends Component
         'deleteConfirmed' => 'deleteFollowup',
     ];
     
+    public $agent_id;
+    
+    public function mount()
+    {
+        $this->agent_id = auth()->user()->agent->id;
+    }
+
     public function render()
     {
         $this->dispatch('refreshSelect');
         
         return view('livewire.backend.agent.follow-up-component',[
-            'followUps'=>FollowUp::where('assigned_to', auth()->id())->latest()->get(),
-            'todayTasks'=>FollowUp::where('assigned_to', auth()->id())->today()->latest()->get(),
-            'overdueTasks'=>FollowUp::where('assigned_to', auth()->id())->overdue()->latest()->get(),
-            'forms'=>Form::where('agent_id', auth()->id())->latest()->get(),
+            // 'followUps'=>FollowUp::where('form_id', auth()->user()->agent->form->id)->latest()->get(),
+            // 'todayTasks'=>FollowUp::where('form_id', auth()->user()->agent->form->id)->today()->latest()->get(),
+            // 'overdueTasks'=>FollowUp::where('form_id', auth()->user()->agent->form->id)->overdue()->latest()->get(),
+            'followUps'=>FollowUp::where('assign_id', $this->agent_id)->latest()->get(),
+            'todayTasks'=>FollowUp::where('assign_id', $this->agent_id)->today()->latest()->get(),
+            'overdueTasks'=>FollowUp::where('assign_id', $this->agent_id)->overdue()->latest()->get(),
+            'forms'=>Form::where('agent_id', $this->agent_id)->latest()->get(),
         ])
         ->layout('layouts.agent.app', [
             'title' => "Follow Up | Let's Go China",
@@ -76,7 +86,7 @@ class FollowUpComponent extends Component
 
         FollowUp::create([
             'form_id'=>$this->form_id,
-            'assigned_to'=>auth()->id(),
+            'assign_id'=>$this->agent_id,
             'follow_up_date'=>$this->follow_up_date,
             'priority'=>$this->priority,
             'status'=>$this->status,

@@ -29,8 +29,8 @@
                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                         <th class="w-10px pe-2">SL</th>
                         <th class="min-w-125px">Name</th>
-                        <th class="min-w-125px">Address</th>
-                        <th class="min-w-125px">City</th>
+                        <th class="min-w-125px">ID Number</th>
+                        <th class="min-w-125px">Department </th>
                         <th class="min-w-125px">Verified</th>
                         <th class="min-w-125px">Last Active</th>
                         <th class="min-w-125px">Account Status</th>
@@ -69,13 +69,8 @@
                                     <div>{{$item->user->phone ?? 'N/L'}}</div>
                                 </div>
                             </td>
-                            <td>
-                                {{$item->user->data['address'] ?? 'N/L'}}
-                            </td>
-                            <td>
-                                {{$item->user->data['city'] ?? 'N/L'}} -
-                                {{$item->user->data['postal'] ?? 'N/L'}}
-                            </td>
+                            <td> {{$item->id_number}}</td>
+                            <td> {{$item->department?->name ?? 'N/L'}} <br> {{$item->designation}}</td>
                             <td><i class="fa fa-check-circle {{$item->user->email_verified_at ? 'text-success' : 'text-danger'}}"></i></td>
                             <td>@if($item->user->last_seen) {{ \Carbon\Carbon::parse($item->user->last_seen)->diffForHumans() }} @else N/L @endif</td>
                             <td>

@@ -19,14 +19,19 @@ Route::get('account-approved', function () {
 Route::get('error/error-401', function () { return view('error/error-401'); });
 Route::get('error/error-500', function () { return view('error/error-500'); });
 
-Route::get('signup', App\Livewire\Auth\SignupComponent::class)->name('signup');
+use App\Http\Controllers\SocialAuthController;
+Route::get('/auth/{provider}', [SocialAuthController::class, 'redirect']);
+Route::get('/auth/{provider}/callback', [SocialAuthController::class, 'callback']);
 
 Route::middleware('guest')->group(function () {
+    Route::get('signup', App\Livewire\Auth\SignupComponent::class)->name('signup');
     Route::get('login', App\Livewire\Auth\LoginComponent::class)->name('login');
+    Route::get('signin', App\Livewire\Auth\LoginComponent::class)->name('signin');
     Route::get('forget-password', App\Livewire\Auth\ForgotPasswordComponent::class)->name('forget.password');
     Route::post('forget-password', [App\Livewire\Auth\ForgotPasswordComponent::class, 'store'])->name('forget.password');
     Route::get('reset-password/{id}', App\Livewire\Auth\ResetPasswordComponent ::class)->name('reset.password');
     Route::post('reset-password', [App\Livewire\Auth\ResetPasswordComponent::class, 'store'])->name('reset.password');
+    Route::get('agent', App\Livewire\Auth\AgentComponent::class)->name('agent');
 });
 
 Route::middleware('auth')->group(function () {
@@ -39,10 +44,29 @@ Route::middleware('auth')->group(function () {
 
     Route::get('logout', [App\Livewire\Auth\LoginComponent::class, 'logout'])->name('logout');
 
-    Route::get('dashboard', \App\Livewire\Frontend\Client\DashboardComponent::class)->name('dashboard');
+    
+    Route::get('personalinfo', \App\Livewire\Frontend\Client\PersonalInformationComponent::class)->name('personalinfo');
+    Route::get('academicinfo', \App\Livewire\Frontend\Client\AcademicInformationComponent::class)->name('academicinfo');
+    Route::get('documentmanager', \App\Livewire\Frontend\Client\DocumentManagerComponent::class)->name('documentmanager');
+    Route::get('progress', \App\Livewire\Frontend\Client\ProgressComponent::class)->name('progress');
+    
     Route::get('form', \App\Livewire\Frontend\Client\FormComponent::class)->name('form');
+    Route::get('form/view/{id}', function($id){
+        $form = \App\Models\Form::with('client')->findOrFail($id);
+        return view('livewire.frontend.client.form-view-component', compact('form'));
+    })->name('form.view');
+
+    Route::get('invoices', \App\Livewire\Frontend\Client\InvoiceComponent::class)->name('invoices');
+    Route::get('invoices/view/{id}', function($id){
+        $invoice = \App\Models\Invoice::with('form.client')->findOrFail($id);
+        return view('livewire.frontend.client.invoice-view-component', compact('invoice'));
+    })->name('invoices.view');
+
+    Route::get('notices', \App\Livewire\Frontend\Client\NoticeComponent::class)->name('notices');
+    Route::get('notices/view/{id}', \App\Livewire\Frontend\Client\NoticeViewComponent::class)->name('notices.view');
+
+    //Remove
     Route::get('application/view/{id}', App\Livewire\Frontend\Client\ApplicationViewComponent::class)->name('application.view');
-    Route::get('profile', \App\Livewire\Frontend\Client\ProfileComponent::class)->name('profile');
     
 });
 
@@ -76,6 +100,7 @@ Route::get('term-condition', \App\Livewire\Frontend\Home::class)->name('front.te
 Route::get('privacy-policy', \App\Livewire\Frontend\Home::class)->name('front.privacypolicy');
 // End Frontend
 
+Route::get('attendance', \App\Livewire\Frontend\AttendanceComponent::class)->name('attendance');
 
 // Admin
 Route::group(['middleware' => ['auth', 'admin']], function () {
@@ -91,17 +116,12 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin/crud/testimonials', \App\Livewire\Backend\Admin\Crud\Testimonial::class)->name('admin.crud.testimonial');
     Route::get('admin/crud/logos', \App\Livewire\Backend\Admin\Crud\Logo::class)->name('admin.crud.logo');
     Route::get('admin/crud/blogs', \App\Livewire\Backend\Admin\Crud\Blog::class)->name('admin.crud.blog');
-
     Route::get('admin/crud/workprocess', \App\Livewire\Backend\Admin\Crud\Workprocess::class)->name('admin.crud.workprocess');
     Route::get('admin/crud/visa', \App\Livewire\Backend\Admin\Crud\Visa::class)->name('admin.crud.visa');
-
     Route::get('admin/crud/casestudies', \App\Livewire\Backend\Admin\Crud\Casestudy::class)->name('admin.crud.casestudies');
-
     Route::get('admin/crud/teams', \App\Livewire\Backend\Admin\Crud\Team::class)->name('admin.crud.teams');
     Route::get('admin/crud/universities', \App\Livewire\Backend\Admin\Crud\University::class)->name('admin.crud.universities');
     Route::get('admin/crud/courses', \App\Livewire\Backend\Admin\Crud\Course::class)->name('admin.crud.courses');
-
-
 
     Route::get('admin/section/feature', \App\Livewire\Backend\Admin\Section\Feature::class)->name('admin.section.feature');
     Route::patch('admin/section/feature/update/{id}', [App\Livewire\Backend\Admin\Section\Feature::class, 'sectionUpdate'])->name('admin.section.feature.update');
@@ -140,16 +160,34 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin/section/footer', \App\Livewire\Backend\Admin\Section\Footer::class)->name('admin.section.footer');
     Route::patch('admin/section/footer/update/{id}', [App\Livewire\Backend\Admin\Section\Footer::class, 'sectionUpdate'])->name('admin.section.footer.update');
 
+    Route::get('admin/banners', App\Livewire\Backend\Admin\Banner::class)->name('admin.banners');
+
     Route::get('admin/application/list', App\Livewire\Backend\Admin\Application\ListComponent::class)->name('admin.application.list');
     Route::get('admin/application/add', App\Livewire\Backend\Admin\Application\AddComponent::class)->name('admin.application.add');
     Route::get('admin/application/edit/{id}', App\Livewire\Backend\Admin\Application\EditComponent::class)->name('admin.application.edit');
     Route::get('admin/application/view/{id}', App\Livewire\Backend\Admin\Application\ViewComponent::class)->name('admin.application.view');
-    Route::get('admin/banners', App\Livewire\Backend\Admin\Banner::class)->name('admin.banners');
-    Route::get('admin/appointments', App\Livewire\Backend\Admin\Appointment::class)->name('admin.appointments');
+   
+    Route::get('admin/invoices', App\Livewire\Backend\Admin\InvoiceComponent::class)->name('admin.invoices');
+    Route::get('admin/invoices/print/{id}', function($id){
+        $invoice = \App\Models\Invoice::with('form.client')->findOrFail($id);
+        return view('livewire.backend.admin.invoice-print-component', compact('invoice'));
+    })->name('admin.invoices.print');
+    Route::get('admin/counselors', App\Livewire\Backend\Admin\CounselorComponent::class)->name('admin.counselors');
+    Route::get('admin/agents', App\Livewire\Backend\Admin\AgentComponent::class)->name('admin.agents');
+    Route::get('admin/client/list', App\Livewire\Backend\Admin\Client\ListComponent::class)->name('admin.client.list');
+    Route::get('admin/client/overview/{id}', App\Livewire\Backend\Admin\Client\OverviewComponent::class)->name('admin.client.overview');
+    
+    Route::get('admin/documents', App\Livewire\Backend\Admin\DocumentComponent::class)->name('admin.documents');
+    Route::get('admin/stages', App\Livewire\Backend\Admin\StageComponent::class)->name('admin.stages');
+    Route::get('admin/notices', App\Livewire\Backend\Admin\NoticeComponent::class)->name('admin.notices');
+
+    Route::get('admin/followups', \App\Livewire\Backend\Admin\FollowUpComponent::class)->name('admin.followups');
+
+    Route::get('admin/appointments', App\Livewire\Backend\Admin\AppointmentComponent::class)->name('admin.appointments');
+    Route::get('admin/calendars', App\Livewire\Backend\Admin\CalendarComponent::class)->name('admin.calendars');
     Route::get('admin/contacts', App\Livewire\Backend\Admin\Contact::class)->name('admin.contacts');
     Route::get('admin/subscribers', App\Livewire\Backend\Admin\Subscriber::class)->name('admin.subscribers');
-    Route::get('admin/clients', App\Livewire\Backend\Admin\Client::class)->name('admin.clients');
-    Route::get('admin/agents', App\Livewire\Backend\Admin\Agent::class)->name('admin.agents');
+
     Route::get('admin/activities', App\Livewire\Backend\Admin\Activity::class)->name('admin.activities');
     Route::get('admin/commissions', App\Livewire\Backend\Admin\CommissionComponent::class)->name('admin.commissions');
     Route::get('admin/commission/rules', App\Livewire\Backend\Admin\CommissionRuleComponent::class)->name('admin.commission.rules');
@@ -160,7 +198,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin/hr/leaves', App\Livewire\Backend\Admin\Hr\LeaveComponent::class)->name('admin.hr.leaves');
     Route::get('admin/hr/leavetypes', App\Livewire\Backend\Admin\Hr\LeaveTypeComponent::class)->name('admin.hr.leavetypes');
     Route::get('admin/hr/departments', App\Livewire\Backend\Admin\Hr\DepartmentComponent::class)->name('admin.hr.departments');
-
+    
     // Setting
     Route::get('admin/setting/app', App\Livewire\Backend\Admin\Setting\App::class)->name('admin.setting.app');
     Route::post('admin/setting/app', [App\Livewire\Backend\Admin\Setting\App::class, 'update'])->name('admin.setting.app.update');
@@ -273,13 +311,16 @@ Route::group(['middleware' => ['auth', 'employee']], function () {
 //Receptionist
 Route::group(['middleware' => ['auth', 'receptionist']], function () {
     Route::get('receptionist/dashboard', \App\Livewire\Backend\Receptionist\DashboardComponent::class)->name('receptionist.dashboard');
-    Route::get('receptionist/clients', \App\Livewire\Backend\Receptionist\ClientComponent::class)->name('receptionist.clients');
+
+    Route::get('receptionist/client/list', App\Livewire\Backend\Receptionist\Client\ListComponent::class)->name('receptionist.client.list');
+    Route::get('receptionist/client/overview/{id}', App\Livewire\Backend\Receptionist\Client\OverviewComponent::class)->name('receptionist.client.overview');
+
     Route::get('receptionist/agents', \App\Livewire\Backend\Receptionist\AgentComponent::class)->name('receptionist.agents');
     Route::get('receptionist/application/list', App\Livewire\Backend\Receptionist\Application\ListComponent::class)->name('receptionist.application.list');
     Route::get('receptionist/application/add', App\Livewire\Backend\Receptionist\Application\AddComponent::class)->name('receptionist.application.add');
     Route::get('receptionist/application/edit/{id}', App\Livewire\Backend\Receptionist\Application\EditComponent::class)->name('receptionist.application.edit');
     Route::get('receptionist/application/view/{id}', App\Livewire\Backend\Receptionist\Application\ViewComponent::class)->name('receptionist.application.view');
-        Route::get('receptionist/application/print/{id}', function($id){
+    Route::get('receptionist/application/print/{id}', function($id){
         $application = \App\Models\Form::with('invoice.client')->findOrFail($id);
         return view('livewire.backend.receptionist.application.print-component', compact('application'));
     })->name('receptionist.application.print');
@@ -294,7 +335,6 @@ Route::group(['middleware' => ['auth', 'receptionist']], function () {
         $invoice = \App\Models\Invoice::with('form.client')->findOrFail($id);
         return view('livewire.backend.receptionist.invoice-print-component', compact('invoice'));
     })->name('receptionist.invoices.print');
-
     Route::get('receptionist/account/overview', App\Livewire\Backend\Receptionist\Account\Overview::class)->name('receptionist.account.overview');
     Route::get('receptionist/account/setting', App\Livewire\Backend\Receptionist\Account\Setting::class)->name('receptionist.account.setting');
     Route::patch('receptionist/account/setting/update/{id}', [App\Livewire\Backend\Receptionist\Account\Setting::class, 'updateSetting'])->name('receptionist.account.setting.update');
@@ -309,11 +349,12 @@ Route::group(['middleware' => ['auth', 'agent']], function () {
     Route::get('agent/dashboard', \App\Livewire\Backend\Agent\DashboardComponent::class)->name('agent.dashboard');
     Route::get('agent/commissions', \App\Livewire\Backend\Agent\CommissionComponent::class)->name('agent.commissions');
     Route::get('agent/clients', \App\Livewire\Backend\Agent\ClientComponent::class)->name('agent.clients');
+    Route::get('agent/client/overview/{id}', App\Livewire\Backend\Agent\Client\OverviewComponent::class)->name('agent.client.overview');
     Route::get('agent/application/list', App\Livewire\Backend\Agent\Application\ListComponent::class)->name('agent.application.list');
     Route::get('agent/application/add', App\Livewire\Backend\Agent\Application\AddComponent::class)->name('agent.application.add');
     Route::get('agent/application/edit/{id}', App\Livewire\Backend\Agent\Application\EditComponent::class)->name('agent.application.edit');
     Route::get('agent/application/view/{id}', App\Livewire\Backend\Agent\Application\ViewComponent::class)->name('agent.application.view');
-        Route::get('agent/application/print/{id}', function($id){
+    Route::get('agent/application/print/{id}', function($id){
         $application = \App\Models\Form::with('invoice.client')->findOrFail($id);
         return view('livewire.backend.agent.application.print-component', compact('application'));
     })->name('agent.application.print');

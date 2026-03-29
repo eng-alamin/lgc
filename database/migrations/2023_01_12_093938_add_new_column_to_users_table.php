@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->string('phone')->nullable()->after('email');
             $table->string('avatar')->nullable()->after('password');
-            $table->enum('type', ['client', 'agent', 'receptionist', 'employee', 'admin', 'ceo', 'cfo', 'coo', 'super_admin'])->default('client')->after('avatar');
+            $table->enum('type', ['client', 'agent', 'receptionist', 'employee', 'counselor', 'admin', 'ceo', 'cfo', 'coo', 'super_admin'])->default('client')->after('avatar');
             $table->json('data')->nullable()->after('type');
             $table->boolean('toc')->default(false)->after('data');
             $table->string('last_login_ip')->nullable()->after('toc');

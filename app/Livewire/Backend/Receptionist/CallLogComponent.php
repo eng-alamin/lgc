@@ -9,7 +9,7 @@ use App\Models\User;
 class CallLogComponent extends Component
 {
     public $type = 'call';
-    public $name,$phone,$purpose,$remarks,$follow_up_date,$assigned_to;
+    public $name,$phone,$service,$remarks,$follow_up_date,$assigned_to;
     public $status = 'new';
 
     public $logs;
@@ -18,7 +18,7 @@ class CallLogComponent extends Component
         'type'=>'required',
         'name'=>'required',
         'phone'=>'nullable',
-        'purpose'=>'nullable',
+        'service'=>'nullable',
         'follow_up_date'=>'nullable|date',
         'assigned_to'=>'nullable',
         'remarks'=>'nullable'
@@ -43,7 +43,7 @@ class CallLogComponent extends Component
             'type'=>$this->type,
             'name'=>$this->name,
             'phone'=>$this->phone,
-            'purpose'=>$this->purpose,
+            'service'=>$this->service,
             'remarks'=>$this->remarks,
             'follow_up_date'=>$this->follow_up_date,
             'assigned_to'=>$this->assigned_to,
@@ -52,7 +52,7 @@ class CallLogComponent extends Component
 
         return redirect()->route('receptionist.calllogs')->with('success', 'Data Created Successfully.');
 
-        // $this->reset(['name','phone','purpose','remarks','follow_up_date','assigned_to']);
+        // $this->reset(['name','phone','service','remarks','follow_up_date','assigned_to']);
         // $this->loadLogs();
         // session()->flash('success','Entry Saved Successfully!');
     }

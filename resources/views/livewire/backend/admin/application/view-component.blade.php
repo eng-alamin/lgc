@@ -1,10 +1,8 @@
-@section('page-title') Application @endsection
+@section('page-title') Registration Form @endsection
 @section('breadcrumb')
     <li class="breadcrumb-item text-muted"><a href="#" class="text-muted text-hover-primary">Home</a></li>
     <li class="breadcrumb-item"><span class="bullet bg-gray-400 w-5px h-2px"></span></li>
-    <li class="breadcrumb-item text-muted">Application</li>
-    <li class="breadcrumb-item"><span class="bullet bg-gray-400 w-5px h-2px"></span></li>
-    <li class="breadcrumb-item text-muted">View</li>
+    <li class="breadcrumb-item text-muted"> View Form</li>
 @endsection
 
 @push('styles')
@@ -98,7 +96,7 @@
     <div class="card print-bg-wrapper">
         <div class="card-header border-0 pt-6 no-print">
             <div class="card-title">
-                <h2 class="d-flex align-items-center position-relative my-1"> {{ucfirst($data->type ?? '-') }} Application View </h2>
+                <h2 class="d-flex align-items-center position-relative my-1"> {{ucfirst($data->type ?? '-') }} Form View </h2>
             </div>
             <div class="card-toolbar">
                 <div class="d-flex justify-content-end">
@@ -142,7 +140,11 @@
             <section class="p-4">
                 <h4>English Language Proficiency</h4>
                 <div class="card w-100 shadow p-5">
-                    <p><strong>medium Of Instruction:</strong> {{$data->data['medium_of_instruction'] ?? '-' }}</p>
+                    <p><strong>medium Of Instruction:</strong> 
+                        @foreach ($data->data['medium_of_instruction'] as $item)
+                            {{ ucfirst($item) }}@if(!$loop->last), @endif
+                        @endforeach
+                    </p>
                     <p><strong>Duolingo:</strong> {{$data->data['duolingo'] ?? '-' }}</p>
                     <p><strong>Score:</strong> {{$data->data['score'] ?? '-' }}</p>
                 </div>

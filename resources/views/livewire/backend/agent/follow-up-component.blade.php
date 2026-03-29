@@ -25,7 +25,7 @@
                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                         <th class="w-10px pe-2">SL</th>
                         <th class="min-w-125px">Name</th>
-                        <th class="min-w-125px">Application Number</th>
+                        <th class="min-w-125px">Form Number</th>
                         <th class="min-w-125px">Date</th>
                         <th class="min-w-125px">Priority</th>
                         <th class="min-w-125px">Status</th>
@@ -38,20 +38,21 @@
                         <td class="d-flex align-items-center border-0">
                             <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
                                 <a href="#">
-                                    @if($item->form?->client?->avatar)
+                                    @if($item->form?->client?->user->avatar)
                                         <div class="symbol-label">
-                                            <img src="{{asset($item->form->client->avatar)}}" alt="{{$item->form->client->name}}" class="w-100" />
+                                            <img src="{{asset($item->form->client->avatar)}}" alt="{{$item->form?->client?->user->name}}" class="w-100" />
                                         </div>
-                                    @elseif($item->form?->client?->name)
-                                        <div class="symbol-label fs-3 bg-light-danger text-danger"> {{substr($item->form->client->name,0,1)}} </div>
+                                    @elseif($item->form?->client?->user->name)
+                                        <div class="symbol-label fs-3 bg-light-danger text-danger"> {{substr($item->form?->client?->user->name,0,1)}} </div>
                                     @else
                                         <div class="symbol-label fs-3 bg-light-secondary text-muted">N</div>
                                     @endif
                                 </a>
                             </div>
                             <div class="d-flex flex-column">
-                                <div>{{$item->form?->client?->email ?? 'N/L'}}</div>
-                                <div>{{$item->form?->client?->phone ?? 'N/L'}}</div>
+                                <div><a href="{{route('admin.client.overview', $item->id)}}" target="_blank" class="text-gray-800 text-hover-primary mb-1">{{$item->form?->client?->user->name}}</a></div>
+                                <div>{{$item->form?->client?->user->email ?? 'N/L'}}</div>
+                                <div>{{$item->form?->client?->user->phone ?? 'N/L'}}</div>
                             </div>
                         </td>
                         <td>{{$item->form->number}}</td>
@@ -87,7 +88,7 @@
                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                         <th class="w-10px pe-2">SL</th>
                         <th class="min-w-125px">Name</th>
-                        <th class="min-w-125px">Application Number</th>
+                        <th class="min-w-125px">Form Number</th>
                         <th class="min-w-125px">Date</th>
                         <th class="min-w-125px">Priority</th>
                         <th class="min-w-125px">Status</th>
@@ -100,20 +101,21 @@
                         <td class="d-flex align-items-center border-0">
                             <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
                                 <a href="#">
-                                    @if($item->form?->client?->avatar)
+                                    @if($item->form?->client?->user->avatar)
                                         <div class="symbol-label">
-                                            <img src="{{asset($item->form->client->avatar)}}" alt="{{$item->form->client->name}}" class="w-100" />
+                                            <img src="{{asset($item->form->client->avatar)}}" alt="{{$item->form?->client?->user->name}}" class="w-100" />
                                         </div>
-                                    @elseif($item->form?->client?->name)
-                                        <div class="symbol-label fs-3 bg-light-danger text-danger"> {{substr($item->form->client->name,0,1)}} </div>
+                                    @elseif($item->form?->client?->user->name)
+                                        <div class="symbol-label fs-3 bg-light-danger text-danger"> {{substr($item->form?->client?->user->name,0,1)}} </div>
                                     @else
                                         <div class="symbol-label fs-3 bg-light-secondary text-muted">N</div>
                                     @endif
                                 </a>
                             </div>
                             <div class="d-flex flex-column">
-                                <div>{{$item->form?->client?->email ?? 'N/L'}}</div>
-                                <div>{{$item->form?->client?->phone ?? 'N/L'}}</div>
+                                <div><a href="{{route('admin.client.overview', $item->id)}}" target="_blank" class="text-gray-800 text-hover-primary mb-1">{{$item->form?->client?->user->name}}</a></div>
+                                <div>{{$item->form?->client?->user->email ?? 'N/L'}}</div>
+                                <div>{{$item->form?->client?->user->phone ?? 'N/L'}}</div>
                             </div>
                         </td>
                         <td>{{$item->form->number}}</td>
@@ -158,7 +160,7 @@
                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                         <th class="w-10px pe-2">SL</th>
                         <th class="min-w-125px">Name</th>
-                        <th class="min-w-125px">Application Number</th>
+                        <th class="min-w-125px">Form Number</th>
                         <th class="min-w-125px">Date</th>
                         <th class="min-w-125px">Priority</th>
                         <th class="min-w-125px">Status</th>
@@ -172,20 +174,21 @@
                         <td class="d-flex align-items-center border-0">
                             <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
                                 <a href="#">
-                                    @if($item->form?->client?->avatar)
+                                    @if($item->form?->client?->user->avatar)
                                         <div class="symbol-label">
-                                            <img src="{{asset($item->form->client->avatar)}}" alt="{{$item->form->client->name}}" class="w-100" />
+                                            <img src="{{asset($item->form->client->avatar)}}" alt="{{$item->form?->client?->user->name}}" class="w-100" />
                                         </div>
-                                    @elseif($item->form?->client?->name)
-                                        <div class="symbol-label fs-3 bg-light-danger text-danger"> {{substr($item->form->client->name,0,1)}} </div>
+                                    @elseif($item->form?->client?->user->name)
+                                        <div class="symbol-label fs-3 bg-light-danger text-danger"> {{substr($item->form?->client?->user->name,0,1)}} </div>
                                     @else
                                         <div class="symbol-label fs-3 bg-light-secondary text-muted">N</div>
                                     @endif
                                 </a>
                             </div>
                             <div class="d-flex flex-column">
-                                <div>{{$item->form?->client?->email ?? 'N/L'}}</div>
-                                <div>{{$item->form?->client?->phone ?? 'N/L'}}</div>
+                                <div><a href="{{route('admin.client.overview', $item->id)}}" target="_blank" class="text-gray-800 text-hover-primary mb-1">{{$item->form?->client?->user->name}}</a></div>
+                                <div>{{$item->form?->client?->user->email ?? 'N/L'}}</div>
+                                <div>{{$item->form?->client?->user->phone ?? 'N/L'}}</div>
                             </div>
                         </td>
                         <td>{{$item->form->number}}</td>
@@ -234,8 +237,8 @@
                             <div class="fv-row mb-7">
                                 <div wire:ignore>
                                     <label class="required fs-6 fw-semibold mb-2">Select Apllication</label>
-                                     <select class="form-select form-select-solid form_id" data-control="select2" data-placeholder="Select Application" wire:model="form_id">
-                                        <option value="">Select Apllication...</option>
+                                     <select class="form-select form-select-solid form_id" data-control="select2" data-placeholder="Select Form" wire:model="form_id">
+                                        <option value="">Select Form...</option>
                                         @foreach ($forms as $item)
                                             <option value="{{$item->id}}">{{$item->number}}</option>
                                         @endforeach

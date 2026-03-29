@@ -17,6 +17,8 @@ return new class extends Migration
             $table->date('date');
             $table->time('check_in')->nullable();
             $table->time('check_out')->nullable();
+            $table->string('latitude')->nullable();
+            $table->string('longitude')->nullable();
             $table->decimal('work_hours',5,2)->default(0);
             $table->decimal('overtime_hours',5,2)->default(0);
             $table->enum('status',['present','absent','half_day','leave'])->default('present');

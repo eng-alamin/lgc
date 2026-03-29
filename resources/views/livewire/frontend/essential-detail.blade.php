@@ -25,10 +25,10 @@
                         @php $detail = $banners->where('type', 'detail')->first(); @endphp
                         <div class="wptb-banner2 mr-top-30"> 
                             <div class="wptb-banner-inner"> 
-                                <a class="wptb-item--link" href="tel:{{$detail->number}}"></a>
+                                <a class="wptb-item--link" href="tel:{{$detail?->number}}"></a>
                                 <div class="wptb-item--image">
                                     <div class="wptb-item-img-primary " data-wow-delay="ms"> 
-                                        <img src="{{asset($detail->file)}}" alt="{{$detail->title}}">
+                                        <img src="{{asset($detail?->file)}}" alt="{{$detail?->title}}">
                                     </div>
                                 </div>
                         
@@ -42,13 +42,13 @@
                                         </svg>
                                     </div>
                                 <div class="wptb-content">
-                                    <div class="wptb-item--title">{{$detail->title}}</div>
+                                    <div class="wptb-item--title">{{$detail?->title}}</div>
                                     <div class="wptb-item-contact-info">
                                             <div class="wptb-item--icon"> 
                                                 <i class="bi bi-telephone-fill"></i>
                                             </div> 
-                                            <span class="wptb-item--desc">{{$detail->description}}</span>
-                                            <h5 class="wptb-item--number">{{$detail->number}}</h5>
+                                            <span class="wptb-item--desc">{{$detail?->description}}</span>
+                                            <h5 class="wptb-item--number">{{$detail?->number}}</h5>
                                         </div>
                                     </div>
                                 </div>

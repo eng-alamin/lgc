@@ -12,6 +12,7 @@ class Invoice extends Model
 
     protected $casts = [
         'items' => 'array',
+        'method' => 'array',
     ];
 
     public function user()
@@ -21,5 +22,9 @@ class Invoice extends Model
     public function form()
     {
         return $this->belongsTo(Form::class);
+    }
+    public function invoice()
+    {
+        return $this->belongsTo(Invoice::class);
     }
 }

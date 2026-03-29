@@ -16,7 +16,7 @@ return new class extends Migration
             $table->enum('type',['call','visitor']);
             $table->string('name');
             $table->string('phone')->nullable();
-            $table->string('purpose')->nullable();
+            $table->string('service')->nullable();
             $table->text('remarks')->nullable();
             $table->date('follow_up_date')->nullable();
             $table->foreignId('assigned_to')->nullable()->constrained('users')->nullOnDelete();

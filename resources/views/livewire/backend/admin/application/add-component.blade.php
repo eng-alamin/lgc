@@ -1,10 +1,8 @@
-@section('page-title') Application @endsection
+@section('page-title') Registration Form @endsection
 @section('breadcrumb')
     <li class="breadcrumb-item text-muted"><a href="#" class="text-muted text-hover-primary">Home</a></li>
     <li class="breadcrumb-item"><span class="bullet bg-gray-400 w-5px h-2px"></span></li>
-    <li class="breadcrumb-item text-muted">Application</li>
-    <li class="breadcrumb-item"><span class="bullet bg-gray-400 w-5px h-2px"></span></li>
-    <li class="breadcrumb-item text-muted">Add New</li>
+    <li class="breadcrumb-item text-muted"> Add Form</li>
 @endsection
 
 <div id="kt_app_content_container" class="app-container container-fluid">
@@ -12,59 +10,34 @@
         <div class="card-body">
             <div class="col-md-8 offset-md-2">
                 <div class="fv-row mb-7">
-                    <div wire:ignore>
-                        <label class="fs-6 fw-semibold mb-2">Client</label>
-                        <select class="form-select form-select-solid client_id" data-control="select2" data-hide-search="true" data-placeholder="Select a client" wire:model="client_id" wire:change="getEventClient">
-                            <option value="">Select Client...</option>
-                            @foreach ($clients as $item)
-                                 <option value="{{$item->id}}">{{$item->name}} - {{$item->email}}</option>
-                            @endforeach
-                        </select>
-                    </div>
+                    <label class="fs-6 fw-semibold mb-2">Client</label>
+                    <select wire:ignore class="form-select p-0 w-100 border-0 selectpicker" data-live-search="true" title="Select a client" wire:model.live="client_id" wire:change="getEventClient">
+                        <option value="" class="text-muted d-none"></option>
+                        @foreach ($clients as $item)
+                                <option value="{{$item->id}}">{{$item->user->name}} - {{$item->user->email}}</option>
+                        @endforeach
+                    </select>
                     @error('client_id') <span class="text-danger">{{ $message }}</span> @enderror
                 </div>
             </div>
             <div class="col-md-8 offset-md-2">
                 <div class="fv-row mb-7">
-                    <div wire:ignore>
-                        <label class="fs-6 fw-semibold mb-2">Service</label>
-                        <select class="form-select form-select-solid service" data-control="select2" data-hide-search="true" data-placeholder="Select a service" name="service"  wire:model="service">
-                            <option value="">Select Service...</option>
-                            <option value="education">Education</option>
-                            <option value="healthcare">Healthcare</option>
-                            <option value="business">Business</option>
-                            <option value="travel">Travel</option>
-                        </select>
-                    </div>
+                    <label class="fs-6 fw-semibold mb-2">Service</label>
+                    <select wire:ignore class="form-select p-0 w-100 border-0 selectpicker" title="Select a service"  wire:model.live="service">
+                        <option value="" class="text-muted d-none"></option>
+                        <option value="education">Education</option>
+                        <option value="healthcare">Healthcare</option>
+                        <option value="business">Business</option>
+                        <option value="travel">Travel</option>
+                    </select>
                     @error('service') <span class="text-danger">{{ $message }}</span> @enderror
                 </div>
             </div>
 
             @if ($service == "education")
-                @include('livewire.backend.receptionist.application.education')
+                @include('livewire.backend.admin.application.education')
             @endif
             
         </div>
     </div>
 </div>
-
-@push('scripts')
-    <script>
-        document.addEventListener('livewire:init', () => {
-            $('.client_id').on('change', function () {
-                @this.set('client_id', $(this).val());
-                @this.getEventClient();  
-            });
-            $('.service').on('change', function () {
-                @this.set('service', $(this).val());
-            });
-
-            Livewire.on('refreshSelect', () => {
-                setTimeout(() => {
-                    $('.client_id').val(@this.get('client_id')).trigger('change');
-                    $('.service').val(@this.get('service')).trigger('change');
-                }, 100);
-            });
-        });
-    </script>
-@endpush

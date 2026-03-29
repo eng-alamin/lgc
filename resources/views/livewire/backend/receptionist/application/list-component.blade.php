@@ -30,9 +30,8 @@
                         <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                             <th class="w-10px pe-2">SL</th>
                             <th class="min-w-125px">Client</th>
-                            <th class="min-w-125px">Track ID</th>
-                            <th class="min-w-125px">Form ID</th>
-                            <th class="min-w-125px">Form Name</th>
+                            <th class="min-w-125px">Form Number</th>
+                            <th class="min-w-125px">Form Type</th>
                             <th class="min-w-125px">Status</th>
                             <th class="min-w-125px">Date At</th>
                             <th class="text-end min-w-70px">Actions</th>
@@ -44,40 +43,39 @@
                             <td>{{ $loop->iteration }}</td>
                             <td class="d-flex align-items-center border-0">
                                 <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
-                                    <a href="#">
-                                        @if($item->client?->avatar)
+                                    <a href="{{route('receptionist.client.overview', $item->client?->id)}}" target="_blank">
+                                        @if($item->client?->user?->avatar)
                                             <div class="symbol-label">
-                                                <img src="{{asset($item->client?->avatar)}}" alt="{{$item->client?->name}}" class="w-100" />
+                                                <img src="{{asset($item->client?->user?->avatar)}}" alt="{{$item->client?->user?->name}}" class="w-100" />
                                             </div>
                                         @else
-                                            <div class="symbol-label fs-3 bg-light-danger text-danger"> {{substr($item->client?->name ?? 'N',0,1)}} </div>
+                                            <div class="symbol-label fs-3 bg-light-danger text-danger"> {{substr($item->client?->user?->name ?? 'N',0,1)}} </div>
                                         @endif
                                     </a>
                                 </div>
                                 <div class="d-flex flex-column">
-                                    <a href="#" class="text-gray-800 text-hover-primary mb-1">{{$item->client?->name ?? 'N/L'}}</a>
-                                    <div>{{$item->client?->email ?? 'N/A'}}</div>
-                                    <div>{{$item->client?->phone ?? 'N/A'}}</div>
+                                    <a href="{{route('receptionist.client.overview', $item->client?->id)}}" target="_blank" class="text-gray-800 text-hover-primary mb-1">{{$item->client?->user?->name ?? 'N/L'}}</a>
+                                    <div>{{$item->client?->user?->email ?? 'N/A'}}</div>
+                                    <div>{{$item->client?->user?->phone ?? 'N/A'}}</div>
                                 </div>
                             </td>
                             <td>{{$item->number}}</td>
-                            <td>{{$item->serial}}</td>
                             <td>{{ ucfirst($item->type) }}</td>
-                                                        <td>
+                            <td>
                                 @php
                                     $current = $item->status;
-                                    $flow = config('status_flow.application');
+                                    $flow = config('status_flow.form');
                                     $allowed = $flow[$current] ?? [];
                                 @endphp
 
                                 @if ($item->status == 'pending')
-                                    <a href="#" class="btn btn-sm btn-warning btn-flex btn-center btn-active-light-warning dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">{{ ucfirst($item->status) }}</a>
+                                    <a href="#" class="btn btn-sm btn-light-warning btn-flex btn-center btn-active-light-warning dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">{{ ucfirst($item->status) }}</a>
                                 @elseif ($item->status == 'processing')
-                                    <a href="#" class="btn btn-sm btn-primary btn-flex btn-center btn-active-light-primary dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">{{ ucfirst($item->status) }}</a>
+                                    <a href="#" class="btn btn-sm btn-light-primary btn-flex btn-center btn-active-light-primary dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">{{ ucfirst($item->status) }}</a>
                                 @elseif ($item->status == 'approved')
-                                    <a href="#" class="btn btn-sm btn-success btn-flex btn-center btn-active-light-success dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">{{ ucfirst($item->status) }}</a>
+                                    <a href="#" class="btn btn-sm btn-light-success btn-flex btn-center btn-active-light-success dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">{{ ucfirst($item->status) }}</a>
                                 @else
-                                    <a href="#" class="btn btn-sm btn-danger btn-flex btn-center btn-active-light-danger dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">{{ ucfirst($item->status) }}</a>
+                                    <a href="#" class="btn btn-sm btn-light-danger btn-flex btn-center btn-active-light-danger dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">{{ ucfirst($item->status) }}</a>
                                 @endif
                                 
                                 <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4 dropdown-menu" aria-labelledby="dropdownMenuButton1">
@@ -134,7 +132,7 @@
                     "lengthChange": false,
                     'columnDefs': [
                     { orderable: false, targets: 0 },
-                    { orderable: false, targets: 5 },
+                    { orderable: false, targets: 4 },
                     ],
                     'dom': `<'row'<'col-sm-12'tr>><'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
                     'language': {

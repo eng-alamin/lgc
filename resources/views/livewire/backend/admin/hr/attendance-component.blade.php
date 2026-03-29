@@ -80,7 +80,7 @@
             <div class="modal-content">
                 <form wire:submit="store" class="form" action="#">
                     <div class="modal-header">
-                        <h2 class="fw-bold">Add Leave</h2>
+                        <h2 class="fw-bold">Add Attendance</h2>
                         <div wire:click="close" class="btn btn-icon btn-sm btn-active-icon-primary"  data-bs-dismiss="modal">
                             <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
                         </div>

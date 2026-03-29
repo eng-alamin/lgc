@@ -74,9 +74,9 @@
                                             <ul>
                                                 <li class="menu-item"><a href="{{ route('home') }}"><i class="bi bi-circle-fill"></i> Home </a></li>
                                                 <li class="menu-item"><a href="{{ route('about') }}"><i class="bi bi-circle-fill"></i> About Company</a></li>
-                                                {{-- <li class="menu-item"><a href="timeline.html"><i class="bi bi-circle-fill"></i> Our Experience</a></li> --}}
                                                 <li class="menu-item"><a href="{{route('casestudies')}}"><i class="bi bi-circle-fill"></i> Case Studies</a></li>
                                                 <li class="menu-item"><a href="{{ route('appointment') }}"><i class="bi bi-circle-fill"></i> Get Appointment</a></li>
+                                                <li class="menu-item"><a href="{{ route('agent') }}"><i class="bi bi-circle-fill"></i> Get Register Company</a></li>
                                             </ul>
                                         </div>
                                     </div>

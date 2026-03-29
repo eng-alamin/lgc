@@ -1,0 +1,110 @@
+<div style="width: 33rem;display: flex;flex-direction: column;align-content: center;justify-items: center;">
+    <div class="clock">
+        <div class="block" data-num="0"></div>
+        <div class="block" data-num="1"></div>
+        <div class="block" data-num="2"></div>
+        <div class="block" data-num="3"></div>
+        <div class="block" data-num="4"></div>
+        <div class="block" data-num="5"></div>
+        <div class="block" data-num="6"></div>
+        <div class="block" data-num="7"></div>
+        <div class="block" data-num="8"></div>
+        <div class="block" data-num="9"></div>
+        <div class="block" data-num="10"></div>
+        <div class="block" data-num="11"></div>
+        <div class="block" data-num="12"></div>
+        <div class="block" data-num="13"></div>
+        <div class="block" data-num="14"></div>
+        <div class="block" data-num="15"></div>
+        <div class="block" data-num="16"></div>
+        <div class="block" data-num="17"></div>
+        <div class="block" data-num="18"></div>
+        <div class="block" data-num="19"></div>
+        <div class="block" data-num="20"></div>
+        <div class="block" data-num="21"></div>
+        <div class="block" data-num="22"></div>
+        <div class="block" data-num="23"></div>
+        <div class="block" data-num="24"></div>
+        <div class="block" data-num="25"></div>
+        <div class="block" data-num="26"></div>
+        <div class="block" data-num="27"></div>
+        <div class="block" data-num="28"></div>
+        <div class="block" data-num="29"></div>
+        <div class="block" data-num="30"></div>
+        <div class="block" data-num="31"></div>
+        <div class="block" data-num="32"></div>
+        <div class="block" data-num="33"></div>
+        <div class="block" data-num="34"></div>
+        <div class="block" data-num="35"></div>
+        <div class="block" data-num="36"></div>
+        <div class="block" data-num="37"></div>
+        <div class="block" data-num="38"></div>
+        <div class="block" data-num="39"></div>
+        <div class="block" data-num="40"></div>
+        <div class="block" data-num="41"></div>
+        <div class="block" data-num="42"></div>
+        <div class="block" data-num="43"></div>
+        <div class="block" data-num="44"></div>
+        <div class="block" data-num="45"></div>
+        <div class="block" data-num="46"></div>
+        <div class="block" data-num="47"></div>
+        <div class="block" data-num="48"></div>
+        <div class="block" data-num="49"></div>
+        <div class="block" data-num="50"></div>
+        <div class="block" data-num="51"></div>
+        <div class="block" data-num="52"></div>
+        <div class="block" data-num="53"></div>
+        <div class="block" data-num="54"></div>
+        <div class="block" data-num="55"></div>
+        <div class="block" data-num="56"></div>
+        <div class="block" data-num="57"></div>
+        <div class="block" data-num="58"></div>
+        <div class="block" data-num="59"></div>
+        <div class="divider"></div>
+    </div>
+
+    <div class="aaa">
+        <input class="c-checkbox" type="checkbox" id="checkbox">
+        <div class="c-formContainer">
+            <form class="c-form">
+                
+                <input wire:model="id_number" class="c-form__input" pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$"  required >
+                
+                <label class="c-form__buttonLabel" for="checkbox">
+                    <button class="c-form__button" type="button" onclick="getLocation()">Submit</button>
+                </label>
+
+                <label class="c-form__toggle" for="checkbox" data-title="Clock In / Clock Out"></label>
+
+            </form>
+        </div>
+    </div>
+
+</div>
+
+@push('styles')
+    <link rel="stylesheet" href="{{asset('assets/attendance/style.css')}}">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:300,500" rel="stylesheet">
+@endpush
+@push('scripts')
+    <script src="{{asset('assets/attendance/script.js')}}"></script>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <script>
+        function getLocation(){
+            navigator.geolocation.getCurrentPosition(function(position){
+
+                let lat = position.coords.latitude;
+                let lng = position.coords.longitude;
+
+                Livewire.dispatch('setLocation', {
+                    latitude: lat,
+                    longitude: lng
+                });
+
+            });
+        }
+    </script>
+@endpush

@@ -13,16 +13,10 @@ class FollowUp extends Model
     {
         return $this->belongsTo(Form::class);
     }
-    public function agent()
+    public function assign()
     {
-        return $this->belongsTo(User::class,'assigned_to');
+        return $this->belongsTo(User::class,'assign_id');
     }
-
-    public function application()
-    {
-        return $this->belongsTo(Form::class);
-    }
-
 
 
     // Scope for today tasks

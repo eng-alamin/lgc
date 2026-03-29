@@ -241,6 +241,8 @@ class AddComponent extends Component
                 'educations' => $this->e_educations,
             ];
             $data->status = "pending";
+
+            dd($data);
             $data->save();
 
             $history = new StatusHistory();

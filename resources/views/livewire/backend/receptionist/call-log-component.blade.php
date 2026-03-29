@@ -36,9 +36,9 @@
                         @error('phone') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
                     <div class="col-md-4">
-                        <label class="fs-6 fw-semibold mb-2">Purpose</label>
-                        <input type="text" wire:model="purpose" name="purpose" class="form-control form-control-solid"/>
-                        @error('purpose') <span class="text-danger">{{ $message }}</span> @enderror
+                        <label class="fs-6 fw-semibold mb-2">Service</label>
+                        <input type="text" wire:model="service" name="service" class="form-control form-control-solid"/>
+                        @error('service') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
                     <div class="col-md-4">
                         <label class="fs-6 fw-semibold mb-2">Follow-up Date</label>

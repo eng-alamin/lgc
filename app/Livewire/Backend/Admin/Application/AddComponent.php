@@ -4,6 +4,7 @@ namespace App\Livewire\Backend\Admin\Application;
 
 use Livewire\Component;
 use App\Models\User;
+use App\Models\Client;
 use App\Models\Form;
 use App\Models\StatusHistory;
 
@@ -26,8 +27,7 @@ class AddComponent extends Component
     public $e_passport_number;
     public $e_date_of_issue;
     public $e_date_of_expiry;
-    public $e_place_of_issue;
-    public $e_medium_of_instruction;
+    public $e_medium_of_instruction = [];
     public $e_duolingo;
     public $e_score;
     public $e_intended_level_of_study;
@@ -57,36 +57,38 @@ class AddComponent extends Component
             $this->form_number = str_pad($code->serial + 1, 3, "0", STR_PAD_LEFT);
         }
 
-        $this->clients = User::where('type', 'client')->latest()->get();
-
-        $this->serviceLoad();
+        $this->clients = Client::latest()->get();
     }
 
     public function render()
     {
+        $this->dispatch('render-selectpicker');
+        
         return view('livewire.backend.admin.application.add-component')
         ->layout('layouts.backend.app', [
-            'title' => "New Application | Let's Go China",
+            'title' => "New Form | Let's Go China",
         ]);
     }
 
-     public function getEventClient()
+    public function getEventClient()
     {
-        if($this->client_id){
-            $client = User::find($this->client_id);
-            $this->e_name = $client->name;
-            $this->e_number = $client->phone;
-            $this->e_email = $client->email;
-            $this->e_current_address = $client->data['address'];
-            $this->e_permanent_address = $client->data['address'];
+        if(!$this->client_id){
+            return;
         }
-    }
 
-    public function serviceLoad()
-    {
-        $this->dispatch('refreshSelect');
+        $client = Client::with('user')->find($this->client_id);
+        $this->e_name = $client->user->name;
+        $this->e_gender = $client->data['personals']['gender'] ?? NULL;
+        $this->e_date_of_birth = $client->data['personals']['date_of_birth'] ?? NULL;
+        $this->e_nationality = $client->data['personals']['nationality'] ?? NULL;
+        $this->e_marital_status = $client->data['personals']['marital_status'] ?? NULL;
+        $this->e_religion = $client->data['personals']['religion'] ?? NULL;
+        $this->e_number = $client->user->phone;
+        $this->e_email = $client->user->email;
+        $this->e_permanent_address = $client->data['personals']['address'] ?? NULL;
+        $this->e_current_address = $client->data['personals']['address'] ?? NULL;
 
-        $this->e_educations = [
+        $this->e_educations = $client->data['educations'] ?? [
             [
                 'degree' => '',
                 'institution' => '',
@@ -94,6 +96,7 @@ class AddComponent extends Component
                 'grade' => '',
             ]
         ];
+
     }
 
     public function addRow()
@@ -129,7 +132,6 @@ class AddComponent extends Component
                     'e_passport_number' => 'required',
                     'e_date_of_issue' => 'required',
                     'e_date_of_expiry' => 'required',
-                    'e_place_of_issue' => 'required',
                     'e_medium_of_instruction' => 'required',
                     'e_duolingo' => 'required',
                     'e_score' => 'required',
@@ -174,7 +176,6 @@ class AddComponent extends Component
             'e_passport_number' => 'required',
             'e_date_of_issue' => 'required',
             'e_date_of_expiry' => 'required',
-            'e_place_of_issue' => 'required',
             'e_medium_of_instruction' => 'required',
             'e_duolingo' => 'required',
             'e_score' => 'required',
@@ -199,13 +200,13 @@ class AddComponent extends Component
             'e_educations.*.grade' => 'required',
         ]);
 
-
         try{
             $data = new Form();
+            $data->created_by  = auth()->id();
             $data->serial  = $this->form_number;
             $data->number  = 'L3G6C' . $this->form_number;
-            $data->type = "education";
             $data->client_id  = $this->client_id;
+            $data->type = "education";
             $data->data = [
                 'name' => $this->e_name,
                 'gender' => $this->e_gender,
@@ -220,7 +221,6 @@ class AddComponent extends Component
                 'passport_number' => $this->e_passport_number,
                 'date_of_issue' => $this->e_date_of_issue,
                 'date_of_expiry' => $this->e_date_of_expiry,
-                'place_of_issue' => $this->e_place_of_issue,
                 'medium_of_instruction' => $this->e_medium_of_instruction,
                 'duolingo' => $this->e_duolingo,
                 'score' => $this->e_score,

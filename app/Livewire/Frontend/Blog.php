@@ -23,7 +23,7 @@ class Blog extends Component
             
         ])
         ->layout('layouts.frontend.app', [
-                'title' => "Blog | Let's Go China"
-            ]);
+            'title' => "Blog | Let's Go China"
+        ]);
     }
 }

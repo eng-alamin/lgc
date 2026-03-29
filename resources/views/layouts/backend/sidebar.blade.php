@@ -51,14 +51,70 @@
                     </div>
 
                     <div class="menu-item">
-                        <a class="menu-link {{ str_contains(request()->url(), 'admin/application/list') == true ? 'active' : '' }}" href="{{route('admin.application.list')}}">
+                        <a class="menu-link {{ Route::is('admin.client.list') == true ? 'active' : '' }}" href="{{route('admin.client.list')}}">
                             <span class="menu-icon">
                                 <i class="ki-duotone ki-user fs-2">
                                     <span class="path1"></span>
                                     <span class="path2"></span>
                                 </i>
                             </span>
-                            <span class="menu-title">Applications</span>
+                            <span class="menu-title">Clients</span>
+                        </a>
+                    </div>
+
+                    <div class="menu-item">
+                        <a class="menu-link {{ str_contains(request()->url(), 'admin/application/') == true ? 'active' : '' }}" href="{{route('admin.application.list')}}">
+                            <span class="menu-icon">
+                                <i class="ki-duotone ki-user fs-2">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                </i>
+                            </span>
+                            <span class="menu-title">Registration</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link {{ str_contains(request()->url(), 'admin/invoices') == true ? 'active' : '' }}" href="{{route('admin.invoices')}}">
+                            <span class="menu-icon">
+                                <i class="ki-duotone ki-user fs-2">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                </i>
+                            </span>
+                            <span class="menu-title">Invoices</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link {{ str_contains(request()->url(), 'admin/counselors') == true ? 'active' : '' }}" href="{{route('admin.counselors')}}">
+                            <span class="menu-icon">
+                                <i class="ki-duotone ki-user fs-2">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                </i>
+                            </span>
+                            <span class="menu-title">Counselors</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link {{ str_contains(request()->url(), 'admin/agents') == true ? 'active' : '' }}" href="{{route('admin.agents')}}">
+                            <span class="menu-icon">
+                                <i class="ki-duotone ki-user fs-2">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                </i>
+                            </span>
+                            <span class="menu-title">Agents</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link {{ str_contains(request()->url(), 'admin/followups') == true ? 'active' : '' }}" href="{{route('admin.followups')}}">
+                            <span class="menu-icon">
+                                <i class="ki-duotone ki-user fs-2">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                </i>
+                            </span>
+                            <span class="menu-title">Follow Ups</span>
                         </a>
                     </div>
                     <div class="menu-item">
@@ -70,6 +126,39 @@
                                 </i>
                             </span>
                             <span class="menu-title">Appointments</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link {{ str_contains(request()->url(), 'admin/calendars') == true ? 'active' : '' }}" href="{{route('admin.calendars')}}">
+                            <span class="menu-icon">
+                                <i class="ki-duotone ki-user fs-2">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                </i>
+                            </span>
+                            <span class="menu-title">Calendars</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link {{ str_contains(request()->url(), 'admin/notices') == true ? 'active' : '' }}" href="{{route('admin.notices')}}">
+                            <span class="menu-icon">
+                                <i class="ki-duotone ki-user fs-2">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                </i>
+                            </span>
+                            <span class="menu-title">Notices</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link {{ str_contains(request()->url(), 'admin/documents') == true ? 'active' : '' }}" href="{{route('admin.documents')}}">
+                            <span class="menu-icon">
+                                <i class="ki-duotone ki-user fs-2">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                </i>
+                            </span>
+                            <span class="menu-title">Documents</span>
                         </a>
                     </div>
                     <div class="menu-item">
@@ -96,30 +185,6 @@
                     </div>
 
                     <div class="menu-item">
-                        <a class="menu-link {{ str_contains(request()->url(), 'admin/clients') == true ? 'active' : '' }}" href="{{route('admin.clients')}}">
-                            <span class="menu-icon">
-                                <i class="ki-duotone ki-user fs-2">
-                                    <span class="path1"></span>
-                                    <span class="path2"></span>
-                                </i>
-                            </span>
-                            <span class="menu-title">Clients</span>
-                        </a>
-                    </div>
-
-                    <div class="menu-item">
-                        <a class="menu-link {{ str_contains(request()->url(), 'admin/agents') == true ? 'active' : '' }}" href="{{route('admin.agents')}}">
-                            <span class="menu-icon">
-                                <i class="ki-duotone ki-user fs-2">
-                                    <span class="path1"></span>
-                                    <span class="path2"></span>
-                                </i>
-                            </span>
-                            <span class="menu-title">Agents</span>
-                        </a>
-                    </div>
-
-                    <div class="menu-item">
                         <a class="menu-link {{ str_contains(request()->url(), 'admin/activities') == true ? 'active' : '' }}" href="{{route('admin.activities')}}">
                             <span class="menu-icon">
                                 <i class="ki-duotone ki-menu fs-2">
@@ -141,17 +206,6 @@
                                 </i>
                             </span>
                             <span class="menu-title">Commissions</span>
-                        </a>
-                    </div>
-                    <div class="menu-item">
-                        <a class="menu-link {{ str_contains(request()->url(), 'admin/commission/rules') == true ? 'active' : '' }}" href="{{route('admin.commission.rules')}}">
-                            <span class="menu-icon">
-                                <i class="ki-duotone ki-user fs-2">
-                                    <span class="path1"></span>
-                                    <span class="path2"></span>
-                                </i>
-                            </span>
-                            <span class="menu-title">Commission Rules</span>
                         </a>
                     </div>
 
@@ -541,6 +595,29 @@
                         <div class="menu-content">
                             <span class="menu-heading fw-bold text-uppercase fs-7">More</span>
                         </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <a class="menu-link  {{ Route::is('admin.stages') == true ? 'active' : '' }}" href="{{route('admin.stages')}}">
+                            <span class="menu-icon">
+                                <i class="ki-duotone ki-user fs-2">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                </i>
+                            </span>
+                            <span class="menu-title">Stages</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link {{ str_contains(request()->url(), 'admin/commission/rules') == true ? 'active' : '' }}" href="{{route('admin.commission.rules')}}">
+                            <span class="menu-icon">
+                                <i class="ki-duotone ki-user fs-2">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                </i>
+                            </span>
+                            <span class="menu-title">Commission Rules</span>
+                        </a>
                     </div>
 
                     <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ str_contains(request()->url(), 'admin/account') == true ? 'here show' : '' }}">

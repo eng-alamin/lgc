@@ -56,7 +56,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getRedirectRoute()
     {
         return match((string)$this->type) {
-            'client' => 'dashboard',
+            'client' => 'personalinfo',
             'agent' => 'agent/dashboard',
             'receptionist' => 'receptionist/dashboard',
             'writer' => 'writer/account/overview',
@@ -101,5 +101,14 @@ class User extends Authenticatable implements MustVerifyEmail
     public function employee()
     {
         return $this->hasOne(Employee::class);
+    }
+
+    public function client()
+    {
+        return $this->hasOne(Client::class);
+    }
+    public function agent()
+    {
+        return $this->hasOne(Agent::class);
     }
 }

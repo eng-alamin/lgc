@@ -53,7 +53,11 @@
             <section class="p-4">
                 <h4>4. English Language Proficiency</h4>
                 <div class="card w-100 shadow p-5">
-                    <p><strong>medium Of Instruction:</strong> {{$data->data['medium_of_instruction'] ?? '-' }}</p>
+                    <p><strong>medium Of Instruction:</strong> 
+                        @foreach ($data->data['medium_of_instruction'] as $item)
+                            {{ ucfirst($item) }}@if(!$loop->last), @endif
+                        @endforeach
+                    </p>
                     <p><strong>Duolingo:</strong> {{$data->data['duolingo'] ?? '-' }}</p>
                     <p><strong>Score:</strong> {{$data->data['score'] ?? '-' }}</p>
                 </div>

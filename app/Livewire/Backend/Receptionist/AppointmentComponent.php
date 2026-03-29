@@ -5,6 +5,8 @@ namespace App\Livewire\Backend\Receptionist;
 use Livewire\Component;
 use App\Models\Appointment;
 use App\Models\User;
+use App\Models\Client;
+use App\Models\Agent;
 
 class AppointmentComponent extends Component
 {
@@ -25,9 +27,11 @@ class AppointmentComponent extends Component
 
     public function render()
     {
+        $this->dispatch('render-selectpicker');
+
         $data = Appointment::latest()->get();
-        $clients = User::where('type', 'client')->get();
-        $agents = User::where('type', 'agent')->get();
+        $clients = Client::latest()->get();
+        $agents = Agent::latest()->get();
 
         return view('livewire.backend.receptionist.appointment-component', [
             'data' => $data,
@@ -104,19 +108,43 @@ class AppointmentComponent extends Component
         }
     }
 
-    // public function view($id)
-    // {
-    //     $view = Appointment::findOrFail($id);
+    public function edit($id)
+    {
+        $edit = Appointment::findOrFail($id);
+        $this->appointment_id = $edit->id;
+        $this->client_id = $edit->client_id;
+        $this->agent_id = $edit->agent_id;
+        $this->appointment_date = $edit->appointment_date;
+        $this->appointment_time = $edit->appointment_time;
+        $this->type = $edit->type;
+        $this->service = $edit->service;
+        $this->notes = $edit->notes;
+    }
 
-    //     $this->appointment_id = $view->id;
-    //     $this->date = $view->date;
-    //     $this->name = $view->name;
-    //     $this->email = $view->email;
-    //     $this->phone = $view->phone;
-    //     $this->address = $view->address;
-    //     $this->message = $view->message;
-    //     $this->service = $view->service;
-    // }
+    public function update()
+    {
+        $this->validate([
+            'client_id' => 'required',
+            'appointment_date' => 'required|date|after_or_equal:today',
+            'appointment_time' => 'required',
+        ]);
+
+        try{
+            $data = Appointment::find($this->appointment_id);
+            $data->client_id = $this->client_id;
+            $data->agent_id = $this->agent_id;
+            $data->appointment_date = $this->appointment_date;
+            $data->appointment_time = $this->appointment_time;
+            $data->type = $this->type;
+            $data->service = $this->service;
+            $data->notes = $this->notes;
+            $data->save();
+
+            return redirect()->route('receptionist.appointments')->with('success', 'Consignee is successfully updated');
+        }catch(\Exception $e){
+            return redirect()->back()->with('error', 'Consignee updated failed: ' . $e->getMessage());
+        }
+    }
 
     public function deleteConfirmation($id)
     {

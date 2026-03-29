@@ -80,7 +80,7 @@
                                     <span class="path2"></span>
                                 </i>
                             </span>
-                            <span class="menu-title">Applications</span>
+                            <span class="menu-title">Registration</span>
                         </a>
                     </div>
                     <div class="menu-item">

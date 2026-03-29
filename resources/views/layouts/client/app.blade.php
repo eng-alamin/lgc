@@ -4,8 +4,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
-    <meta name="description" content="Immigway - Immigration & Visa Solutions Template">
-    <meta name="author" content="">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+	<link rel="shortcut icon" href="{{ asset(config('setting.favicon'))}}" />
+    <meta name="description" content="Let's Go China - Trusted Gateway to China">
+    <meta name="author" content="Let's Go China">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Favicon and touch Icons -->
@@ -14,16 +16,14 @@
     <link href="{{ asset('assets/frontend/assets/img/apple-touch-icon-72x72.html') }}" rel="apple-touch-icon" sizes="72x72">
     <link href="{{ asset('assets/frontend/assets/img/apple-touch-icon-114x114.html') }}" rel="apple-touch-icon" sizes="114x114">
     <link href="{{ asset('assets/frontend/assets/img/apple-touch-icon-144x144.html') }}" rel="apple-touch-icon" sizes="144x144">
-
     <title>{{ $title ?? config('app.name') }}</title>
-        
-    <!-- Styles Include -->
     <link rel="stylesheet" href="{{ asset('assets/frontend/assets/css/main.css') }}">
-    {{-- <script src="{{ asset('js/custom.js') }}" defer></script> --}}
-    
     <style>
+        input[type="submit"], .btn {
+            padding: 12px 50px;
+        }
         .header-space {
-            margin-top: 200px;
+            margin-top: 120px;
         }
         @media screen and (max-width: 575px) {
             .header-space {
@@ -53,6 +53,9 @@
         }
         .nav-link {
             color: #E13833;
+        }
+        .btn:before {
+            background-color: transparent;
         }
     </style>
     @stack('styles')

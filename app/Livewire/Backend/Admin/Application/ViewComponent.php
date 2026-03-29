@@ -18,7 +18,7 @@ class ViewComponent extends Component
     {
         return view('livewire.backend.admin.application.view-component')
         ->layout('layouts.backend.app', [
-            'title' => "Application View | Let's Go China",
+            'title' => "Form View | Let's Go China",
         ]);
     }
 }

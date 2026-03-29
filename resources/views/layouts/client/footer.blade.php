@@ -54,11 +54,11 @@
                                 use Illuminate\Support\Facades\DB;
                                 $footer = DB::table('sections')->where('type', 'footer')->first();
                             @endphp
-                            <h3 class="text-two">{{ $footer->title ?? '' }}</h3>
-                            <p class="text-two">{{ $footer->description ?? '' }}</p>
+                            <h3 class="text-two">{{ $footer?->title ?? '' }}</h3>
+                            <p class="text-two">{{ $footer?->description ?? '' }}</p>
                     
 
-                            <a href="{{$footer->link}}" class="btn mt-4">
+                            <a href="{{$footer?->link ?? '#'}}" class="btn mt-4">
                                 <span class="btn-wrap">
                                     <span class="text-first">Get Consultancy</span>
                                     <span class="text-second">Get Consultancy</span>

@@ -25,29 +25,27 @@
                 </div>
             </div>
 
-            <div class="wptb-work-process-one--inner">
-                <div class="row">
-                    @forelse ($data as $item)
-                         <div class="col-md-4">
-                            <div class="wptb-process">
-                                <div class="wptb-item--inner">
-                                    <div class="wptb-item--image">
-                                        <img src="{{asset($item->file)}}" alt="{{$item->title}}">
-                                    </div>
-                                    <div class="wptb-item--holder">
-                                        <div class="wptb-item--icon"><span></span></div>
-                                        <h4 class="wptb-item--title">{{$item->title}}</h4>
-                                        <div class="wptb-item--description">{{$item->description}}</div>
-                                    </div>
+            <div class="row">
+                @forelse ($data as $item)
+                        <div class="col-md-4">
+                        <div class="wptb-process">
+                            <div class="wptb-item--inner">
+                                <div class="wptb-item--image">
+                                    <img src="{{asset($item->file)}}" alt="{{$item->title}}">
+                                </div>
+                                <div class="wptb-item--holder">
+                                    <div class="wptb-item--icon"><span></span></div>
+                                    <h4 class="wptb-item--title">{{$item->title}}</h4>
+                                    <div class="wptb-item--description">{{$item->description}}</div>
                                 </div>
                             </div>
                         </div>
-                    @empty
-                        <div class="d-flex justify-content-center align-items-center" style="height: 100px;">
-                            <p class="wptb-item--description">No Data Found</p>
-                        </div>
-                    @endforelse
-                </div>
+                    </div>
+                @empty
+                    <div class="d-flex justify-content-center align-items-center" style="height: 100px;">
+                        <p class="wptb-item--description">No Data Found</p>
+                    </div>
+                @endforelse
             </div>
         </div>
     </section>

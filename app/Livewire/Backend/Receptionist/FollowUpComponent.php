@@ -10,7 +10,7 @@ use Carbon\Carbon;
 
 class FollowUpComponent extends Component
 {
-    public $form_id, $assigned_to, $follow_up_date, $priority='normal', $notes, $status='pending';
+    public $form_id, $assign_id, $follow_up_date, $priority='normal', $notes, $status='pending';
 
     public $followup_id;
     public $delete_id;
@@ -28,7 +28,7 @@ class FollowUpComponent extends Component
             'todayTasks'=>FollowUp::today()->latest()->get(),
             'overdueTasks'=>FollowUp::overdue()->latest()->get(),
             'forms'=>Form::latest()->get(),
-            'agents'=>User::where('type', 'agent')->get(),
+            'users'=>User::latest()->get(),
         ])
         ->layout('layouts.receptionist.app', [
             'title' => "Follow Up | Let's Go China",
@@ -45,10 +45,10 @@ class FollowUpComponent extends Component
         }
     }
 
-        private function resetInputFields()
+    private function resetInputFields()
     {
         $this->form_id = '';
-        $this->assigned_to = '';
+        $this->assign_id = '';
         $this->follow_up_date = '';
         $this->priority = 'normal';
         $this->status = 'pending';
@@ -63,7 +63,7 @@ class FollowUpComponent extends Component
     {
         $this->validateOnly($name, [
             'form_id'=>'required|exists:forms,id',
-            'assigned_to'=>'required|exists:users,id',
+            'assign_id'=>'required|exists:users,id',
             'follow_up_date'=>'required|date',
             'priority'=>'required',
         ]);
@@ -73,14 +73,14 @@ class FollowUpComponent extends Component
     {
         $this->validate([
             'form_id'=>'required|exists:forms,id',
-            'assigned_to'=>'required|exists:users,id',
+            'assign_id'=>'required|exists:users,id',
             'follow_up_date'=>'required|date',
             'priority'=>'required',
         ]);
 
         FollowUp::create([
             'form_id'=>$this->form_id,
-            'assigned_to'=>$this->assigned_to,
+            'assign_id'=>$this->assign_id,
             'follow_up_date'=>$this->follow_up_date,
             'priority'=>$this->priority,
             'status'=>$this->status,
@@ -93,13 +93,35 @@ class FollowUpComponent extends Component
     public function edit($id)
     {
         $edit = FollowUp::findOrFail($id);
-        $this->invoice_id = $id;
+        $this->followup_id = $id;
         $this->form_id = $edit->form_id;
-        $this->assigned_to = $edit->assigned_to;
+        $this->assign_id = $edit->assign_id;
         $this->follow_up_date = $edit->follow_up_date;
         $this->priority = $edit->priority;
         $this->status = $edit->status;
         $this->notes = $this->notes;
+    }
+
+    public function update()
+    {
+        $this->validate([
+            'form_id'=>'required|exists:forms,id',
+            'follow_up_date'=>'required|date',
+            'priority'=>'required',
+        ]);
+
+        $followups = FollowUp::findOrFail($this->followup_id);
+
+        $followups->update([
+            'form_id'=>$this->form_id,
+            'assign_id'=>$this->assign_id,
+            'follow_up_date'=>$this->follow_up_date,
+            'priority'=>$this->priority,
+            'status'=>$this->status,
+            'notes'=>$this->notes,
+        ]);
+
+        return redirect()->route('receptionist.followups')->with('success', 'Data Created Successfully.');
     }
 
     public function deleteConfirmation($id)

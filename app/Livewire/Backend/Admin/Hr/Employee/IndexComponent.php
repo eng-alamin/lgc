@@ -69,6 +69,9 @@ class IndexComponent extends Component
             'email' => 'required|email|unique:users',
             'department_id' => 'required',
             'designation' => 'required',
+            'basic_salary' => 'nullable|numeric',
+            'allowance' => 'nullable|numeric',
+            
 
         ]);
     }
@@ -80,14 +83,11 @@ class IndexComponent extends Component
             'email' => 'required|email|unique:users',
             'department_id' => 'required',
             'designation' => 'required',
+            'basic_salary' => 'nullable|numeric',
+            'allowance' => 'nullable|numeric',
         ]);
 
         try{
-            // $json_data = [
-            //     'address' =>  $this->address,
-            //     'city' =>  $this->city,
-            //     'postal' =>  $this->postal,
-            // ];
 
             $user = User::create([
                 'name'=>$this->name,
@@ -95,12 +95,11 @@ class IndexComponent extends Component
                 'phone'=>$this->phone,
                 'password'=>Hash::make($this->password ?? '12345678'),
                 'type'=>'employee',
-                // 'data' => $json_data;
             ]);
 
              $employee = Employee::create([
                 'user_id'=>$user->id,
-                'employee_id'=>'L3G6CEMP-'.str_pad(Employee::count()+1,3,'0',STR_PAD_LEFT),
+                'id_number'=>'L3G6CEMP-'.str_pad(Employee::count()+1,3,'0',STR_PAD_LEFT),
                 'department_id'=>$this->department_id,
                 'designation'=>$this->designation,
                 'basic_salary'=>$this->basic_salary ?? 0,
@@ -146,6 +145,8 @@ class IndexComponent extends Component
             'email' => 'required|email',
             'department_id' => 'required',
             'designation' => 'required',
+            'basic_salary' => 'nullable|numeric',
+            'allowance' => 'nullable|numeric',
         ]);
 
         try{

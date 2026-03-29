@@ -16,11 +16,7 @@
     <link href="{{ asset('assets/frontend/assets/img/apple-touch-icon-144x144.html') }}" rel="apple-touch-icon" sizes="144x144">
 
     <title>{{ $title ?? config('app.name') }}</title>
-        
-    <!-- Styles Include -->
     <link rel="stylesheet" href="{{ asset('assets/frontend/assets/css/main.css') }}">
-    {{-- <script src="{{ asset('js/custom.js') }}" defer></script> --}}
-    {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
 
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':

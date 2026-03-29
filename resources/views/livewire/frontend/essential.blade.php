@@ -28,11 +28,11 @@
                                         <a href="#" class="wptb-item-link"><img src="{{asset($item->file)}}" alt="{{$item->title}}"></a>
                                     </div>
                                     <div class="wptb-item--holder">
-                                        <div class="wptb-item--icon">
+                                        {{-- <div class="wptb-item--icon">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 9 9" fill="none"> <path d="M0 9C6 9 8.5 3 9 0V9H0Z"></path> </svg>
-                                            <img src="{{asset('assets/frontend/assets/img/services/icon-1.png')}}" alt="icon">
+                                            <img src="{{{{asset('assets/frontend/assets/img/services/icon-1.png')}}}}" alt="icon">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 9 9" fill="none"> <path d="M9 9C3 9 0.5 3 0 0V9H9Z"></path> </svg>
-                                        </div>
+                                        </div> --}}
                                         <h4 class="wptb-item--title"><a href="{{ route('essential.detail', $item->id) }}">{{$item->title}}</a></h4>
                                         <div class="wptb-line-paper"></div>
                                         <p class="wptb-item--description">{{$item->subtitle}}</p>

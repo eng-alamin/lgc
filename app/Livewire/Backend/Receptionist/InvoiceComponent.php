@@ -3,6 +3,7 @@
 namespace App\Livewire\Backend\Receptionist;
 
 use Livewire\Component;
+
 use App\Models\Invoice;
 use App\Models\Form;
 use App\Models\User;
@@ -10,6 +11,7 @@ use App\Models\User;
 class InvoiceComponent extends Component
 {
     public $form_id;
+    public $serial;
     public $number;
     public $date;
     public $items = [];
@@ -50,8 +52,6 @@ class InvoiceComponent extends Component
     public function render()
     {
         $this->dispatch('render-selectpicker');
-        $this->dispatch('refreshSelect');
-        // $this->dispatch('refreshSelect', ['type' => $this->type]);
 
         $invoices = Invoice::latest()->get();
         $forms = Form::latest()->get();
@@ -83,7 +83,6 @@ class InvoiceComponent extends Component
     private function resetInputFields()
     {
         $this->form_id = '';
-        $this->number = '';
         $this->items = [
             [
                 'name' => '',
@@ -146,15 +145,15 @@ class InvoiceComponent extends Component
             Invoice::create([
                 'created_by' => auth()->id(),
                 'form_id' => $this->form_id,
-                'serial'  => $this->number,
-                'number'  => 'L3G6CIN' . $this->number,
+                'serial'  => $this->serial,
+                'number'  => 'L3G6CIN' . $this->serial,
                 'date' => $this->date,
                 'items' => $this->items,
                 'method' => $this->method,
                 'total_amount' => $total,
                 'paid_amount' => $paid,
                 'due_amount' => $due,
-                'status' => $status,
+                'payment_status' => $status,
                 'notes' => $this->notes,
             ]);
 
@@ -169,7 +168,7 @@ class InvoiceComponent extends Component
         $edit = Invoice::findOrFail($id);
         $this->invoice_id = $id;
         $this->form_id = $edit->form_id;
-        $this->serial = $edit->number;
+        $this->serial = $edit->serial;
         $this->date = $edit->date;
         $this->items = $edit->items;
         $this->method = $edit->method;
@@ -213,7 +212,7 @@ class InvoiceComponent extends Component
             $update->total_amount = $total;
             $update->paid_amount = $paid;
             $update->due_amount = $due;
-            $update->status = $status;
+            $update->payment_status = $status;
             $update->notes = $this->notes;
             $update->save();
 
@@ -248,6 +247,41 @@ class InvoiceComponent extends Component
         }catch(\Exception $e){
             return redirect()->back()->with('error', 'Consignee deleted failed: ' . $e->getMessage());
         }
+    }
+
+    public function canChangeTo($currentStatus, $newStatus)
+    {
+        $flow = config('status_flow.invoice');
+
+        if (!isset($flow[$currentStatus])) {
+            return false;
+        }
+
+        return in_array($newStatus, $flow[$currentStatus]);
+    }
+
+    public function statusClick($id, $newStatus)
+    {
+        $invoice = Invoice::findOrFail($id);
+
+        // Prevent invalid transition
+        if (!$this->canChangeTo($invoice->invoice_status, $newStatus)) {
+            session()->flash('error', 'Invalid status transition!');
+            return;
+        }
+
+        // Already approved check
+        if ($invoice->invoice_status === 'approved') {
+            session()->flash('error', 'Already Approved');
+            return;
+        }
+
+        // Update Status
+        $invoice->update([
+            'invoice_status' => $newStatus
+        ]);
+
+        return redirect()->route('receptionist.invoices')->with('success', 'Invoices is successfully status!');
     }
 
 }

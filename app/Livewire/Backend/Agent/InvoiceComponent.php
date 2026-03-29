@@ -3,6 +3,7 @@
 namespace App\Livewire\Backend\Agent;
 
 use Livewire\Component;
+
 use App\Models\Invoice;
 use App\Models\Form;
 use App\Models\User;
@@ -10,6 +11,7 @@ use App\Models\User;
 class InvoiceComponent extends Component
 {
     public $form_id;
+    public $serial;
     public $number;
     public $date;
     public $items = [];
@@ -18,6 +20,8 @@ class InvoiceComponent extends Component
     public $due_amount;
     public $method;
     public $notes;
+
+    public $agent_id;
 
     public $invoice_id;
     public $delete_id;
@@ -28,11 +32,13 @@ class InvoiceComponent extends Component
 
     public function mount()
     {
+        $this->agent_id = auth()->user()->agent->id;
+
         $code = Invoice::latest()->first();
         if (empty($code->id)) {
-            $this->number = '101';
+            $this->serial = '101';
         } else {
-            $this->number = str_pad($code->serial + 1, 3, "0", STR_PAD_LEFT);
+            $this->serial = str_pad($code->serial + 1, 3, "0", STR_PAD_LEFT);
         }
 
         $this->date = now()->format('Y-m-d');
@@ -50,11 +56,9 @@ class InvoiceComponent extends Component
     public function render()
     {
         $this->dispatch('render-selectpicker');
-        $this->dispatch('refreshSelect');
-        // $this->dispatch('refreshSelect', ['type' => $this->type]);
 
-        $invoices = Invoice::where('agent_id', auth()->id())->latest()->get();
-        $forms = Form::where('agent_id', auth()->id())->latest()->get();
+        $invoices = Invoice::where('agent_id', $this->agent_id)->latest()->get();
+        $forms = Form::where('agent_id', $this->agent_id)->latest()->get();
 
         return view('livewire.backend.agent.invoice-component', [
             'invoices' => $invoices,
@@ -83,7 +87,6 @@ class InvoiceComponent extends Component
     private function resetInputFields()
     {
         $this->form_id = '';
-        $this->number = '';
         $this->items = [
             [
                 'name' => '',
@@ -144,18 +147,18 @@ class InvoiceComponent extends Component
             }
 
             Invoice::create([
-                'agent_id' => auth()->id(),
                 'created_by' => auth()->id(),
                 'form_id' => $this->form_id,
-                'serial'  => $this->number,
-                'number'  => 'L3G6CIN' . $this->number,
+                'agent_id' => $this->agent_id,
+                'serial'  => $this->serial,
+                'number'  => 'L3G6CIN' . $this->serial,
                 'date' => $this->date,
                 'items' => $this->items,
                 'method' => $this->method,
                 'total_amount' => $total,
                 'paid_amount' => $paid,
                 'due_amount' => $due,
-                'status' => $status,
+                'payment_status' => $status,
                 'notes' => $this->notes,
             ]);
 
@@ -170,7 +173,7 @@ class InvoiceComponent extends Component
         $edit = Invoice::findOrFail($id);
         $this->invoice_id = $id;
         $this->form_id = $edit->form_id;
-        $this->serial = $edit->number;
+        $this->serial = $edit->serial;
         $this->date = $edit->date;
         $this->items = $edit->items;
         $this->method = $edit->method;
@@ -214,7 +217,7 @@ class InvoiceComponent extends Component
             $update->total_amount = $total;
             $update->paid_amount = $paid;
             $update->due_amount = $due;
-            $update->status = $status;
+            $update->payment_status = $status;
             $update->notes = $this->notes;
             $update->save();
 
@@ -249,6 +252,41 @@ class InvoiceComponent extends Component
         }catch(\Exception $e){
             return redirect()->back()->with('error', 'Consignee deleted failed: ' . $e->getMessage());
         }
+    }
+
+    public function canChangeTo($currentStatus, $newStatus)
+    {
+        $flow = config('status_flow.invoice');
+
+        if (!isset($flow[$currentStatus])) {
+            return false;
+        }
+
+        return in_array($newStatus, $flow[$currentStatus]);
+    }
+
+    public function statusClick($id, $newStatus)
+    {
+        $invoice = Invoice::findOrFail($id);
+
+        // Prevent invalid transition
+        if (!$this->canChangeTo($invoice->invoice_status, $newStatus)) {
+            session()->flash('error', 'Invalid status transition!');
+            return;
+        }
+
+        // Already approved check
+        if ($invoice->invoice_status === 'approved') {
+            session()->flash('error', 'Already Approved');
+            return;
+        }
+
+        // Update Status
+        $invoice->update([
+            'invoice_status' => $newStatus
+        ]);
+
+        return redirect()->route('agent.invoices')->with('success', 'Invoices is successfully status!');
     }
 
 }

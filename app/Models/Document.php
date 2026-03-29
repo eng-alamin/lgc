@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\User;
 
 class Document extends Model
 {
@@ -11,7 +10,7 @@ class Document extends Model
 
     public function client()
     {
-        return $this->belongsTo(User::class, 'client_id');
+        return $this->belongsTo(Client::class);
     }
 
     public function verifier()
@@ -19,4 +18,13 @@ class Document extends Model
         return $this->belongsTo(User::class, 'verified_by');
     }
 
+    public function getFileUrlAttribute()
+    {
+        return asset('storage/' . $this->file_path);
+    }
+
+    public function getIsExpiredAttribute()
+    {
+        return $this->expiry_date && now()->gt($this->expiry_date);
+    }
 }

@@ -59,7 +59,7 @@ class DashboardComponent extends Component
         $this->activeOnline = User::where('agent_id', auth()->id())->where('last_seen', '>=', now()->subMinutes(1))->count();
         $this->clientsToday = User::where('agent_id', auth()->id())->whereDate('created_at', $today)->count();
         $this->applicationsToday = Form::where('agent_id', auth()->id())->whereDate('created_at', $today)->count();
-        $this->followupsToday = FollowUp::where('assigned_to', auth()->id())->whereDate('created_at', $today)->count();
+        $this->followupsToday = FollowUp::where('assign_id', auth()->id())->whereDate('created_at', $today)->count();
 
         $this->total_earning_pending = Commission::where('agent_id', auth()->id())->where('status', 'pending')->sum('commission_amount');
         $this->total_earning_approved = Commission::where('agent_id', auth()->id())->where('status', 'approved')->sum('commission_amount');

@@ -4,6 +4,7 @@ namespace App\Livewire\Backend\Receptionist;
 
 use Livewire\Component;
 use App\Models\User;
+use App\Models\Agent;
 use Illuminate\Support\Facades\Hash;
 
 class AgentComponent extends Component
@@ -14,11 +15,6 @@ class AgentComponent extends Component
     public $name;
     public $phone;
     public $email;
-    public $address;
-    public $city;
-    public $postal;
-    public $website;
-
 
     protected $listeners = [
         'deleteConfirmed' => 'deleteAgent',
@@ -26,7 +22,7 @@ class AgentComponent extends Component
 
     public function render()
     {
-        $data = User::where('type', 'agent')->latest()->get();
+        $data = Agent::latest()->get();
 
         return view('livewire.backend.receptionist.agent-component', [
             'data' => $data,
@@ -44,11 +40,6 @@ class AgentComponent extends Component
         $this->name = '';
         $this->phone = '';
         $this->email = '';
-        $this->address = '';
-        $this->city = '';
-        $this->state = '';
-        $this->postal = '';
-        $this->website = '';
     }
 
     public function close()
@@ -72,22 +63,19 @@ class AgentComponent extends Component
         ]);
 
         try{
-            $json_data = json_encode([
-                'address' =>  $this->address,
-                'city' =>  $this->city,
-                'postal' =>  $this->postal,
-                'website' =>  $this->website,
-            ]);
             $data = new User();
             $data->name = $this->name;
             $data->email = $this->email;
             $data->phone = $this->phone;
-            $data->type = 'agent';
             $data->password = Hash::make($this->email);
-            $data->data = $json_data;
+            $data->type ='agent';
             $data->email_verified_at = now();
             $data->account_status = 1;
             $data->save();
+
+            Agent::create([
+               'user_id' => $data->id,
+            ]);
 
             // Log the activity
             activity()
@@ -105,17 +93,11 @@ class AgentComponent extends Component
     }
     public function edit($id)
     {
-        $edit = User::findOrFail($id);
-        $json_data = json_decode($edit->data);
-
+        $edit = Agent::findOrFail($id);
         $this->agent_id = $edit->id;
-        $this->name = $edit->name;
-        $this->email = $edit->email;
-        $this->phone = $edit->phone;
-        $this->address = $json_data->address;
-        $this->city = $json_data->city;
-        $this->postal = $json_data->postal;
-        $this->website = $json_data->website ?? '';
+        $this->name = $edit->user->name;
+        $this->email = $edit->user->email;
+        $this->phone = $edit->user->phone;
     }
     public function update()
     {
@@ -125,23 +107,17 @@ class AgentComponent extends Component
         ]);
 
         try{
-            $data = User::find($this->agent_id);
+            $data = Agent::find($this->agent_id);
 
-            $json_data = json_encode([
-                'address' =>  $this->address,
-                'city' =>  $this->city,
-                'postal' =>  $this->postal,
-                'website' =>  $this->website,
-            ]);
-
-            $data->name = $this->name;
-            $data->email = $this->email;
-            $data->phone = $this->phone;
-            $data->password = Hash::make($this->email);
-            $data->data = $json_data;
-            $data->email_verified_at = now();
-            $data->account_status = 1;
-            $data->save();
+            if ($data->user) {
+                $data->user->name = $this->name;
+                $data->user->email = $this->email;
+                $data->user->phone = $this->phone;
+                $data->user->password = Hash::make($this->email);
+                $data->user->email_verified_at = now();
+                $data->user->account_status = 1;
+                $data->user->save();
+            }
 
             // Log the activity
             activity()
@@ -155,19 +131,6 @@ class AgentComponent extends Component
             return redirect()->route('receptionist.agents')->with('success', 'Consignee is successfully updated');
         }catch(\Exception $e){
             return redirect()->back()->with('error', 'Consignee updated failed: ' . $e->getMessage());
-        }
-    }
-
-    public function statusClick($id, $status)
-    {
-        try{
-            $data = User::find($id);
-            $data->account_status = $status;
-            $data->save();
-
-            return redirect()->route('receptionist.agents')->with('success', 'Agent is successfully status!');
-        }catch(\Exception $e){
-            return redirect()->back()->with('error', 'Agent updated failed: ' . $e->getMessage());
         }
     }
 
@@ -198,6 +161,19 @@ class AgentComponent extends Component
         }
     }
 
+
+    public function statusClick($id, $status)
+    {
+        try{
+            $data = User::find($id);
+            $data->account_status = $status;
+            $data->save();
+
+            return redirect()->route('receptionist.agents')->with('success', 'Agent is successfully status!');
+        }catch(\Exception $e){
+            return redirect()->back()->with('error', 'Agent updated failed: ' . $e->getMessage());
+        }
+    }
 
     public function approved($id)
     {

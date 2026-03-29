@@ -29,12 +29,13 @@
                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                         <th class="w-10px pe-2">SL</th>
                         <th class="min-w-125px">Name</th>
-                        <th class="min-w-125px">Number</th>
-                        <th class="min-w-125px">Total</th>
-                        <th class="min-w-125px">Paid</th>
-                        <th class="min-w-125px">Due</th>
-                        <th class="min-w-125px">Status</th>
-                        <th class="text-end min-w-70px">Actions</th>
+                        <th class="min-w-100px">Number</th>
+                        <th class="min-w-100px">Total</th>
+                        <th class="min-w-100px">Paid</th>
+                        <th class="min-w-100px">Due</th>
+                        <th class="w-70px">Payment</th>
+                        <th class="w-70px">Status</th>
+                        <th class="text-end w-70px">Actions</th>
                     </tr>
                 </thead>
                 <tbody class="fw-semibold text-gray-600">
@@ -43,21 +44,25 @@
                         <td>{{ $index + 1 }}</td>
                         <td class="d-flex align-items-center border-0">
                             <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
-                                <a href="#">
-                                    @if($item->form?->client?->avatar)
+                                <a href="{{route('receptionist.client.overview', $item->id)}}" target="_blank">
+                                    @if($item->form?->client?->user->avatar)
                                         <div class="symbol-label">
-                                            <img src="{{asset($item->form->client->avatar)}}" alt="{{$item->form->client->name}}" class="w-100" />
+                                            <img src="{{asset($item->form?->client?->user->avatar)}}" alt="{{$item->form?->client?->user->name}}" class="w-100" />
                                         </div>
-                                    @elseif($item->form?->client?->name)
-                                        <div class="symbol-label fs-3 bg-light-danger text-danger"> {{substr($item->form->client->name,0,1)}} </div>
                                     @else
-                                        <div class="symbol-label fs-3 bg-light-secondary text-muted">N</div>
+                                        <div class="symbol-label fs-3 bg-light-danger text-danger"> {{substr($item->form?->client?->user->name,0,1)}} </div>
                                     @endif
                                 </a>
+                                @if($item->form?->client?->user->isOnline())
+                                    <div class="bg-success position-absolute border border-4 border-body h-15px w-15px rounded-circle translate-middle start-100 top-100 ms-n3 mt-n3"></div>
+                                @else
+                                    <div class="bg-danger position-absolute border border-4 border-body h-15px w-15px rounded-circle translate-middle start-100 top-100 ms-n3 mt-n3"></div>
+                                @endif
                             </div>
                             <div class="d-flex flex-column">
-                                <div>{{$item->form?->client?->email ?? 'N/L'}}</div>
-                                <div>{{$item->form?->client?->phone ?? 'N/L'}}</div>
+                                <a href="{{route('receptionist.client.overview', $item->id)}}" target="_blank" class="text-gray-800 text-hover-primary mb-1">{{$item->form?->client?->user->name}}</a>
+                                <div>{{$item->form?->client?->user->email}}</div>
+                                <div>{{$item->form?->client?->user->phone}}</div>
                             </div>
                         </td>
                         <td><a href="{{ route('receptionist.invoices.print', $item->id) }}" target="_blank">{{$item->number}}</a></td>
@@ -65,13 +70,42 @@
                         <td>{{$item->paid_amount}}</td>
                         <td>{{$item->due_amount}}</td>
                         <td>
-                            @if($item->status == 'paid')
+                            @if($item->payment_status == 'paid')
                                 <span class="badge badge-light-success">Paid</span>
-                            @elseif($item->status == 'partial')
+                            @elseif($item->payment_status == 'partial')
                                 <span class="badge badge-light-warning">Partial</span>
                             @else
                                 <span class="badge badge-light-danger">Due</span>
                             @endif
+                        </td>
+                        <td>
+                            @php
+                                $current = $item->invoice_status;
+                                $flow = config('status_flow.invoice');
+                                $allowed = $flow[$current] ?? [];
+                            @endphp
+
+                            @if ($item->invoice_status == 'pending')
+                                <a href="#" class="btn btn-sm btn-light-warning btn-flex btn-center btn-active-light-warning dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">{{ ucfirst($item->invoice_status) }}</a>
+                            @elseif ($item->invoice_status == 'processing')
+                                <a href="#" class="btn btn-sm btn-light-primary btn-flex btn-center btn-active-light-primary dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">{{ ucfirst($item->invoice_status) }}</a>
+                            @elseif ($item->invoice_status == 'approved')
+                                <a href="#" class="btn btn-sm btn-light-success btn-flex btn-center btn-active-light-success dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">{{ ucfirst($item->invoice_status) }}</a>
+                            @else
+                                <a href="#" class="btn btn-sm btn-light-danger btn-flex btn-center btn-active-light-danger dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">{{ ucfirst($item->invoice_status) }}</a>
+                            @endif
+                            
+                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4 dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                @foreach (['pending','processing','approved','cancelled'] as $status)
+                                    <div class="menu-item px-3">
+                                        <a href="javascript:;"
+                                        class="menu-link px-3 {{ !in_array($status,$allowed) ? 'disabled text-muted' : '' }}"
+                                        wire:click="{{ in_array($status,$allowed) ? "statusClick($item->id, '$status')" : '' }}">
+                                            {{ ucfirst($status) }}
+                                        </a>
+                                    </div>
+                                @endforeach
+                            </div>
                         </td>
  
                         <td class="text-end">
@@ -111,37 +145,32 @@
                         <div class="scroll-y me-n7 pe-7">
                             <div class="row">
                                 <div class="col-md-6 mb-7">
-                                    <div wire:ignore>
-                                        <label class="required fs-6 fw-semibold mb-2">Select Application</label>
-                                        <select class="form-select form-select-solid form_id" data-control="select2" data-placeholder="Select Application" wire:model="form_id">
-                                            <option value="">Select Apllication...</option>
-                                            @foreach ($forms as $item)
-                                                <option value="{{$item->id}}">{{$item->number}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+                                    <label class="required fs-6 fw-semibold mb-2">Select Application</label>
+                                    <select wire:ignore class="form-select p-0 w-100 border-0 selectpicker" data-live-search="true" title="Select Application" wire:model="form_id">
+                                        <option value="">Select Apllication...</option>
+                                        @foreach ($forms as $item)
+                                            <option value="{{$item->id}}">{{$item->number}} - {{$item->client->user->name}}</option>
+                                        @endforeach
+                                    </select>
                                     @error('form_id') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="col-md-6 mb-7">
                                     <label class="required fs-6 fw-semibold mb-2">Number</label>
-                                    <input type="text" wire:model="number" class="form-control form-control-solid" disabled />
-                                    @error('number') <span class="text-danger">{{ $message }}</span> @enderror
+                                    <input type="text" wire:model="serial" class="form-control form-control-solid" disabled />
+                                    @error('serial') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="col-md-6 mb-7">
                                     <label class="required fs-6 fw-semibold mb-2">Date</label>
-                                    <input type="date" wire:model="date" class="form-control form-control-solid"/>
+                                    <input type="date" wire:model="date" class="form-control form-control-solid" disabled/>
                                     @error('date') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="col-md-6 mb-7">
-                                    <div wire:ignore>
-                                        <label class="required fs-6 fw-semibold mb-2">Select Method</label>
-                                        <select class="form-select form-select-solid method" data-control="select2" data-hide-search="true" data-placeholder="Select Method" wire:model="method">
-                                            <option value="">Select Method...</option>
-                                            <option value="cash">Cash</option>
-                                            <option value="bank">Bank</option>
-                                            <option value="mobile">Mobile</option>
-                                        </select>
-                                    </div>
+                                    <label class="required fs-6 fw-semibold mb-2">Select Method</label>
+                                    <select wire:ignore class="form-select p-0 w-100 border-0 selectpicker" title="Select Method" wire:model="method">
+                                        <option value="cash">Cash</option>
+                                        <option value="bank">Bank</option>
+                                        <option value="mobile">Mobile</option>
+                                    </select>
                                     @error('method') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="col-md-12 mb-7">
@@ -216,37 +245,32 @@
                         <div class="scroll-y me-n7 pe-7">
                             <div class="row">
                                 <div class="col-md-6 mb-7">
-                                    <div wire:ignore>
-                                        <label class="required fs-6 fw-semibold mb-2">Select Application</label>
-                                        <select class="form-select form-select-solid form_id" data-control="select2" data-placeholder="Select Application" wire:model="form_id">
-                                            <option value="">Select Apllication...</option>
-                                            @foreach ($forms as $item)
-                                                <option value="{{$item->id}}">{{$item->number}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+                                    <label class="required fs-6 fw-semibold mb-2">Select Application</label>
+                                    <select wire:ignore class="form-select p-0 w-100 border-0 selectpicker" data-live-search="true" title="Select Application" wire:model="form_id">
+                                        <option value="">Select Apllication...</option>
+                                        @foreach ($forms as $item)
+                                            <option value="{{$item->id}}">{{$item->number}} - {{$item->client->user->name}}</option>
+                                        @endforeach
+                                    </select>
                                     @error('form_id') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="col-md-6 mb-7">
                                     <label class="required fs-6 fw-semibold mb-2">Number</label>
-                                    <input type="text" wire:model="number" class="form-control form-control-solid" disabled />
-                                    @error('number') <span class="text-danger">{{ $message }}</span> @enderror
+                                    <input type="text" wire:model="serial" class="form-control form-control-solid" disabled />
+                                    @error('serial') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="col-md-6 mb-7">
                                     <label class="required fs-6 fw-semibold mb-2">Date</label>
-                                    <input type="date" wire:model="date" class="form-control form-control-solid"/>
+                                    <input type="date" wire:model="date" class="form-control form-control-solid" disabled/>
                                     @error('date') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="col-md-6 mb-7">
-                                    <div wire:ignore>
-                                        <label class="required fs-6 fw-semibold mb-2">Select Method</label>
-                                        <select class="form-select form-select-solid method" data-control="select2" data-hide-search="true" data-placeholder="Select Method" wire:model="method">
-                                            <option value="">Select Method...</option>
-                                            <option value="cash">Cash</option>
-                                            <option value="bank">Bank</option>
-                                            <option value="mobile">Mobile</option>
-                                        </select>
-                                    </div>
+                                    <label class="required fs-6 fw-semibold mb-2">Select Method</label>
+                                    <select wire:ignore class="form-select p-0 w-100 border-0 selectpicker" title="Select Method" wire:model="method">
+                                        <option value="cash">Cash</option>
+                                        <option value="bank">Bank</option>
+                                        <option value="mobile">Mobile</option>
+                                    </select>
                                     @error('method') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="col-md-12 mb-7">

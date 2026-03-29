@@ -3,7 +3,6 @@
 namespace App\Livewire\Auth;
 
 use Livewire\Component;
-// use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -13,16 +12,16 @@ class LoginComponent extends Component
 {
     public $email;
     public $password;
-    public $remember;
+    public $remember = false;
 
     public function render()
     {
-        return view('livewire.auth.login-component')->layout('layouts.auth.app');
+        return view('livewire.auth.login-component')->layout('layouts.frontend.app');
     }
 
-    public function login()
+    public function store()
     {
-        $validation = $this->validate([
+        $this->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
@@ -32,10 +31,8 @@ class LoginComponent extends Component
             'password' => $this->password,
         ];
 
-        if (Auth::attempt($credentials)) {
-
+        if (Auth::attempt($credentials, $this->remember)) {
             session()->regenerate();
-
             return redirect()->to(auth()->user()->getRedirectRoute());
         } else {
             session()->flash('error', 'Invalid credentials. Please try again.');

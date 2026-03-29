@@ -2,7 +2,7 @@
 @section('breadcrumb')
     <li class="breadcrumb-item text-muted"><a href="#" class="text-muted text-hover-primary">Home</a></li>
     <li class="breadcrumb-item"><span class="bullet bg-gray-400 w-5px h-2px"></span></li>
-    <li class="breadcrumb-item text-muted">Required Documents Checklist</li>
+    <li class="breadcrumb-item text-muted">Documents</li>
 @endsection
 
 
@@ -36,23 +36,69 @@
                                 <th class="min-w-125px">Status</th>
                                 <th class="min-w-125px">View</th>
                                 <th class="min-w-125px">Date Added</th>
-                                <th class="text-end min-w-70px">Actions</th>
                             </tr>
                         </thead>
                         <tbody class="fw-semibold text-gray-600">
                             @forelse ($documents as $index => $item)
                             <tr>
                                 <td>{{ $index + 1 }}</td>
-                                <td>{{$item->client->name}}</td>
-                                <td>{{$item->name}}</td>
+                                <td class="d-flex align-items-center border-0">
+                                    <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
+                                        <a href="{{route('receptionist.client.overview', $item->client->id)}}" target="_blank">
+                                            @if($item->client->user->avatar)
+                                                <div class="symbol-label">
+                                                    <img src="{{asset($item->client->user->avatar)}}" alt="{{$item->client->user->name}}" class="w-100" />
+                                                </div>
+                                            @else
+                                                <div class="symbol-label fs-3 bg-light-danger text-danger"> {{substr($item->client->user->name,0,1)}} </div>
+                                            @endif
+                                        </a>
+                                        @if($item->client->user->isOnline())
+                                            <div class="bg-success position-absolute border border-4 border-body h-15px w-15px rounded-circle translate-middle start-100 top-100 ms-n3 mt-n3"></div>
+                                        @else
+                                            <div class="bg-danger position-absolute border border-4 border-body h-15px w-15px rounded-circle translate-middle start-100 top-100 ms-n3 mt-n3"></div>
+                                        @endif
+                                    </div>
+                                    <div class="d-flex flex-column">
+                                        <div>
+                                            <a href="{{route('receptionist.client.overview', $item->client->id)}}" target="_blank" class="text-gray-800 text-hover-primary mb-1">{{$item->client->user->name}}</a>
+                                            @if ($item->client->user->account_status == 0)
+                                                <a wire:click="approved({{$item->client->user->id}})" href="javascript:;" class="menu-link badge badge-light-warning"> Approved </a>
+                                            @endif
+                                        </div>
+                                        <div>{{$item->client->user->email}}</div>
+                                        <div>{{$item->client->user->phone}}</div>
+                                    </div>
+                                </td>
+                                <td>{{$item->document_type}}</td>
                                 <td>
-                                    @if($item->status == 'pending')
-                                        <span class="badge badge-light-warning">Pending</span>
-                                    @elseif($item->status == 'uploaded')
-                                        <span class="badge badge-light-info">Uploaded</span>
-                                    @elseif($item->status == 'verified')
-                                        <span class="badge badge-light-success">Verified</span>
+                                    @php
+                                        $current = $item->status;
+                                        $flow = config('status_flow.document');
+                                        $allowed = $flow[$current] ?? [];
+                                    @endphp
+
+                                    @if ($item->status == 'pending')
+                                        <a href="#" class="btn btn-sm btn-light-warning btn-flex btn-center btn-active-light-warning dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">{{ ucfirst($item->status) }}</a>
+                                    @elseif ($item->status == 'uploaded')
+                                        <a href="#" class="btn btn-sm btn-light-primary btn-flex btn-center btn-active-light-primary dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">{{ ucfirst($item->status) }}</a>
+                                    @elseif ($item->status == 'verified')
+                                        <a href="#" class="btn btn-sm btn-light-success btn-flex btn-center btn-active-light-success dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">{{ ucfirst($item->status) }}</a>
+                                    @else
+                                        <a href="#" class="btn btn-sm btn-light-danger btn-flex btn-center btn-active-light-danger dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">{{ ucfirst($item->status) }}</a>
                                     @endif
+                                    
+                                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4 dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                        @foreach (['pending','uploaded','verified','declined'] as $status)
+                                            <div class="menu-item px-3">
+                                                <a href="javascript:;"
+                                                class="menu-link px-3 {{ !in_array($status,$allowed) ? 'disabled text-muted' : '' }}"
+                                                wire:click="{{ in_array($status,$allowed) ? "statusClick($item->id, '$status')" : '' }}">
+                                                    {{ ucfirst($status) }}
+                                                </a>
+                                            </div>
+                                        @endforeach
+                                    </div>
                                 </td>
                                 <td>
                                     @if($item->file)
@@ -67,20 +113,6 @@
                                     @endif
                                 </td>
                                 <td>{{ \Carbon\Carbon::parse($item->updated_at)->diffForHumans() }}</td>
-                                <td class="text-end">
-                                    <a href="#" class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                    <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                        <div class="menu-item px-3">
-                                            <a href="javascript:;" wire:click="edit({{ $item->id }})" data-bs-toggle="modal" data-bs-target="#editModal" class="menu-link px-3">Edit</a>
-                                        </div>
-                                        @if($item->status != 'verified')
-                                            <div class="menu-item px-3">
-                                                <a href="javascript:;" wire:click="verify({{ $item->id }})"  class="menu-link px-3">Verify</a>
-                                            </div>
-                                        @endif
-                                    </div>
-                                </td>
                             </tr>
                             @empty
                             @endforelse
@@ -90,108 +122,9 @@
             </div>
         </div>
     </div>
-
-    <!--begin::Modals-->
-        <div wire:ignore.self class="modal fade" id="addModal" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-xl">
-                <div class="modal-content">
-                    <form class="form" role="form" wire:submit.prevent="store">
-                        <div class="modal-header">
-                            <h2 class="fw-bold">Add Document</h2>
-                            <div wire:click="close" class="btn btn-icon btn-sm btn-active-icon-primary"  data-bs-dismiss="modal">
-                                <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
-                            </div>
-                        </div>
-                        <div class="modal-body py-10 px-lg-17">
-                            <div class="scroll-y me-n7 pe-7">
-                                <div class="fv-row mb-7">
-                                    <label class="required fs-6 fw-semibold mb-2">File</label>
-                                    <input type="file" wire:model="file" name="file" />
-                                    @error('file') <span class="text-danger">{{ $message }}</span> @enderror
-                                </div>
-                                <div class="fv-row mb-7">
-                                    <div wire:ignore>
-                                        <label class="required fs-6 fw-semibold mb-2">Select Client</label>
-                                        <select class="form-select form-select-solid client_id" data-control="select2" data-hide-search="true" data-placeholder="Select a Client" wire:model="client_id">
-                                            <option value="">Select Client...</option>
-                                            @foreach ($clients as $item)
-                                                <option value="{{$item->id}}">{{$item->name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    @error('client_id') <span class="text-danger">{{ $message }}</span> @enderror
-                                </div>
-                                <div class="fv-row mb-7">
-                                    <div wire:ignore>
-                                        <label class="required fs-6 fw-semibold mb-2">Select Type</label>
-                                        <select class="form-select form-select-solid type" data-control="select2" data-hide-search="true" data-placeholder="Select a type" wire:model="type">
-                                        <option value="">Select Type...</option>
-                                            <option value="Passport Copy">Passport Copy</option>
-                                            <option value="NID Copy">NID Copy</option>
-                                            <option value="Bank Statement">Bank Statement</option>
-                                            <option value="Academic Certificate">Academic Certificate</option>
-                                            <option value="Photo">Photo</option>
-                                        </select>
-                                    </div>
-                                    @error('type') <span class="text-danger">{{ $message }}</span> @enderror
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer flex-end">
-                            <button type="submit" class="btn btn-sm btn-primary">Save</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    <!--end::Modals-->
-    <!--begin::Modals-->
-        <div wire:ignore.self class="modal fade" id="editModal" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-xl">
-                <div class="modal-content">
-                    <form class="form" role="form" wire:submit.prevent="update">
-                        <div class="modal-header">
-                            <h2 class="fw-bold">Edit Document</h2>
-                            <div wire:click="close" class="btn btn-icon btn-sm btn-active-icon-primary"  data-bs-dismiss="modal">
-                                <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
-                            </div>
-                        </div>
-                        <div class="modal-body py-10 px-lg-17">
-                            <div class="scroll-y me-n7 pe-7">
-                                <div class="me-7 mb-4">
-                                    <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
-                                        <img src="{{asset($file)}}" alt="file">
-                                    </div>
-                                </div>
-                                <div class="fv-row mb-7">
-                                    <label class="required fs-6 fw-semibold mb-2">New Document</label> <br>
-                                    <input type="file" wire:model="newfile" name="newfile"/>
-                                    @error('newfile') <span class="text-danger">{{ $message }}</span> @enderror
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer flex-end">
-                            <button type="submit" class="btn btn-sm btn-primary">Update</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    <!--end::Modals-->
-
 </div>
 
     @push('scripts')
-        <script>
-            document.addEventListener('livewire:init', () => {
-                $('.client_id').on('change', function () {
-                    @this.set('client_id', $(this).val());
-                });
-                $('.type').on('change', function () {
-                    @this.set('type', $(this).val());
-                });
-            });
-        </script>
         <script>
             "use strict";
             var KTDatatable = function () {
@@ -208,7 +141,7 @@
                         "lengthChange": false,
                         'columnDefs': [
                         { orderable: false, targets: 0 },
-                        { orderable: false, targets: 5 },
+                        { orderable: false, targets: 4 },
                         ],
                         'dom': `<'row'<'col-sm-12'tr>><'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
                         'language': {

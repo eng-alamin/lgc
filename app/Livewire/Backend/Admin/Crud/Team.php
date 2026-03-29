@@ -37,7 +37,7 @@ class Team extends Component
     public function render()
     {    $teams = TeamModel::latest()->get();
 
-        return view('livewire.backend.admin.crud.teams', [
+        return view('livewire.backend.admin.crud.team', [
             'teams' => $teams,
         ])
         ->layout('layouts.backend.app', [

@@ -25,8 +25,7 @@ class EditComponent extends Component
     public $e_passport_number;
     public $e_date_of_issue;
     public $e_date_of_expiry;
-    public $e_place_of_issue;
-    public $e_medium_of_instruction;
+    public $e_medium_of_instruction = [];
     public $e_duolingo;
     public $e_score;
     public $e_intended_level_of_study;
@@ -67,8 +66,6 @@ class EditComponent extends Component
 
     public function serviceLoad($form)
     {
-        $this->dispatch('refreshSelect');
-
         $this->e_name = $form->data['name'];
         $this->e_gender = $form->data['gender'];
         $this->e_date_of_birth = $form->data['date_of_birth'];
@@ -82,7 +79,6 @@ class EditComponent extends Component
         $this->e_passport_number = $form->data['passport_number'];
         $this->e_date_of_issue = $form->data['date_of_issue'];
         $this->e_date_of_expiry = $form->data['date_of_expiry'];
-        $this->e_place_of_issue = $form->data['place_of_issue'];
         $this->e_medium_of_instruction = $form->data['medium_of_instruction'];
         $this->e_duolingo = $form->data['duolingo'];
         $this->e_score = $form->data['score'];
@@ -135,7 +131,6 @@ class EditComponent extends Component
                     'e_passport_number' => 'required',
                     'e_date_of_issue' => 'required',
                     'e_date_of_expiry' => 'required',
-                    'e_place_of_issue' => 'required',
                     'e_medium_of_instruction' => 'required',
                     'e_duolingo' => 'required',
                     'e_score' => 'required',
@@ -179,7 +174,6 @@ class EditComponent extends Component
             'e_passport_number' => 'required',
             'e_date_of_issue' => 'required',
             'e_date_of_expiry' => 'required',
-            'e_place_of_issue' => 'required',
             'e_medium_of_instruction' => 'required',
             'e_duolingo' => 'required',
             'e_score' => 'required',
@@ -221,7 +215,6 @@ class EditComponent extends Component
                 'passport_number' => $this->e_passport_number,
                 'date_of_issue' => $this->e_date_of_issue,
                 'date_of_expiry' => $this->e_date_of_expiry,
-                'place_of_issue' => $this->e_place_of_issue,
                 'medium_of_instruction' => $this->e_medium_of_instruction,
                 'duolingo' => $this->e_duolingo,
                 'score' => $this->e_score,

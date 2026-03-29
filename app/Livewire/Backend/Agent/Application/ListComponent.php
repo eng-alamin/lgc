@@ -15,13 +15,13 @@ class ListComponent extends Component
 
     public function render()
     {
-        $data = Form::where('agent_id', auth()->id())->latest()->get();
+        $data = Form::where('agent_id', auth()->user()->agent->id)->latest()->get();
 
         return view('livewire.backend.agent.application.list-component', [
             'data' => $data,
         ])
         ->layout('layouts.agent.app', [
-            'title' => "Application List | Let's Go China",
+            'title' => "Registration Forms | Let's Go China",
         ]);
     }
 

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->string('employee_id')->unique(); // LG-EMP-001
+            $table->string('id_number')->unique(); // LG-EMP-001
             $table->foreignId('department_id')->nullable()->constrained()->nullOnDelete();
             $table->string('designation');
             $table->decimal('basic_salary', 10, 2)->default(0);

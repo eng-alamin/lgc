@@ -3,6 +3,8 @@
     <li class="breadcrumb-item text-muted"><a href="#" class="text-muted text-hover-primary">Home</a></li>
     <li class="breadcrumb-item"><span class="bullet bg-gray-400 w-5px h-2px"></span></li>
     <li class="breadcrumb-item text-muted">Agents</li>
+    <li class="breadcrumb-item"><span class="bullet bg-gray-400 w-5px h-2px"></span></li>
+    <li class="breadcrumb-item text-muted">List</li>
 @endsection
 
 <div id="kt_app_content_container" class="app-container container-fluid">
@@ -19,7 +21,7 @@
             </div>
             <div class="card-toolbar">
                 <div class="d-flex justify-content-end">
-                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addAgent">Add Agent</button>
+                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">Add Agent</button>
                 </div>
             </div>
         </div>
@@ -27,10 +29,8 @@
             <table class="table align-middle table-row-dashed fs-6 gy-5" id="datatable">
                 <thead>
                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
-                        <th class="w-10px pe-2">#ID</th>
+                        <th class="w-10px pe-2">SL</th>
                         <th class="min-w-125px">Name</th>
-                        <th class="min-w-125px">Address</th>
-                        <th class="min-w-125px">City</th>
                         <th class="min-w-125px">Verified</th>
                         <th class="min-w-125px">Last Active</th>
                         <th class="min-w-125px">Account Status</th>
@@ -38,21 +38,21 @@
                     </tr>
                 </thead>
                 <tbody class="fw-semibold text-gray-600">
-                    @forelse ($data as $item)
+                    @forelse ($data as $index => $item)
                     <tr>
-                        <td>#{{$item->id}}</td>
+                        <td>{{ $index + 1 }}</td>
                         <td class="d-flex align-items-center border-0">
                             <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
                                 <a href="#">
-                                    @if($item->avatar)
+                                    @if($item->user->avatar)
                                         <div class="symbol-label">
-                                            <img src="{{asset($item->avatar)}}" alt="{{$item->name}}" class="w-100" />
+                                            <img src="{{asset($item->user->avatar)}}" alt="{{$item->user->name}}" class="w-100" />
                                         </div>
                                     @else
-                                        <div class="symbol-label fs-3 bg-light-danger text-danger"> {{substr($item->name,0,1)}} </div>
+                                        <div class="symbol-label fs-3 bg-light-danger text-danger"> {{substr($item->user->name,0,1)}} </div>
                                     @endif
                                 </a>
-                                @if($item->isOnline())
+                                @if($item->user->isOnline())
                                     <div class="bg-success position-absolute border border-4 border-body h-15px w-15px rounded-circle translate-middle start-100 top-100 ms-n3 mt-n3"></div>
                                 @else
                                     <div class="bg-danger position-absolute border border-4 border-body h-15px w-15px rounded-circle translate-middle start-100 top-100 ms-n3 mt-n3"></div>
@@ -60,71 +60,62 @@
                             </div>
                             <div class="d-flex flex-column">
                                 <div>
-                                    <a href="#" class="text-gray-800 text-hover-primary mb-1">{{$item->name}}</a>
-                                    @if ($item->account_status == 0)
-                                        <a wire:click="approved({{$item->id}})" href="javascript:;" class="menu-link badge badge-light-warning"> Approved </a>
+                                    <a href="#" class="text-gray-800 text-hover-primary mb-1">{{$item->user->name}}</a>
+                                    @if ($item->user->account_status == 0)
+                                        <a wire:click="approved({{$item->user->id}})" href="javascript:;" class="menu-link badge badge-light-warning"> Approved </a>
                                     @endif
                                 </div>
-                                <div>{{$item->email}}</div>
-                                <div>{{$item->phone}}</div>
+                                <div>{{$item->user->email}}</div>
+                                <div>{{$item->user->phone}}</div>
                             </div>
                         </td>
-
-                        @php $data_json = json_decode($item->data) @endphp
+                        <td><i class="fa fa-check-circle {{$item->user->email_verified_at ? 'text-success' : 'text-danger'}}"></i></td>
+                        <td>@if($item->user->last_seen) {{ \Carbon\Carbon::parse($item->user->last_seen)->diffForHumans() }} @else N/L @endif</td>
                         <td>
-                            @if(isset($data_json->address)) {{$data_json->address}}, @endif
-                        </td>
-                        <td>
-                            @if(isset($data_json->city)) {{$data_json->city}} - @endif
-                            @if(isset($data_json->postal)) {{$data_json->postal}} @endif
-                        </td>
-                        <td><i class="fa fa-check-circle {{$item->email_verified_at ? 'text-success' : 'text-danger'}}"></i></td>
-                        <td>@if($item->last_seen) {{ \Carbon\Carbon::parse($item->last_seen)->diffForHumans() }} @else N/L @endif</td>
-                        <td>
-                            @if ($item->account_status == 0)
+                            @if ($item->user->account_status == 0)
                                 <a href="#" class="btn btn-sm btn-warning btn-flex btn-center btn-active-light-warning dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Pending</a>
-                            @elseif ($item->account_status == 1)
+                            @elseif ($item->user->account_status == 1)
                                 <a href="#" class="btn btn-sm btn-success btn-flex btn-center btn-active-light-success dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Approved</a>
-                            @elseif ($item->account_status == 2)
+                            @elseif ($item->user->account_status == 2)
                                 <a href="#" class="btn btn-sm btn-danger btn-flex btn-center btn-active-light-danger dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Deactive</a>
-                            @elseif ($item->account_status == 3)
+                            @elseif ($item->user->account_status == 3)
                                 <a href="#" class="btn btn-sm btn-danger btn-flex btn-center btn-active-light-danger dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Suspended</a>
-                            @elseif ($item->account_status == 4)
+                            @elseif ($item->user->account_status == 4)
                                 <a href="#" class="btn btn-sm btn-danger btn-flex btn-center btn-active-light-danger dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Banned</a>
                             @else
                                 <a href="#" class="btn btn-sm btn-danger btn-flex btn-center btn-active-light-danger dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Deleted</a>
                             @endif
                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4 dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                 <div class="menu-item px-3">
-                                    <a href="javascript:;"  wire:click="statusClick({{ $item->id }}, 0)" class="menu-link px-3">Pending</a>
+                                    <a href="javascript:;"  wire:click="statusClick({{ $item->user->id }}, 0)" class="menu-link px-3">Pending</a>
                                 </div>
                                 <div class="menu-item px-3">
-                                    <a href="javascript:;"  wire:click="statusClick({{ $item->id }}, 1)" class="menu-link px-3">Approved</a>
+                                    <a href="javascript:;"  wire:click="statusClick({{ $item->user->id }}, 1)" class="menu-link px-3">Approved</a>
                                 </div>
                                 <div class="menu-item px-3">
-                                    <a href="javascript:;"  wire:click="statusClick({{ $item->id }}, 2)" class="menu-link px-3">Deactive</a>
+                                    <a href="javascript:;"  wire:click="statusClick({{ $item->user->id }}, 2)" class="menu-link px-3">Deactive</a>
                                 </div>
                                 <div class="menu-item px-3">
-                                    <a href="javascript:;"  wire:click="statusClick({{ $item->id }}, 3)" class="menu-link px-3">Suspended</a>
+                                    <a href="javascript:;"  wire:click="statusClick({{ $item->user->id }}, 3)" class="menu-link px-3">Suspended</a>
                                 </div>
                                 <div class="menu-item px-3">
-                                    <a href="javascript:;"  wire:click="statusClick({{ $item->id }}, 4)" class="menu-link px-3">Banned</a>
+                                    <a href="javascript:;"  wire:click="statusClick({{ $item->user->id }}, 4)" class="menu-link px-3">Banned</a>
                                 </div>
                             </div>
                         </td>
                         <td class="text-end">
                             <a href="#" class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Actions</a>
                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4 dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                @if ($item->account_status == 0)
+                                @if ($item->user->account_status == 0)
                                     <div class="menu-item px-3">
-                                        <a href="javascript:;" wire:click="approved({{ $item->id }})" class="menu-link px-3">Approved</a>
+                                        <a href="javascript:;" wire:click="approved({{ $item->user->id }})" class="menu-link px-3">Approved</a>
                                     </div>
                                 @endif
                                 <div class="menu-item px-3">
-                                    <a href="javascript:;" wire:click="edit({{ $item->id }})" data-bs-toggle="modal" data-bs-target="#editAgent" class="menu-link px-3">Edit</a>
+                                    <a href="javascript:;" wire:click="edit({{ $item->id }})" data-bs-toggle="modal" data-bs-target="#editModal" class="menu-link px-3">Edit</a>
                                 </div>
                                 <div class="menu-item px-3">
-                                    <a href="javascript:;"  wire:click="deleteConfirmation({{ $item->id }})" class="menu-link px-3">Delete</a>
+                                    <a href="javascript:;"  wire:click="deleteConfirmation({{ $item->user->id }})" class="menu-link px-3">Delete</a>
                                 </div>
                             </div>
                         </td>
@@ -136,7 +127,7 @@
         </div>
     </div>
     <!--begin::Modals-->
-    <div wire:ignore.self class="modal fade" id="addAgent" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div wire:ignore.self class="modal fade" id="addModal" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <form wire:submit="store" class="form" action="#">
@@ -163,26 +154,6 @@
                                 <input type="tel" wire:model="phone" name="phone" class="form-control form-control-solid" placeholder="Enter Phone" />
                                 @error('phone') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
-                            <div class="fv-row mb-7">
-                                <label class="fs-6 fw-semibold mb-2">Address</label>
-                                <input type="text" wire:model="address" name="address" class="form-control form-control-solid" placeholder="Enter Address" />
-                                @error('address') <span class="text-danger">{{ $message }}</span> @enderror
-                            </div>
-                            <div class="fv-row mb-7">
-                                <label class="fs-6 fw-semibold mb-2">City</label>
-                                <input type="text" wire:model="city" name="city" class="form-control form-control-solid" placeholder="Enter City" />
-                                @error('city') <span class="text-danger">{{ $message }}</span> @enderror
-                            </div>
-                            <div class="fv-row mb-7">
-                                <label class="fs-6 fw-semibold mb-2">Postal</label>
-                                <input type="text" wire:model="postal" name="postal" class="form-control form-control-solid" placeholder="Enter Postal" />
-                                @error('postal') <span class="text-danger">{{ $message }}</span> @enderror
-                            </div>
-                            <div class="fv-row mb-7">
-                                <label class="fs-6 fw-semibold mb-2">Website</label>
-                                <input type="text" wire:model="website" name="website" class="form-control form-control-solid" placeholder="Enter Website" />
-                                @error('website') <span class="text-danger">{{ $message }}</span> @enderror
-                            </div>
                         </div>
                     </div>
                     <div class="modal-footer flex-end">
@@ -194,7 +165,7 @@
     </div>
      <!--end::Modals-->
     <!--begin::Modals-->
-    <div wire:ignore.self class="modal fade" id="editAgent" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div wire:ignore.self class="modal fade" id="editModal" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <form wire:submit="update" class="form" action="#">
@@ -220,26 +191,6 @@
                                 <label class="fs-6 fw-semibold mb-2">Phone</label>
                                 <input type="tel" wire:model="phone" name="phone" class="form-control form-control-solid" placeholder="Enter Phone" />
                                 @error('phone') <span class="text-danger">{{ $message }}</span> @enderror
-                            </div>
-                            <div class="fv-row mb-7">
-                                <label class="fs-6 fw-semibold mb-2">Address</label>
-                                <input type="text" wire:model="address" name="address" class="form-control form-control-solid" placeholder="Enter Address" />
-                                @error('address') <span class="text-danger">{{ $message }}</span> @enderror
-                            </div>
-                            <div class="fv-row mb-7">
-                                <label class="fs-6 fw-semibold mb-2">City</label>
-                                <input type="text" wire:model="city" name="city" class="form-control form-control-solid" placeholder="Enter City" />
-                                @error('city') <span class="text-danger">{{ $message }}</span> @enderror
-                            </div>
-                            <div class="fv-row mb-7">
-                                <label class="fs-6 fw-semibold mb-2">Postal</label>
-                                <input type="text" wire:model="postal" name="postal" class="form-control form-control-solid" placeholder="Enter Postal" />
-                                @error('postal') <span class="text-danger">{{ $message }}</span> @enderror
-                            </div>
-                            <div class="fv-row mb-7">
-                                <label class="fs-6 fw-semibold mb-2">Website</label>
-                                <input type="text" wire:model="website" name="website" class="form-control form-control-solid" placeholder="Enter Website" />
-                                @error('website') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                         </div>
                     </div>
@@ -270,7 +221,7 @@
                     "lengthChange": false,
                     'columnDefs': [
                     { orderable: false, targets: 0 },
-                    { orderable: false, targets: 7 },
+                    { orderable: false, targets: 5 },
                     ],
                     'dom': `<'row'<'col-sm-12'tr>><'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
                     'language': {

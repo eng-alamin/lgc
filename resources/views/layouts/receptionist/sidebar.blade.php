@@ -51,7 +51,7 @@
                     </div>
 
                     <div class="menu-item">
-                        <a class="menu-link {{ str_contains(request()->url(), 'receptionist/clients') == true ? 'active' : '' }}" href="{{route('receptionist.clients')}}">
+                        <a class="menu-link {{ str_contains(request()->url(), 'receptionist/client/list') == true ? 'active' : '' }}" href="{{route('receptionist.client.list')}}">
                             <span class="menu-icon">
                                 <i class="ki-duotone ki-user fs-2">
                                     <span class="path1"></span>
@@ -80,7 +80,7 @@
                                     <span class="path2"></span>
                                 </i>
                             </span>
-                            <span class="menu-title">Applications</span>
+                            <span class="menu-title">Registration</span>
                         </a>
                     </div>
                     <div class="menu-item">

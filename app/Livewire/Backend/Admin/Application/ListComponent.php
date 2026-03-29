@@ -4,13 +4,12 @@ namespace App\Livewire\Backend\Admin\Application;
 
 use Livewire\Component;
 use App\Models\Form;
-use App\Models\StatusHistory;
 use App\Models\Commission;
 use App\Models\CommissionRule;
 
 class ListComponent extends Component
 {
-    public $application_id;
+    public $form_id;
     public $delete_id;
 
     protected $listeners = ['deleteConfirmed' => 'delete'];
@@ -23,13 +22,13 @@ class ListComponent extends Component
             'data' => $data,
         ])
         ->layout('layouts.backend.app', [
-            'title' => "Application List | Let's Go China",
+            'title' => "Form List | Let's Go China",
         ]);
     }
 
     public function canChangeTo($currentStatus, $newStatus)
     {
-        $flow = config('status_flow.application');
+        $flow = config('status_flow.form');
 
         if (!isset($flow[$currentStatus])) {
             return false;
@@ -40,34 +39,34 @@ class ListComponent extends Component
 
     public function statusClick($id, $newStatus)
     {
-        $application = Form::findOrFail($id);
+        $form = Form::findOrFail($id);
 
         // Prevent invalid transition
-        if (!$this->canChangeTo($application->status, $newStatus)) {
+        if (!$this->canChangeTo($form->status, $newStatus)) {
             session()->flash('error', 'Invalid status transition!');
             return;
         }
 
         // Already approved check
-        if ($application->status === 'approved') {
+        if ($form->status === 'approved') {
             session()->flash('error', 'Already Approved');
             return;
         }
 
         // Update Status
-        $application->update([
+        $form->update([
             'status' => $newStatus
         ]);
         
         if($newStatus == 'approved'){
 
             // Prevent duplicate commission
-            if (Commission::where('form_id', $application->id)->exists()) {
+            if (Commission::where('form_id', $form->id)->exists()) {
                 return;
             }
 
             // Find commission rule
-            $rule = CommissionRule::where('service_type', $application->type)->where('status', true)->first();
+            $rule = CommissionRule::where('service_type', $form->type)->where('status', true)->first();
 
             if (!$rule) {
                 session()->flash('error', 'No Commission Rule Found');
@@ -78,30 +77,32 @@ class ListComponent extends Component
             $commissionAmount = 0;
 
             if ($rule->commission_type === 'percentage') {
-                $commissionAmount = ($application->invoiceHasOneForm->total_amount * $rule->commission_value) / 100;
+                $commissionAmount = ($form->invoiceHasOneForm->total_amount * $rule->commission_value) / 100;
             } else {
                 $commissionAmount = $rule->commission_value;
             }
 
             // Create commission
             Commission::create([
-                'form_id' => $application->id,
-                'agent_id' => $application->agent_id,
-                'total_amount' => $application->invoiceHasOneForm->total_amount,
+                'form_id' => $form->id,
+                'agent_id' => $form->agent_id,
+                'total_amount' => $form->invoiceHasOneForm->total_amount,
                 'commission_rate' => $rule->commission_value,
                 'commission_amount' => $commissionAmount,
                 'status' => 'pending',
             ]);
         }
 
-        // Create Status History
-        $history = new StatusHistory();
-        $history->module = 'form';
-        $history->module_id = $application->id;
-        $history->status = $newStatus;
-        $history->save();
+        return redirect()->route('admin.application.list')->with('success', 'Form is successfully status!');
+    }
 
-        return redirect()->route('admin.application.list')->with('success', 'Application is successfully status!');
+    private function resetInputFields(){
+        $this->delete_id = '';
+    }
+
+    public function close()
+    {
+        $this->resetInputFields();
     }
 
     public function deleteConfirmation($id)
@@ -116,9 +117,9 @@ class ListComponent extends Component
             $data = Form::find($this->delete_id);
             $data->delete();
 
-            return redirect()->route('admin.application.list')->with('success', 'Application is successfully deleted!');
+            return redirect()->route('admin.application.list')->with('success', 'Form is successfully deleted!');
         }catch(\Exception $e){
-            return redirect()->back()->with('error', 'Application deleted failed: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Form deleted failed: ' . $e->getMessage());
         }
     }
 }

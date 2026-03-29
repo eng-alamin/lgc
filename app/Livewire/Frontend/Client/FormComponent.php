@@ -4,6 +4,7 @@ namespace App\Livewire\Frontend\Client;
 
 use Livewire\Component;
 use App\Models\Form;
+use App\Models\Client;
 use App\Models\StatusHistory;
 use Carbon\Carbon;
 
@@ -25,7 +26,7 @@ class FormComponent extends Component
     public $date_of_issue;
     public $date_of_expiry;
     public $place_of_issue;
-    public $medium_of_instruction;
+    public $medium_of_instruction= [];
     public $duolingo;
     public $score;
     public $intended_level_of_study;
@@ -169,7 +170,19 @@ class FormComponent extends Component
     }
     public function serviceLoad()
     {
-        $this->educations = [
+        $client = Client::find(auth()->user()->client->id);
+        $this->name = $client->user->name;
+        $this->gender = $client->data['personals']['gender'] ?? NULL;
+        $this->date_of_birth = $client->data['personals']['date_of_birth'] ?? NULL;
+        $this->nationality = $client->data['personals']['nationality'] ?? NULL;
+        $this->marital_status = $client->data['personals']['marital_status'] ?? NULL;
+        $this->religion = $client->data['personals']['religion'] ?? NULL;
+        $this->number = $client->user->phone;
+        $this->email = $client->user->email;
+        $this->permanent_address = $client->data['personals']['address'] ?? NULL;
+        $this->current_address = $client->data['personals']['address'] ?? NULL;
+
+        $this->educations = $client->data['educations'] ?? [
             [
                 'degree' => '',
                 'institution' => '',
@@ -297,7 +310,7 @@ class FormComponent extends Component
             $data = new Form();
             $data->serial  = $this->form_number;
             $data->number  = 'L3G6C' . $this->form_number;
-            $data->client_id = auth()->id();
+            $data->client_id = auth()->user()->client->id;
             $data->type = "education";
             $data->data = [
                 'name' => $this->name,
@@ -336,11 +349,11 @@ class FormComponent extends Component
             $data->status = "pending";
             $data->save();
 
-            $history = new StatusHistory();
-            $history->module = 'form';
-            $history->module_id = $data->id;
-            $history->status = "pending";
-            $history->save();
+            // $history = new StatusHistory();
+            // $history->module = 'form';
+            // $history->module_id = $data->id;
+            // $history->status = "pending";
+            // $history->save();
 
             return redirect()->route('form')->with('success', 'Form request submitted successfully!');
         }catch(\Exception $e){

@@ -4,6 +4,7 @@ namespace App\Livewire\Backend\Agent;
 
 use Livewire\Component;
 use App\Models\User;
+use App\Models\Client;
 use Illuminate\Support\Facades\Hash;
 
 class ClientComponent extends Component
@@ -12,22 +13,29 @@ class ClientComponent extends Component
     public $delete_id;
 
     public $name;
-    public $phone;
     public $email;
-    public $address;
-    public $city;
-    public $postal;
+    public $phone;
+    public $service;
+    
+    public $agent_id;
 
     protected $listeners = [
         'deleteConfirmed' => 'deleteClient',
     ];
 
+    public function mount()
+    {
+        $this->agent_id = auth()->user()->agent->id;
+    }
+
     public function render()
     {
-        $data = User::where('type', 'client')->where('agent_id', auth()->id())->latest()->get();
+        $this->dispatch('render-selectpicker');
+
+        $clients = Client::where('agent_id', $this->agent_id)->latest()->get();
 
         return view('livewire.backend.agent.client-component', [
-            'data' => $data,
+            'clients' => $clients,
         ])
         ->layout('layouts.agent.app', [
             'title' => "Clients | Let's Go China",
@@ -39,12 +47,9 @@ class ClientComponent extends Component
         $this->delete_id = '';
 
         $this->name = '';
-        $this->phone = '';
         $this->email = '';
-        $this->address = '';
-        $this->city = '';
-        $this->state = '';
-        $this->postal = '';
+        $this->phone = '';
+        $this->service = '';
     }
 
     public function close()
@@ -68,27 +73,26 @@ class ClientComponent extends Component
         ]);
 
         try{
-            $json_data = json_encode([
-                'address' =>  $this->address,
-                'city' =>  $this->city,
-                'postal' =>  $this->postal,
+            $user = User::create([
+                'name'     => $this->name,
+                'email'    => $this->email,
+                'phone'    => $this->phone,
+                'password' => Hash::make($this->email),
+                'email_verified_at'  =>   now(),
+                'account_status' => 1,
             ]);
-            $data = new User();
-            $data->name = $this->name;
-            $data->email = $this->email;
-            $data->phone = $this->phone;
-            $data->password = Hash::make($this->email);
-            $data->data = $json_data;
-            $data->email_verified_at = now();
-            $data->agent_id = auth()->id();
-            $data->account_status = 1;
-            $data->save();
+
+            Client::create([
+               'user_id' => $user->id,
+               'agent_id' => $this->agent_id,
+               'service' => $this->service,
+            ]);
 
             // Log the activity
             activity()
             ->useLog('client')
             ->event('created')
-            ->performedOn($data)
+            ->performedOn($user)
             ->causedBy(auth()->user())
             ->withProperties(['ip' => request()->ip(), 'browser' => request()->userAgent()])
             ->log("The client is created for information.");
@@ -100,16 +104,14 @@ class ClientComponent extends Component
     }
     public function edit($id)
     {
-        $edit = User::findOrFail($id);
-        $json_data = json_decode($edit->data);
+        $edit = Client::findOrFail($id);
 
         $this->client_id = $edit->id;
-        $this->name = $edit->name;
-        $this->email = $edit->email;
-        $this->phone = $edit->phone;
-        $this->address = $json_data->address;
-        $this->city = $json_data->city;
-        $this->postal = $json_data->postal;
+        $this->name = $edit->user->name;
+        $this->email = $edit->user->email;
+        $this->phone = $edit->user->phone;
+
+        $this->service = $edit->service;
     }
     public function update()
     {
@@ -119,21 +121,19 @@ class ClientComponent extends Component
         ]);
 
         try{
-            $data = User::find($this->client_id);
+            $data = Client::find($this->client_id);
 
-            $json_data = json_encode([
-                'address' =>  $this->address,
-                'city' =>  $this->city,
-                'postal' =>  $this->postal,
-            ]);
+            if ($data->user) {
+                $data->user->name = $this->name;
+                $data->user->email = $this->email;
+                $data->user->phone = $this->phone;
+                $data->user->password = Hash::make($this->email);
+                $data->user->email_verified_at = now();
+                $data->user->account_status = 1;
+                $data->user->save();
+            }
 
-            $data->name = $this->name;
-            $data->email = $this->email;
-            $data->phone = $this->phone;
-            $data->password = Hash::make($this->email);
-            $data->data = $json_data;
-            $data->email_verified_at = now();
-            $data->account_status = 1;
+            $data->service = $this->service;
             $data->save();
 
             // Log the activity

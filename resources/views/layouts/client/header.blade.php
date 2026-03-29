@@ -64,11 +64,8 @@
                 <div class="header_right_part d-flex align-items-center">
                     <div class="mainnav d-none d-xl-block">
                         <ul class="main-menu">
-                            <li class="menu-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
-                                <a href="{{ route('dashboard') }}">Dashboard</a>
-                            </li>
-                            <li class="menu-item {{ request()->routeIs('profile') ? 'active' : '' }}">
-                                <a href="{{ route('profile') }}">Profile</a>
+                            <li class="menu-item {{ request()->routeIs('personalinfo') ? 'active' : '' }}">
+                                <a href="{{ route('personalinfo') }}">Dashboard</a>
                             </li>
                             <li class="menu-item {{ request()->routeIs('form') ? 'active' : '' }}">
                                 <a href="{{ route('form') }}">Form</a>
@@ -76,12 +73,6 @@
                             <li class="menu-item {{ request()->routeIs('logout') ? 'active' : '' }}">
                                 <a href="{{ route('logout') }}">Sign Out</a>
                             </li>
-                            {{-- <li class="menu-item {{ request()->routeIs('blogs') ? 'active' : '' }}">
-                                <a href="{{ route('blogs') }}">Blogs</a>
-                            </li>
-                            <li class="menu-item {{ request()->routeIs('contact') ? 'active' : '' }}">
-                                <a href="{{ route('contact') }}">Contact</a>
-                            </li> --}}
                         </ul>
                     </div>
 
