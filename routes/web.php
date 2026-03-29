@@ -407,3 +407,6 @@ Route::get('link', function () {
 // Route::get('fresh', function () {
 //     Artisan::call('migrate:fresh --seed');
 // });
+Route::get('migrate', function () {
+    Artisan::call('migrate');
+});
