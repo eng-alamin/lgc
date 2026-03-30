@@ -52,7 +52,7 @@ Route::middleware('auth')->group(function () {
     
     Route::get('form', \App\Livewire\Frontend\Client\FormComponent::class)->name('form');
     Route::get('form/view/{id}', function($id){
-        $form = \App\Models\Form::with('client')->findOrFail($id);
+        $form = \App\Models\Form::with('client')->findOrFail($id);;
         return view('livewire.frontend.client.form-view-component', compact('form'));
     })->name('form.view');
 

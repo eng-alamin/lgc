@@ -127,7 +127,12 @@
                                                         <small class="text-muted"> Added at {{ \Carbon\Carbon::parse($item->created_at)->format('M d Y - h:i A') }}</small>
                                                         @forelse ($item->form->invoices as $inv)
                                                             <div class="border rounded p-3 mt-3 d-flex justify-content-between align-items-center">
-                                                                <a href="#" class="text-muted">{{$inv->number}}</a>
+                                                                <a href="{{route('invoices.view', $inv->id)}}" target="_blank" class="text-muted">{{$inv->number}}</a>
+                                                                <p>
+                                                                    @foreach ($inv->items as $ii)
+                                                                        <span class="badge bg-secondary">{{ ucfirst($ii['name']) }}  @if(!$loop->last), @endif</span>
+                                                                    @endforeach
+                                                                </p>
                                                                 @if ($inv->payment_status == 'paid')
                                                                     <span class="badge bg-primary">{{ ucfirst($inv->payment_status) }}</span>
                                                                 @elseif ($inv->payment_status == 'partial')

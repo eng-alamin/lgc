@@ -116,6 +116,12 @@
                                                         <div class="d-flex align-items-center border border-dashed border-gray-300 rounded min-w-750px px-7 py-3 mb-5">
                                                             <a href="javascript:;" class="fs-5 text-dark text-hover-primary fw-semibold w-375px min-w-200px"  data-bs-toggle="modal" data-bs-target="#viewInvoice" wire:click="viewInvoice({{ $inv->id }})">{{ $inv->number }}</a>
                                                             
+                                                            <p>
+                                                                @foreach ($inv->items as $ii)
+                                                                    <span class="badge bg-secondary">{{ ucfirst($ii['name']) }}  @if(!$loop->last), @endif</span>
+                                                                @endforeach
+                                                            </p>
+
                                                             <div class="symbol-group symbol-hover flex-nowrap flex-grow-1 min-w-100px pe-2">
                                                                 <div class="symbol symbol-circle symbol-25px"></div>
                                                             </div>

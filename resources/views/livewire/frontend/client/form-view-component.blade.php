@@ -62,7 +62,11 @@
 															<section class="p-2">
 																<h4>4. English Language Proficiency</h4>
 																<div class="p-2">
-																	<p><strong>medium Of Instruction:</strong> {{$form->data['medium_of_instruction'] ?? '-' }}</p>
+																	<p><strong>medium Of Instruction:</strong> 
+																		@foreach ($form->data['medium_of_instruction'] as $item)
+																			{{ ucfirst($item) }}@if(!$loop->last), @endif
+																		@endforeach
+																	</p>
 																	<p><strong>Duolingo:</strong> {{$form->data['duolingo'] ?? '-' }}</p>
 																	<p><strong>Score:</strong> {{$form->data['score'] ?? '-' }}</p>
 																</div>
