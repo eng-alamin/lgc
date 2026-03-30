@@ -259,7 +259,7 @@
                                             </svg>
                                             {{$item->name}}</h6>
                                         <h1 class="wptb-item--title"> {{$item->title}}</h1>
-                                        <p class="wptb-item--description">{{$item->description}}</p>
+                                        <p class="wptb-item--description">{!! $item->description !!}</p>
                                     </div>
                                 </div>
 
