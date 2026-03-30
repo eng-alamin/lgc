@@ -28,28 +28,16 @@
                         </div>
                     </div>
                     <div class="card-toolbar">
-                        @if(empty($selectedItems))
-                            <div class="d-flex justify-content-end">
-                                <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">Add New</button>
-                            </div>
-                        @else
-                            <div class="d-flex justify-content-end align-items-center">
-                                <div class="fw-bold me-5">
-                                <span class="me-2">{{ $this->selectedItemsCount() }}</span>Selected</div>
-                                <button type="button" wire:click="deleteSelectedItems"  class="btn btn-danger">Delete Selected</button>
-                            </div>
-                        @endif
+                        <div class="d-flex justify-content-end">
+                            <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">Add New</button>
+                        </div>
                     </div>
                 </div>
                 <div wire:ignore class="card-body pt-0">
                     <table class="table align-middle table-row-dashed fs-6 gy-5" id="datatable">
                         <thead>
                             <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
-                                <th class="w-10px pe-2">
-                                    <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
-                                        <input wire:click="selectedItemsAll" class="form-check-input" type="checkbox" wire:model.defer="selectAll"/>
-                                    </div>
-                                </th>
+                                <th class="w-10px pe-2">SL</th>
                                 <th class="min-w-125px">File</th>
                                 <th class="min-w-125px">Icon</th>
                                 <th class="min-w-125px">Title</th>
@@ -59,13 +47,9 @@
                             </tr>
                         </thead>
                         <tbody class="fw-semibold text-gray-600">
-                            @forelse ($essentials as $item)
+                            @forelse ($essentials as $index => $item)
                             <tr>
-                                <td>
-                                    <div class="form-check form-check-sm form-check-custom form-check-solid">
-                                        <input wire:click="selectedItemsClick" wire:model.defer="selectedItems" class="form-check-input" type="checkbox" value="{{ $item->id }}" />
-                                    </div>
-                                </td>
+                                <td>{{ $index + 1 }}</td>
                                 <td>
                                     <div class="symbol symbol-25px symbol-lg-50px symbol-fixed position-relative">
                                         <img src="{{asset($item->file)}}" alt="file">

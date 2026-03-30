@@ -53,7 +53,6 @@
                                 <th class="min-w-125px">Image</th>
                                 <th class="min-w-125px">Name</th>
                                 <th class="min-w-125px">Title</th>
-                                <th class="min-w-125px">Description</th>
                                 <th class="min-w-125px">University</th>
                                 <th class="min-w-125px">Date Added</th>
                                 <th class="text-end min-w-70px">Actions</th>
@@ -74,7 +73,6 @@
                                 </td>
                                 <td>{{$item->name}}</td>
                                 <td>{{$item->title}}</td>
-                                <td>{{$item->description}}</td>
                                 <td>
                                     @php
                                         $items = json_decode($item->json, true);
@@ -240,7 +238,7 @@
                         "lengthChange": false,
                         'columnDefs': [
                         { orderable: false, targets: 0 },
-                        { orderable: false, targets: 7 },
+                        { orderable: false, targets: 6 },
                         ],
                         'dom': `<'row'<'col-sm-12'tr>><'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
                         'language': {
