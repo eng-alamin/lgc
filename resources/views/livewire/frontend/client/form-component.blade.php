@@ -159,13 +159,6 @@
                                                 @error('date_of_expiry') <small class="text-danger">{{ $message }}</small> @enderror
                                             </div>
                                         </div>
-                                        <div class="col-lg-12 col-md-12 mb-4">
-                                            <div class="form-group">
-                                                <label for="" class="labell">Place of Issue</label>
-                                                <input type="date" wire:model="place_of_issue" class="form-control ms-1" required>
-                                                @error('place_of_issue') <small class="text-danger">{{ $message }}</small> @enderror
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                                 <div class="wptb-form--inner">
@@ -478,7 +471,6 @@
                                 <p><strong>Passport Number:</strong> {{$data->data['passport_number'] ?? '-' }}</p>
                                 <p><strong>Date of Issue:</strong> {{$data->data['date_of_issue'] ?? '-' }}</p>
                                 <p><strong>Date of Expiry:</strong> {{$data->data['date_of_expiry'] ?? '-' }}</p>
-                                <p><strong>Place of Issue:</strong> {{$data->data['place_of_issue'] ?? '-' }}</p>
                             </div>
                         </section>
                     </div>

@@ -134,7 +134,6 @@
                     <p><strong>Passport Number:</strong> {{$data->data['passport_number'] ?? '-' }}</p>
                     <p><strong>Date of Issue:</strong> {{$data->data['date_of_issue'] ?? '-' }}</p>
                     <p><strong>Date of Expiry:</strong> {{$data->data['date_of_expiry'] ?? '-' }}</p>
-                    <p><strong>Place of Issue:</strong> {{$data->data['place_of_issue'] ?? '-' }}</p>
                 </div>
             </section>
             <section class="p-4">

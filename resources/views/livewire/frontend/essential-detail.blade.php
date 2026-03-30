@@ -13,7 +13,7 @@
                                         <a href="{{ route('essential.detail', $item->id) }}" class="d-flex align-items-center justify-content-between">
                                             <span>
                                                 {!! $item->icon !!}
-                                                {{$item->title}}
+                                                {{substr($item->title, 0, 25) . '...';}}
                                             </span>
                                             <i class="bi bi-chevron-right"></i>
                                         </a>

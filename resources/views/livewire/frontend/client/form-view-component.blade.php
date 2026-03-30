@@ -56,7 +56,6 @@
 																	<p><strong>Passport Number:</strong> {{$form->data['passport_number'] ?? '-' }}</p>
 																	<p><strong>Date of Issue:</strong> {{$form->data['date_of_issue'] ?? '-' }}</p>
 																	<p><strong>Date of Expiry:</strong> {{$form->data['date_of_expiry'] ?? '-' }}</p>
-																	<p><strong>Place of Issue:</strong> {{$form->data['place_of_issue'] ?? '-' }}</p>
 																</div>
 															</section>
 															<section class="p-2">
