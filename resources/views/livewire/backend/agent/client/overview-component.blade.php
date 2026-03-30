@@ -1,7 +1,7 @@
 <div id="kt_app_content_container" class="app-container container-fluid">
     <div class="row g-5 g-xl-8">
 
-        @include('livewire.backend.admin.client.navbar')
+        @include('livewire.backend.agent.client.navbar')
 
         <div class="col-lg-12">
             <div class="card">		
@@ -24,7 +24,7 @@
                         </div>
                         <div class="card-toolbar">
                             <div class="d-flex align-items-center justify-content-end">
-                                <a href="javascript:;" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addStage">Add Stage</a>
+                                <a href="{{route('agent.application.view', $this->form->id)}}" target="_blank" class="btn btn-sm btn-primary">{{$this->form->number}}</a>
                             </div>
                         </div>
                     </div>
@@ -75,23 +75,14 @@
 
                                                         <div class="min-w-125px pe-2">
                                                             @if ($item->status == 'pending')
-                                                                <a href="javascript:;" class="btn btn-sm btn-light-warning btn-flex btn-center btn-active-light-warning dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">{{ ucfirst($item->status) }}</a>
+                                                                <a href="javascript:;" class="btn btn-sm btn-light-warning btn-flex btn-center btn-active-light-warning">{{ ucfirst($item->status) }}</a>
                                                             @elseif ($item->status == 'processing')
-                                                                <a href="javascript:;" class="btn btn-sm btn-light-primary btn-flex btn-center btn-active-light-primary dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">{{ ucfirst($item->status) }}</a>
+                                                                <a href="javascript:;" class="btn btn-sm btn-light-primary btn-flex btn-center btn-active-light-primary">{{ ucfirst($item->status) }}</a>
                                                             @elseif ($item->status == 'completed')
-                                                                <a href="javascript:;" class="btn btn-sm btn-light-success btn-flex btn-center btn-active-light-success dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">{{ ucfirst($item->status) }}</a>
+                                                                <a href="javascript:;" class="btn btn-sm btn-light-success btn-flex btn-center btn-active-light-success">{{ ucfirst($item->status) }}</a>
                                                             @else
-                                                                <a href="javascript:;" class="btn btn-sm btn-light-danger btn-flex btn-center btn-active-light-danger dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">{{ ucfirst($item->status) }}</a>
+                                                                <a href="javascript:;" class="btn btn-sm btn-light-danger btn-flex btn-center btn-active-light-danger">{{ ucfirst($item->status) }}</a>
                                                             @endif
-                                                            
-                                                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4 dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                                <div class="menu-item px-3">
-                                                                    <a href="javascript:;" class="menu-link px-3" wire:click="statusClick({{$item->id}}, 'pending')">Pending</a>
-                                                                    <a href="javascript:;" class="menu-link px-3" wire:click="statusClick({{$item->id}}, 'processing')">Processing</a>
-                                                                    <a href="javascript:;" class="menu-link px-3" wire:click="statusClick({{$item->id}}, 'completed')">Completed</a>
-                                                                    <a href="javascript:;" class="menu-link px-3" wire:click="statusClick({{$item->id}}, 'declined')">Declined</a>
-                                                                </div>
-                                                            </div>
                                                         </div>
                                                         
                                                     </div>
@@ -435,9 +426,6 @@
                                                             <div class="text-muted me-2 fs-7">Added at {{ \Carbon\Carbon::parse($item->created_at)->format('M d Y - h:i A') }}</div>
                                                         </div>
                                                     </div>
-                                                    <div>
-                                                        <a href="javascript:;" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addFlight" wire:click="addFlight({{ $item->form->flight?->id ?? 'null' }})">Add Flight</a>
-                                                    </div>
                                                 </div>
 
                                                 <table class="table table-row-dashed align-middle fs-6 gy-4 my-0 pb-3">
@@ -501,23 +489,14 @@
 
                                                         <div class="min-w-125px pe-2">
                                                             @if ($item->status == 'pending')
-                                                                <a href="javascript:;" class="btn btn-sm btn-light-warning btn-flex btn-center btn-active-light-warning dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">{{ ucfirst($item->status) }}</a>
+                                                                <a href="javascript:;" class="btn btn-sm btn-light-warning btn-flex btn-center btn-active-light-warning">{{ ucfirst($item->status) }}</a>
                                                             @elseif ($item->status == 'processing')
-                                                                <a href="javascript:;" class="btn btn-sm btn-light-primary btn-flex btn-center btn-active-light-primary dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">{{ ucfirst($item->status) }}</a>
+                                                                <a href="javascript:;" class="btn btn-sm btn-light-primary btn-flex btn-center btn-active-light-primary">{{ ucfirst($item->status) }}</a>
                                                             @elseif ($item->status == 'completed')
-                                                                <a href="javascript:;" class="btn btn-sm btn-light-success btn-flex btn-center btn-active-light-success dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">{{ ucfirst($item->status) }}</a>
+                                                                <a href="javascript:;" class="btn btn-sm btn-light-success btn-flex btn-center btn-active-light-success">{{ ucfirst($item->status) }}</a>
                                                             @else
-                                                                <a href="javascript:;" class="btn btn-sm btn-light-danger btn-flex btn-center btn-active-light-danger dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">{{ ucfirst($item->status) }}</a>
+                                                                <a href="javascript:;" class="btn btn-sm btn-light-danger btn-flex btn-center btn-active-light-danger">{{ ucfirst($item->status) }}</a>
                                                             @endif
-                                                            
-                                                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4 dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                                <div class="menu-item px-3">
-                                                                    <a href="javascript:;" class="menu-link px-3" wire:click="statusClick({{$item->id}}, 'pending')">Pending</a>
-                                                                    <a href="javascript:;" class="menu-link px-3" wire:click="statusClick({{$item->id}}, 'processing')">Processing</a>
-                                                                    <a href="javascript:;" class="menu-link px-3" wire:click="statusClick({{$item->id}}, 'completed')">Completed</a>
-                                                                    <a href="javascript:;" class="menu-link px-3" wire:click="statusClick({{$item->id}}, 'declined')">Declined</a>
-                                                                </div>
-                                                            </div>
                                                         </div>
                                                         
                                                     </div>
@@ -556,7 +535,7 @@
                         <div class="scroll-y me-n7 pe-7">
 
                             @php
-                                $current = $this->timelineLast->last()?->stage->type ?? 'start';
+                                $current = $this->timelineLast?->last()?->stage->type ?? 'start';
                                 $flow = config('status_flow.stage');
                                 $allowed = $flow[$current] ?? [];
                             @endphp
@@ -829,70 +808,6 @@
         </div>
     </div>
     <!--end::DocumentModals-->
-
-    <!--begin::FlightModals-->
-    <div wire:ignore.self class="modal fade" id="addFlight" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <form wire:submit="storeFlight" class="form">
-                    <div class="modal-header">
-                        <h2 class="fw-bold">Add Flight</h2>
-                        <div wire:click="close" class="btn btn-icon btn-sm btn-active-icon-primary"  data-bs-dismiss="modal">
-                            <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
-                        </div>
-                    </div>
-                    <div class="modal-body py-10 px-lg-17">
-                        <div class="scroll-y me-n7 pe-7">
-                            <div class="fv-row mb-7">
-                                <label class="required fs-6 fw-semibold mb-2">Airline</label>
-                                <input type="text" wire:model="airline" class="form-control form-control-solid" placeholder="Enter airline" />
-                                @error('airline') <span class="text-danger">{{ $message }}</span> @enderror
-                            </div>
-                            <div class="fv-row mb-7">
-                                <label class="required fs-6 fw-semibold mb-2">Flight Number</label>
-                                <input type="text" wire:model="flight_number" class="form-control form-control-solid" placeholder="Enter flight number" />
-                                @error('flight_number') <span class="text-danger">{{ $message }}</span> @enderror
-                            </div>
-                            <div class="fv-row mb-7">
-                                <label class="fs-6 fw-semibold mb-2">Departure City</label>
-                                <input type="text" wire:model="departure_city" class="form-control form-control-solid" placeholder="Enter departure city" />
-                                @error('departure_city') <span class="text-danger">{{ $message }}</span> @enderror
-                            </div>
-                            <div class="fv-row mb-7">
-                                <label class="fs-6 fw-semibold mb-2">Departure Time</label>
-                                <input type="datetime-local" wire:model="departure_time" class="form-control form-control-solid" placeholder="Enter departure time" />
-                                @error('departure_time') <span class="text-danger">{{ $message }}</span> @enderror
-                            </div>
-                            <div class="fv-row mb-7">
-                                <label class="fs-6 fw-semibold mb-2">Transit City</label>
-                                <input type="text" wire:model="transit_city" class="form-control form-control-solid" placeholder="Enter transit city" />
-                                @error('transit_city') <span class="text-danger">{{ $message }}</span> @enderror
-                            </div>
-                            <div class="fv-row mb-7">
-                                <label class="fs-6 fw-semibold mb-2">Transit Time</label>
-                                <input type="datetime-local" wire:model="transit_time" class="form-control form-control-solid" placeholder="Enter transit time" />
-                                @error('transit_time') <span class="text-danger">{{ $message }}</span> @enderror
-                            </div>
-                            <div class="fv-row mb-7">
-                                <label class="fs-6 fw-semibold mb-2">ArrivalV City</label>
-                                <input type="text" wire:model="arrival_city" class="form-control form-control-solid" placeholder="Enter arrival city" />
-                                @error('arrival_city') <span class="text-danger">{{ $message }}</span> @enderror
-                            </div>
-                            <div class="fv-row mb-7">
-                                <label class="fs-6 fw-semibold mb-2">Arrival Time</label>
-                                <input type="datetime-local" wire:model="arrival_time" class="form-control form-control-solid" placeholder="Enter arrival time" />
-                                @error('arrival_time') <span class="text-danger">{{ $message }}</span> @enderror
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer flex-end">
-                        <button type="submit" class="btn btn-sm btn-primary">Save</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-     <!--end::FlightModals-->
 
 </div>
 

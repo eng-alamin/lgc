@@ -45,46 +45,6 @@
                         </div>
                     </div>
                     <div class="d-flex flex-wrap flex-stack">
-                        <div class="d-flex flex-column flex-grow-1 pe-8">
-                           @php
-                                $total_amount = $this->form?->invoices->sum('total_amount') ?? 0;
-                                $due_amount = $this->form?->invoices->sum('due_amount') ?? 0;
-                                $paid_amount = $this->form?->invoices->sum('paid_amount') ?? 0;
-                                $paidPercent = $total_amount > 0 ? ($paid_amount / $total_amount) * 100 : 0;
-                            @endphp
-                            <div class="d-flex flex-wrap">
-                                <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
-                                    <div class="d-flex align-items-center">
-                                        <i class="ki-duotone ki-arrow-up fs-3 text-success me-2">
-                                            <span class="path1"></span>
-                                            <span class="path2"></span>
-                                        </i>
-                                        <div class="fs-2 fw-bold" data-kt-countup="true" data-kt-countup-value="{{ $total_amount }}" data-kt-countup-prefix="৳">0</div>
-                                    </div>
-                                    <div class="fw-semibold fs-6 text-gray-400">Price</div>
-                                </div>
-                                <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
-                                    <div class="d-flex align-items-center">
-                                        <i class="ki-duotone ki-arrow-down fs-3 text-danger me-2">
-                                            <span class="path1"></span>
-                                            <span class="path2"></span>
-                                        </i>
-                                        <div class="fs-2 fw-bold" data-kt-countup="true" data-kt-countup-value="{{ $due_amount }}" data-kt-countup-prefix="৳">0</div>
-                                    </div>
-                                    <div class="fw-semibold fs-6 text-gray-400">Due</div>
-                                </div>
-                                <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
-                                    <div class="d-flex align-items-center">
-                                        <i class="ki-duotone ki-arrow-up fs-3 text-success me-2">
-                                            <span class="path1"></span>
-                                            <span class="path2"></span>
-                                        </i>
-                                        <div class="fs-2 fw-bold" data-kt-countup="true" data-kt-countup-value="{{ $paidPercent }}" data-kt-countup-prefix="%">0</div>
-                                    </div>
-                                    <div class="fw-semibold fs-6 text-gray-400">Paid</div>
-                                </div>
-                            </div>
-                        </div>
                         <!--begin::Progress-->
                         <div class="d-flex align-items-center w-200px w-sm-300px flex-column mt-3">
                             <div class="d-flex justify-content-between w-100 mt-auto mb-2">

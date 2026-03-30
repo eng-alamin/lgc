@@ -29,6 +29,7 @@
                         <option value="healthcare">Healthcare</option>
                         <option value="business">Business</option>
                         <option value="travel">Travel</option>
+                        <option value="career">Career</option>
                     </select>
                     @error('service') <span class="text-danger">{{ $message }}</span> @enderror
                 </div>

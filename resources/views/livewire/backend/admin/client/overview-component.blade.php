@@ -24,6 +24,7 @@
                         </div>
                         <div class="card-toolbar">
                             <div class="d-flex align-items-center justify-content-end">
+                                <a href="{{route('admin.application.view', $this->form->id)}}" target="_blank" class="btn btn-sm btn-primary me-2">{{$this->form->number}}</a>
                                 <a href="javascript:;" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addStage">Add Stage</a>
                             </div>
                         </div>
@@ -562,7 +563,7 @@
                         <div class="scroll-y me-n7 pe-7">
 
                             @php
-                                $current = $this->timelineLast->last()?->stage->type ?? 'start';
+                                $current = $this->timelineLast?->last()?->stage->type ?? 'start';
                                 $flow = config('status_flow.stage');
                                 $allowed = $flow[$current] ?? [];
                             @endphp
@@ -602,7 +603,7 @@
                             @endif
 
                             <div class="fv-row mb-7">
-                                <label class="required fs-6 fw-semibold mb-2">Title</label>
+                                <label class="fs-6 fw-semibold mb-2">Title</label>
                                 <input type="text" wire:model="title" class="form-control form-control-solid" placeholder="Title" />
                                 @error('title') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>

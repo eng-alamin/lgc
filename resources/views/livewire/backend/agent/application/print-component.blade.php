@@ -121,7 +121,7 @@
                     <div class="card-toolbar">
                         <div class="d-flex justify-content-end">
                             <a href="javascript:void(0);" onclick="window.print()" class="btn btn-sm btn-primary me-2">Print</a>
-                            <a href="{{route('admin.application.list')}}" class="btn btn-sm btn-primary">Return Back</a>
+                            <a href="{{route('agent.application.list')}}" class="btn btn-sm btn-primary">Return Back</a>
                         </div>
                     </div>
                 </div>
@@ -160,7 +160,11 @@
                     <section class="p-4">
                         <h4>English Language Proficiency</h4>
                         <div class="card w-100 shadow p-5">
-                            <p><strong>medium Of Instruction:</strong> {{$application->data['medium_of_instruction'] ?? '-' }}</p>
+                            <p><strong>medium Of Instruction:</strong> 
+                                @foreach ($application->data['medium_of_instruction'] as $item)
+                                    {{ ucfirst($item) }}@if(!$loop->last), @endif
+                                @endforeach
+                            </p>
                             <p><strong>Duolingo:</strong> {{$application->data['duolingo'] ?? '-' }}</p>
                             <p><strong>Score:</strong> {{$application->data['score'] ?? '-' }}</p>
                         </div>

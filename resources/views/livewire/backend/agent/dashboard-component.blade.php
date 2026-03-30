@@ -195,7 +195,7 @@
                 <div class="card-header pt-5 mb-6">
                     <h3 class="card-title align-items-start flex-column">
                         <span class="card-label fw-bold text-gray-800">Applications</span>
-                        <span class="fs-6 fw-semibold text-gray-400">Pending - {{$applications->where('status', 'pending')->count()}}</span>
+                        <span class="fs-6 fw-semibold text-gray-400">Pending - {{$forms->where('status', 'pending')->count()}}</span>
                     </h3>
                 </div>
                 <div class="card-body py-0 px-0">
@@ -209,7 +209,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($applications->where('status', 'pending')->take(6) as $item)
+                                @foreach ($forms->where('status', 'pending')->take(6) as $item)
                                     <tr>
                                         <td>
                                             <a href="{{route('receptionist.application.view', $item->id)}}" target="_blank"><span class="text-gray-800 fw-bold fs-6 me-1">{{$item->number}}</span></a>
@@ -234,7 +234,7 @@
                 <div class="card-header pt-7">
                     <h3 class="card-title align-items-start flex-column">
                         <span class="card-label fw-bold text-gray-800">Applications</span>
-                        <span class="text-gray-400 mt-1 fw-semibold fs-6">{{ucfirst($applicationFilter)}} {{$this->invoices->count()}} Data</span>
+                        <span class="text-gray-400 mt-1 fw-semibold fs-6">{{ucfirst($applicationFilter)}} {{$forms->count()}} Data</span>
                     </h3>
                     <div class="card-toolbar">
                         <ul class="nav" id="kt_chart_widget_8_tabs">
@@ -263,7 +263,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($this->applications as $item)
+                                @foreach ($forms as $item)
                                     <tr>
                                         <td>
                                             <div class="d-flex align-items-center">
@@ -310,124 +310,6 @@
         </div>
     </div>
     <!--end::Application-->
-    <!--begin::Invoice-->
-    <div class="row g-5 g-xl-10 mb-5 mb-xl-10">
-        <div class="col-xl-8">
-            <div class="card card-flush h-md-100">
-                <div class="card-header pt-7">
-                    <h3 class="card-title align-items-start flex-column">
-                        <span class="card-label fw-bold text-gray-800">Invoices</span>
-                        <span class="text-gray-400 mt-1 fw-semibold fs-6">{{ucfirst($invoiceFilter)}} {{$this->invoices->count()}} Data</span>
-                    </h3>
-                    <div class="card-toolbar">
-                        <ul class="nav" id="kt_chart_widget_8_tabs">
-                            <li class="nav-item">
-                                <a class="nav-link btn btn-sm btn-color-muted btn-active btn-active-light fw-bold px-4 me-1 {{ $invoiceFilter == 'today' ? 'active' : '' }}"  wire:click="setFilterInvoice('today')">Today</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link btn btn-sm btn-color-muted btn-active btn-active-light fw-bold px-4 me-1 {{ $invoiceFilter == 'yesterday' ? 'active' : '' }}"  wire:click="setFilterInvoice('yesterday')">Yesterday</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link btn btn-sm btn-color-muted btn-active btn-active-light fw-bold px-4 me-1 {{ $invoiceFilter == 'week' ? 'active' : '' }}"  wire:click="setFilterInvoice('week')">Week</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="card-body pt-6">
-                    <div class="table-responsive">
-                        <table class="table table-row-dashed align-middle gs-0 gy-3 my-0">
-                            <thead>
-                                <tr class="fs-7 fw-bold text-gray-400 border-bottom-0">
-                                    <th class="p-0 pb-3 min-w-200px text-start">ITEM</th>
-                                    <th class="p-0 pb-3 min-w-100px text-end">NUMBER</th>
-                                    <th class="p-0 pb-3 min-w-100px text-end">TOTAL</th>
-                                    <th class="p-0 pb-3 min-w-175px text-end pe-12">STATUS</th>
-                                    <th class="p-0 pb-3 w-50px text-end">VIEW</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($this->invoices as $item)
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="symbol symbol-50px me-3">
-                                                    <img src="{{asset('assets/backend/media/stock/600x600/img-49.jpg')}}" class="" alt="" />
-                                                </div>
-                                                <div class="d-flex justify-content-start flex-column">
-                                                    <a href="#" class="text-gray-800 fw-bold text-hover-primary mb-1 fs-6">{{$item->form?->client?->name ?? 'N/L'}}</a>
-                                                    <span class="text-gray-400 fw-semibold d-block fs-7">{{$item->form?->client?->email ?? 'N/A'}}</span>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="text-end pe-0">
-                                            <span class="text-gray-600 fw-bold fs-6">{{$item->number}}</span>
-                                        </td>
-                                        <td class="text-end pe-0">
-                                            <span class="text-gray-600 fw-bold fs-6">{{ ($item->total_amount) }}</span>
-                                        </td>
-                                        <td class="text-end pe-12">
-                                            @if($item->status == 'paid')
-                                                <span class="badge py-3 px-4 fs-7 badge-light-success">Paid</span>
-                                            @elseif($item->status == 'partial')
-                                                <span class="badge py-3 px-4 fs-7 badge-light-warning">Partial</span>
-                                           @else
-                                                <span class="badge py-3 px-4 fs-7 badge-light-danger">Due</span>
-                                            @endif
-                                        </td>
-                                        <td class="text-end">
-                                            <a href="{{route('receptionist.application.view', $item->id)}}" target="_blank" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary w-30px h-30px">
-                                                <i class="ki-duotone ki-black-right fs-2 text-gray-500"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-4">
-            <div class="card card-flush h-md-100">
-                <div class="card-header pt-5 mb-6">
-                    <h3 class="card-title align-items-start flex-column">
-                        <span class="card-label fw-bold text-gray-800">Invoices</span>
-                        <span class="fs-6 fw-semibold text-gray-400">Due - {{$invoices->where('status', 'due')->count()}}</span>
-                    </h3>
-                </div>
-                <div class="card-body py-0 px-0">
-                    <div class="table-responsive mx-9 mt-n6">
-                        <table class="table align-middle gs-0 gy-4">
-                            <thead>
-                                <tr>
-                                    <th class="min-w-100px"></th>
-                                    <th class="min-w-50px text-end pe-0"></th>
-                                    <th class="text-end min-w-100px"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($invoices->where('status', 'due')->take(6) as $item)
-                                    <tr>
-                                        <td>
-                                            <a href="{{route('receptionist.application.view', $item->id)}}" target="_blank"><span class="text-gray-800 fw-bold fs-6 me-1">{{$item->number}}</span></a>
-                                        </td>
-                                        <td class="pe-0 text-end">
-                                            <span class="badge badge-light-danger fs-7">{{ucfirst($item->status)}}</span>
-                                        </td>
-                                        <td class="pe-0 text-end">
-                                            <a href="#" class="text-gray-600 fw-bold fs-6">{{\Carbon\Carbon::parse($item->created_at)->diffForHumans()}}</a>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                            <!--end::Table body-->
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--end::Invoice-->
 </div>
 
 @push('scripts')

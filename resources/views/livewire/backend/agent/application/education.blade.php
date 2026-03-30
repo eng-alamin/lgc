@@ -162,12 +162,12 @@
                 <label class="required fs-6 fw-semibold mb-2">Preferred Intake</label>
                 <div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" wire:model="e_preferred_intake" id="March" value="March">
-                        <label class="form-check-label" for="March">March</label>
+                        <input class="form-check-input" type="radio" wire:model="e_preferred_intake" id="march" value="march">
+                        <label class="form-check-label" for="march">March</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" wire:model="e_preferred_intake" id="September" value="September">
-                        <label class="form-check-label" for="September">September</label>
+                        <input class="form-check-input" type="radio" wire:model="e_preferred_intake" id="september" value="september">
+                        <label class="form-check-label" for="september">September</label>
                     </div>
                 </div>
                 @error('e_preferred_intake') <span class="text-danger">{{ $message }}</span> @enderror

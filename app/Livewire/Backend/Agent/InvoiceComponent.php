@@ -32,7 +32,7 @@ class InvoiceComponent extends Component
 
     public function mount()
     {
-        $this->agent_id = auth()->user()->agent->id;
+        $this->agent_id = optional(auth()->user()->agent)->id;
 
         $code = Invoice::latest()->first();
         if (empty($code->id)) {
@@ -57,8 +57,8 @@ class InvoiceComponent extends Component
     {
         $this->dispatch('render-selectpicker');
 
-        $invoices = Invoice::where('agent_id', $this->agent_id)->latest()->get();
         $forms = Form::where('agent_id', $this->agent_id)->latest()->get();
+        $invoices = $forms->pluck('invoices')->flatten();
 
         return view('livewire.backend.agent.invoice-component', [
             'invoices' => $invoices,

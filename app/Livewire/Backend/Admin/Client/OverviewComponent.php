@@ -93,7 +93,6 @@ class OverviewComponent extends Component
     {
         $this->validate([
             'stage_id' => 'required',
-            'title' => 'required'
         ]);
 
         StageHistory::updateOrCreate(

@@ -15,8 +15,8 @@
             </div>
             <div class="card-toolbar">
                 <div class="d-flex justify-content-end">
-                    <a href="{{ route('receptionist.application.print', $data->id) }}" target="_blank" class="btn btn-sm btn-primary me-2">Print</a>
-                    <a href="{{route('admin.application.list')}}" class="btn btn-sm btn-primary">Return Back</a>
+                    <a href="{{ route('agent.application.print', $data->id) }}" target="_blank" class="btn btn-sm btn-primary me-2">Print</a>
+                    <a href="{{route('agent.application.list')}}" class="btn btn-sm btn-primary">Return Back</a>
                 </div>
             </div>
         </div>
@@ -159,7 +159,7 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td class="fw-bold"><a href="{{ route('receptionist.invoices.print', $invoice->id) }}" target="_blank">{{ $invoice->number }}</a></td>
+                                    <td class="fw-bold"><a href="{{ route('agent.invoices.print', $invoice->id) }}" target="_blank">{{ $invoice->number }}</a></td>
                                     <td class="fw-bold">{{ $invoice->total_amount }}</td>
                                     <td class="fw-bold">{{ $invoice->paid_amount }}</td>
                                     <td class="fw-bold">{{ $invoice->due_amount }}</td>

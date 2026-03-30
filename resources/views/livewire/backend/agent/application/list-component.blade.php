@@ -43,7 +43,7 @@
                             <td>{{ $loop->iteration }}</td>
                             <td class="d-flex align-items-center border-0">
                                 <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
-                                    <a href="{{route('admin.client.overview', $item->client?->id)}}" target="_blank">
+                                    <a href="{{route('agent.client.overview', $item->client?->id)}}" target="_blank">
                                         @if($item->client?->user?->avatar)
                                             <div class="symbol-label">
                                                 <img src="{{asset($item->client?->user?->avatar)}}" alt="{{$item->client?->user?->name}}" class="w-100" />
@@ -54,12 +54,12 @@
                                     </a>
                                 </div>
                                 <div class="d-flex flex-column">
-                                    <a href="{{route('admin.client.overview', $item->client?->id)}}" target="_blank" class="text-gray-800 text-hover-primary mb-1">{{$item->client?->user?->name ?? 'N/L'}}</a>
+                                    <a href="{{route('agent.client.overview', $item->client?->id)}}" target="_blank" class="text-gray-800 text-hover-primary mb-1">{{$item->client?->user?->name ?? 'N/L'}}</a>
                                     <div>{{$item->client?->user?->email ?? 'N/A'}}</div>
                                     <div>{{$item->client?->user?->phone ?? 'N/A'}}</div>
                                 </div>
                             </td>
-                             <td>{{$item->number}}</td>
+                             <td><a href="{{route('agent.application.view', $item->id)}}" target="_blank">{{$item->number}}</a></td>
                             <td>{{ ucfirst($item->type) }}</td>
                             <td>
                                 @php
