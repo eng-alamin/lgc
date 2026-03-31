@@ -25,25 +25,6 @@ class ListComponent extends Component
         ]);
     }
 
-    public function statusClick($id, $status)
-    {
-        try{
-            $data = Form::find($id);
-            $data->status = $status;
-            $data->save();
-
-            $history = new StatusHistory();
-            $history->module = 'form';
-            $history->module_id = $data->id;
-            $history->status = $status;
-            $history->save();
-
-            return redirect()->route('agent.application.list')->with('success', 'Application is successfully status!');
-        }catch(\Exception $e){
-            return redirect()->back()->with('error', 'Application updated failed: ' . $e->getMessage());
-        }
-    }
-
     public function deleteConfirmation($id)
     {
         $this->delete_id = $id;

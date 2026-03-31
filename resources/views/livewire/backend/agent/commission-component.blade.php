@@ -43,7 +43,7 @@
                     @forelse ($data as $item)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td><a href="{{route('agent.commissions')}}" target="_blank">{{ $item->form?->number ?? 'N/L' }}</a></td>
+                        <td><a href="{{route('agent.application.view', $item->form?->id)}}" target="_blank">{{ $item->form?->number ?? 'N/L' }}</a></td>
                         <td>{{ ucfirst($item->form?->type ?? 'N/L') }}</td>
                         <td>{{ $item->total_amount  }}</td>
                         <td>{{ $item->commission_amount  }}</td>

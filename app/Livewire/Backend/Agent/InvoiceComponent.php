@@ -42,6 +42,7 @@ class InvoiceComponent extends Component
         }
 
         $this->date = now()->format('Y-m-d');
+
         $this->method = 'cash';
 
         $this->items = [
@@ -95,7 +96,7 @@ class InvoiceComponent extends Component
             ]
         ];
         $this->date = '';
-        $this->method = '';
+        $this->method = 'cash';
         $this->notes = '';
     }
 

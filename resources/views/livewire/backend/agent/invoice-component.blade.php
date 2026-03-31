@@ -44,7 +44,7 @@
                         <td>{{ $index + 1 }}</td>
                         <td class="d-flex align-items-center border-0">
                             <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
-                                <a href="{{route('admin.client.overview', $item->id)}}" target="_blank">
+                                <a href="{{route('agent.client.overview', $item->form?->client?->id)}}" target="_blank">
                                     @if($item->form?->client?->user->avatar)
                                         <div class="symbol-label">
                                             <img src="{{asset($item->form?->client?->user->avatar)}}" alt="{{$item->form?->client?->user->name}}" class="w-100" />
@@ -60,7 +60,7 @@
                                 @endif
                             </div>
                             <div class="d-flex flex-column">
-                                <a href="{{route('admin.client.overview', $item->id)}}" target="_blank" class="text-gray-800 text-hover-primary mb-1">{{$item->form?->client?->user->name}}</a>
+                                <a href="{{route('agent.client.overview', $item->form?->client?->id)}}" target="_blank" class="text-gray-800 text-hover-primary mb-1">{{$item->form?->client?->user->name}}</a>
                                 <div>{{$item->form?->client?->user->email}}</div>
                                 <div>{{$item->form?->client?->user->phone}}</div>
                             </div>
@@ -112,7 +112,7 @@
                             <a href="#" class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Actions</a>
                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4 dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                 <div class="menu-item px-3">
-                                    <a href="{{ route('invoices.view', $item->id) }}" target="_blank"  class="menu-link px-3">Print</a>
+                                    <a href="{{ route('invoices.view', $item->id) }}" target="_blank"  class="menu-link px-3">View</a>
                                 </div>
                                 <div class="menu-item px-3">
                                     <a href="javascript:;" wire:click="edit({{ $item->id }})" data-bs-toggle="modal" data-bs-target="#editModal" class="menu-link px-3">Edit</a>
@@ -166,8 +166,8 @@
                                 </div>
                                 <div class="col-md-6 mb-7">
                                     <label class="required fs-6 fw-semibold mb-2">Select Method</label>
-                                    <select wire:ignore class="form-select p-0 w-100 border-0 selectpicker" title="Select Method" wire:model="method">
-                                        <option value="cash">Cash</option>
+                                    <select class="form-select p-0 w-100 border-0 selectpicker" multiple title="Select Method" wire:model="method">
+                                        <option value="cash" selected>Cash</option>
                                         <option value="bank">Bank</option>
                                         <option value="mobile">Mobile</option>
                                     </select>
@@ -266,7 +266,7 @@
                                 </div>
                                 <div class="col-md-6 mb-7">
                                     <label class="required fs-6 fw-semibold mb-2">Select Method</label>
-                                    <select wire:ignore class="form-select p-0 w-100 border-0 selectpicker" title="Select Method" wire:model="method">
+                                    <select class="form-select p-0 w-100 border-0 selectpicker" multiple title="Select Method" wire:model="method">
                                         <option value="cash">Cash</option>
                                         <option value="bank">Bank</option>
                                         <option value="mobile">Mobile</option>

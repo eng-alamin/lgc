@@ -59,7 +59,7 @@
                                     <div>{{$item->client?->user?->phone ?? 'N/A'}}</div>
                                 </div>
                             </td>
-                            <td>{{$item->number}}</td>
+                            <td><a href="{{route('admin.application.view', $item->id)}}" target="_blank">{{$item->number}}</a></td>
                             <td>{{ ucfirst($item->type) }}</td>
                             <td>
                                 @php

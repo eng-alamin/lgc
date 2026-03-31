@@ -29,7 +29,8 @@
                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                         <th class="w-10px pe-2">SL</th>
                         <th class="min-w-125px">Service Type</th>
-                        <th class="min-w-125px">Commission Value</th>
+                        <th class="min-w-125px">Service Value</th>
+                        <th class="min-w-125px">Commission Typw</th>
                         <th class="min-w-125px">Commission Value</th>
                         <th class="min-w-125px">Status</th>
                         <th class="text-end min-w-70px">Actions</th>
@@ -40,6 +41,7 @@
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ ucfirst($item->service_type) }}</td>
+                        <td>{{ ucfirst($item->service_value) }}</td>
                         <td>{{ $item->commission_type }}</td>
                         <td>{{ $item->commission_value }}</td>
                         <td>
@@ -98,10 +100,15 @@
                                         <option value="healthcare">Healthcare</option>
                                         <option value="business">Business</option>
                                         <option value="travel">Travel</option>
-                                        <option value="job">Job</option>
+                                        <option value="career">Career</option>
                                     </select>
                                 </div>
                                 @error('service_type') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+                            <div class="fv-row mb-7">
+                                <label class="required fs-6 fw-semibold mb-2">Service Value</label>
+                                <input type="text" wire:model="service_value" class="form-control form-control-solid" placeholder="Enter Service Value" />
+                                @error('service_value') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                             <div class="fv-row mb-7">
                                 <div wire:ignore>
@@ -155,6 +162,11 @@
                                     </select>
                                 </div>
                                 @error('service_type') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+                            <div class="fv-row mb-7">
+                                <label class="required fs-6 fw-semibold mb-2">Service Value</label>
+                                <input type="text" wire:model="service_value" class="form-control form-control-solid" placeholder="Enter Service Value" />
+                                @error('service_value') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                             <div class="fv-row mb-7">
                                 <div wire:ignore>

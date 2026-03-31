@@ -98,15 +98,18 @@
                                                             <div class="text-muted me-2 fs-7">Added at {{ \Carbon\Carbon::parse($item->created_at)->format('M d Y - h:i A') }}</div>
                                                         </div>
                                                     </div>
-                                                    <div>
-                                                        <a href="javascript:;" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addInvoice">Add Invoice</a>
-                                                    </div>
                                                 </div>
                                                 <div class="overflow-auto pb-5">
                                                     @foreach ($item->form->invoices as $inv)
                                                         <div class="d-flex align-items-center border border-dashed border-gray-300 rounded min-w-750px px-7 py-3 mb-5">
                                                             <a href="javascript:;" class="fs-5 text-dark text-hover-primary fw-semibold w-375px min-w-200px"  data-bs-toggle="modal" data-bs-target="#viewInvoice" wire:click="viewInvoice({{ $inv->id }})">{{ $inv->number }}</a>
                                                             
+                                                            <p>
+                                                                @foreach ($inv->items as $ii)
+                                                                    <span class="badge bg-secondary">{{ ucfirst($ii['name']) }}  @if(!$loop->last), @endif</span>
+                                                                @endforeach
+                                                            </p>
+
                                                             <div class="symbol-group symbol-hover flex-nowrap flex-grow-1 min-w-100px pe-2">
                                                                 <div class="symbol symbol-circle symbol-25px"></div>
                                                             </div>
@@ -464,6 +467,20 @@
                                                     </tbody>
                                                 </table>
                                             </div>
+                                        @elseif($item->stage->type == "mission")
+                                            <div class="timeline-content mb-10 mt-n1">
+                                                <div class="pe-3 mb-5">
+                                                    <div class="fs-5 fw-semibold mb-2">{{$item->stage->name}}</div>
+                                                    <div class="d-flex align-items-center mt-1 fs-6">
+                                                        <div class="text-muted me-2 fs-7">Added at {{ \Carbon\Carbon::parse($item->created_at)->format('M d Y - h:i A') }} - Recieved by </div>
+                                                        <div class="symbol-group symbol-hover flex-nowrap flex-grow-1 min-w-100px pe-2">
+                                                            <div class=" symbol symbol-circle symbol-25px" data-bs-toggle="tooltip" data-bs-boundary="window" data-bs-placement="top" title="Receiver">
+                                                                <img src="{{asset('assets/backend/media/avatars/300-2.jpg')}}" alt="img" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         @else
                                             <div class="timeline-content mb-10 mt-n1">
                                                 <div class="pe-3 mb-5">
@@ -600,94 +617,6 @@
     </div>
     <!--end::Stage Modals-->
 
-    <!--begin::AddInvoiceModals-->
-    <div wire:ignore.self class="modal fade" id="addInvoice" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <form wire:submit.prevent="storeInvoice" class="form">
-                    <div class="modal-header">
-                        <h2 class="fw-bold">Add Invoice</h2>
-                        <div wire:click="close" class="btn btn-icon btn-sm btn-active-icon-primary"  data-bs-dismiss="modal">
-                            <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
-                        </div>
-                    </div>
-                    <div class="modal-body py-10 px-lg-17">
-                        <div class="scroll-y me-n7 pe-7">
-                            <div class="row">
-                                <div class="col-md-6 mb-7">
-                                    <label class="required fs-6 fw-semibold mb-2">Date</label>
-                                    <input type="date" wire:model="date" class="form-control form-control-solid" disabled/>
-                                    @error('date') <span class="text-danger">{{ $message }}</span> @enderror
-                                </div>
-                                <div class="col-md-6 mb-7">
-                                    <div wire:ignore>
-                                        <label class="required fs-6 fw-semibold mb-2">Select Method</label>
-                                        <select class="form-select form-select-solid method" data-control="select2" data-hide-search="true" data-placeholder="Select Method" multiple wire:model="method">
-                                            <option value="">Select Method...</option>
-                                            <option value="cash">Cash</option>
-                                            <option value="bank">Bank</option>
-                                            <option value="mobile">Mobile</option>
-                                        </select>
-                                    </div>
-                                    @error('method') <span class="text-danger">{{ $message }}</span> @enderror
-                                </div>
-                                <div class="col-md-12 mb-7">
-                                    <label class="required fs-6 fw-semibold mb-2">Items</label>
-                                    <div class="table-responsive">
-                                        @error('items.*') <span class="text-danger">{{ $message }}</span> @enderror
-                                        <table class="table align-middle table-row-dashed fw-semibold fs-6 gy-5">
-                                            <thead>
-                                                <tr class="text-muted fw-bold fs-7 text-uppercase">
-                                                    <th>Name</th>
-                                                    <th>Total Amount</th>
-                                                    <th>Advance Payment</th>
-                                                    @if(count($items) > 1)
-                                                        <th class="text-end">Remove</th>
-                                                    @endif
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach($items as $index => $education)
-                                                    <tr>
-                                                        <td>
-                                                            <input type="text" wire:model="items.{{ $index }}.name" class="form-control form-control-solid">
-                                                        </td>
-                                                        <td>
-                                                            <input type="text" wire:model="items.{{ $index }}.total" class="form-control form-control-solid">
-                                                        </td>
-                                                        <td>
-                                                            <input type="text" wire:model="items.{{ $index }}.advance" class="form-control form-control-solid">
-                                                        </td>
-                                                        @if(count($items) > 1)
-                                                            <td class="text-end">
-                                                                <button type="button" wire:click="removeRow({{ $index }})" class="btn btn-sm btn-danger">Remove</button>
-                                                            </td>
-                                                        @endif
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="mt-2 text-end">
-                                        <button type="button" wire:click="addRow" class="btn btn-light-primary"> + Add More </button>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mb-7">
-                                    <label class="fs-6 fw-semibold mb-2">Notes</label>
-                                    <textarea wire:model="notes" class="form-control"></textarea>
-                                    @error('notes') <span class="text-danger">{{ $message }}</span> @enderror
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer flex-end">
-                        <button type="submit" class="btn btn-sm btn-primary">Save</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-     <!--end::AddInvoiceModals-->
     <!--begin::ViewInvoiceModals-->
     <div wire:ignore.self class="modal fade" id="viewInvoice" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
         <div class="modal-dialog modal-xl">

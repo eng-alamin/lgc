@@ -62,33 +62,15 @@
                              <td><a href="{{route('agent.application.view', $item->id)}}" target="_blank">{{$item->number}}</a></td>
                             <td>{{ ucfirst($item->type) }}</td>
                             <td>
-                                @php
-                                    $current = $item->status;
-                                    $flow = config('status_flow.form');
-                                    $allowed = $flow[$current] ?? [];
-                                @endphp
-
                                 @if ($item->status == 'pending')
-                                    <a href="#" class="btn btn-sm btn-light-warning btn-flex btn-center btn-active-light-warning dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">{{ ucfirst($item->status) }}</a>
+                                    <a href="#" class="btn btn-sm btn-light-warning btn-flex btn-center btn-active-light-warning">{{ ucfirst($item->status) }}</a>
                                 @elseif ($item->status == 'processing')
-                                    <a href="#" class="btn btn-sm btn-light-primary btn-flex btn-center btn-active-light-primary dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">{{ ucfirst($item->status) }}</a>
+                                    <a href="#" class="btn btn-sm btn-light-primary btn-flex btn-center btn-active-light-primary">{{ ucfirst($item->status) }}</a>
                                 @elseif ($item->status == 'approved')
-                                    <a href="#" class="btn btn-sm btn-light-success btn-flex btn-center btn-active-light-success dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">{{ ucfirst($item->status) }}</a>
+                                    <a href="#" class="btn btn-sm btn-light-success btn-flex btn-center btn-active-light-success">{{ ucfirst($item->status) }}</a>
                                 @else
-                                    <a href="#" class="btn btn-sm btn-light-danger btn-flex btn-center btn-active-light-danger dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">{{ ucfirst($item->status) }}</a>
+                                    <a href="#" class="btn btn-sm btn-light-danger btn-flex btn-center btn-active-light-danger">{{ ucfirst($item->status) }}</a>
                                 @endif
-                                
-                                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4 dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                    @foreach (['pending','processing','approved','declined'] as $status)
-                                        <div class="menu-item px-3">
-                                            <a href="javascript:;"
-                                            class="menu-link px-3 {{ !in_array($status,$allowed) ? 'disabled text-muted' : '' }}"
-                                            wire:click="{{ in_array($status,$allowed) ? "statusClick($item->id, '$status')" : '' }}">
-                                                {{ ucfirst($status) }}
-                                            </a>
-                                        </div>
-                                    @endforeach
-                                </div>
                             </td>
                             <td>{{ \Carbon\Carbon::parse($item->created_at)->diffForHumans() }}</td>
                             <td class="text-end">

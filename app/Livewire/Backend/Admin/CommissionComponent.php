@@ -23,7 +23,7 @@ class CommissionComponent extends Component
             'data' => $data,
         ])
         ->layout('layouts.backend.app', [
-            'title' => "Commission Rulse | Let's Go China",
+            'title' => "Commissions | Let's Go China",
         ]);
     }
 

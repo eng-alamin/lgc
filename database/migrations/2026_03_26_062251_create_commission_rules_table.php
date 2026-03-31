@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('commission_rules', function (Blueprint $table) {
             $table->id();
-            $table->string('service_type')->unique(); // education, healthcare, business, travel, job
+            $table->string('service_type')->unique(); // education, healthcare, business, travel, career
+            $table->decimal('service_value', 10, 2);
             $table->enum('commission_type', ['fixed', 'percentage']);
             $table->decimal('commission_value', 10, 2);
             $table->boolean('status')->default(true);

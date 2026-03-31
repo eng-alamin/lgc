@@ -15,7 +15,7 @@ class CommissionComponent extends Component
 
     public function render()
     {
-        $data = Commission::where('agent_id', auth()->id())->latest()->get();
+        $data = Commission::where('agent_id', auth()->user()->agent->id)->latest()->get();
 
         // $data = Commission::when($this->statusFilter,
         //     fn($q) => $q->where('status', $this->statusFilter)

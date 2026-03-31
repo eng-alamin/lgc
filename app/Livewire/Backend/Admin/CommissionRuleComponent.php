@@ -4,6 +4,7 @@ namespace App\Livewire\Backend\Admin;
 
 use Livewire\Component;
 use App\Models\CommissionRule;
+use Illuminate\Validation\Rule;
 
 class CommissionRuleComponent extends Component
 {
@@ -11,6 +12,7 @@ class CommissionRuleComponent extends Component
     public $delete_id;
 
     public $service_type;
+    public $service_value;
     public $commission_type;
     public $commission_value;
 
@@ -37,6 +39,7 @@ class CommissionRuleComponent extends Component
         $this->delete_id = '';
 
         $this->service_type = '';
+        $this->service_value = '';
         $this->commission_type = '';
         $this->commission_value = '';
     }
@@ -50,6 +53,7 @@ class CommissionRuleComponent extends Component
     {
         $this->validateOnly($name, [
             'service_type' => 'required|unique:commission_rules',
+            'service_value' => 'required',
             'commission_type' => 'required',
             'commission_value' => 'required',
         ]);
@@ -59,6 +63,7 @@ class CommissionRuleComponent extends Component
     {
         $this->validate([
             'service_type' => 'required|unique:commission_rules',
+            'service_value' => 'required',
             'commission_type' => 'required',
             'commission_value' => 'required',
         ]);
@@ -66,6 +71,7 @@ class CommissionRuleComponent extends Component
         try{
             $data = new CommissionRule();
             $data->service_type = $this->service_type;
+            $data->service_value = $this->service_value;
             $data->commission_type = $this->commission_type;
             $data->commission_value = $this->commission_value;
             $data->save();
@@ -91,13 +97,15 @@ class CommissionRuleComponent extends Component
 
         $this->rule_id = $edit->id;
         $this->service_type = $edit->service_type;
+        $this->service_value = $edit->service_value;
         $this->commission_type = $edit->commission_type;
         $this->commission_value = $edit->commission_value;
     }
     public function update()
     {
         $this->validate([
-            'service_type' => 'required|unique:commission_rules',
+            'service_type' => ['required', Rule::unique('commission_rules', 'service_type')->ignore($this->rule_id)],
+            'service_value' => 'required',
             'commission_type' => 'required',
             'commission_value' => 'required',
         ]);
@@ -105,6 +113,7 @@ class CommissionRuleComponent extends Component
         try{
             $data = CommissionRule::find($this->rule_id);
             $data->service_type = $this->service_type;
+            $data->service_value = $this->service_value;
             $data->commission_type = $this->commission_type;
             $data->commission_value = $this->commission_value;
             $data->save();

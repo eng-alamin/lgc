@@ -483,6 +483,20 @@
                                                     </tbody>
                                                 </table>
                                             </div>
+                                        @elseif($item->stage->type == "mission")
+                                            <div class="timeline-content mb-10 mt-n1">
+                                                <div class="pe-3 mb-5">
+                                                    <div class="fs-5 fw-semibold mb-2">{{$item->stage->name}}</div>
+                                                    <div class="d-flex align-items-center mt-1 fs-6">
+                                                        <div class="text-muted me-2 fs-7">Added at {{ \Carbon\Carbon::parse($item->created_at)->format('M d Y - h:i A') }} - Recieved by </div>
+                                                        <div class="symbol-group symbol-hover flex-nowrap flex-grow-1 min-w-100px pe-2">
+                                                            <div class=" symbol symbol-circle symbol-25px" data-bs-toggle="tooltip" data-bs-boundary="window" data-bs-placement="top" title="Receiver">
+                                                                <img src="{{asset('assets/backend/media/avatars/300-2.jpg')}}" alt="img" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         @else
                                             <div class="timeline-content mb-10 mt-n1">
                                                 <div class="pe-3 mb-5">
@@ -608,7 +622,7 @@
                                 @error('title') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                             <div class="fv-row mb-7">
-                                <label class="required fs-6 fw-semibold mb-2">Status</label>
+                                <label class="fs-6 fw-semibold mb-2">Status</label>
                                 <select class="form-select p-0 w-100 border-0 selectpicker" title="Select a status" wire:model="status">
                                     <option value="">Select Status...</option>
                                     <option value="pending">Pending</option>
@@ -648,15 +662,12 @@
                                     @error('date') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="col-md-6 mb-7">
-                                    <div wire:ignore>
-                                        <label class="required fs-6 fw-semibold mb-2">Select Method</label>
-                                        <select class="form-select form-select-solid method" data-control="select2" data-hide-search="true" data-placeholder="Select Method" multiple wire:model="method">
-                                            <option value="">Select Method...</option>
-                                            <option value="cash">Cash</option>
-                                            <option value="bank">Bank</option>
-                                            <option value="mobile">Mobile</option>
-                                        </select>
-                                    </div>
+                                    <label class="required fs-6 fw-semibold mb-2">Select Method</label>
+                                    <select class="form-select p-0 w-100 border-0 selectpicker" multiple title="Select Method" wire:model.live="method">
+                                        <option value="cash" selected>Cash</option>
+                                        <option value="bank">Bank</option>
+                                        <option value="mobile">Mobile</option>
+                                    </select>
                                     @error('method') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="col-md-12 mb-7">
@@ -904,22 +915,6 @@
 </div>
 
 @push('scripts')
-    <script>
-        document.addEventListener('livewire:init', () => {
-            $('.method').on('change', function () {
-                @this.set('method', $(this).val());
-            });
-            $('.status').on('change', function () {
-                @this.set('status', $(this).val());
-            });
-            Livewire.on('refreshSelect', () => {
-                setTimeout(() => {
-                    $('.status').val(@this.get('status')).trigger('change');
-                    $('.method').val(@this.get('method')).trigger('change');
-                }, 100);
-            });
-        });
-    </script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
 

@@ -77,16 +77,16 @@ class ListComponent extends Component
             $commissionAmount = 0;
 
             if ($rule->commission_type === 'percentage') {
-                $commissionAmount = ($form->invoiceHasOneForm->total_amount * $rule->commission_value) / 100;
+                $commissionAmount = ($rule->service_value * $rule->commission_value) / 100;
             } else {
                 $commissionAmount = $rule->commission_value;
             }
-
+ 
             // Create commission
             Commission::create([
                 'form_id' => $form->id,
                 'agent_id' => $form->agent_id,
-                'total_amount' => $form->invoiceHasOneForm->total_amount,
+                'total_amount' => $rule->service_value,
                 'commission_rate' => $rule->commission_value,
                 'commission_amount' => $commissionAmount,
                 'status' => 'pending',

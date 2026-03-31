@@ -10,10 +10,10 @@ class Commission extends Model
 
     public function agent()
     {
-        return $this->belongsTo(User::class, 'agent_id');
+        return $this->belongsTo(Agent::class);
     }
     public function form()
     {
-        return $this->belongsTo(Form::class, 'form_id');
+        return $this->belongsTo(Form::class);
     }
 }

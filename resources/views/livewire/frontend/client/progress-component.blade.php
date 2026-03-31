@@ -494,7 +494,7 @@
             position: absolute;
             left: 18px;
             top: 0;
-            bottom: 0;
+            bottom: 17px;
             width: 3px;
             background: #e9ecef;
         }
