@@ -17,8 +17,10 @@
                                             <div class="wptb-item--inner">
                                                 <h6 class="wptb-item--subtitle"> {{$item->subtitle}} </h6>
                                                 <h1 class="wptb-item--title"> {!! $item->title !!} </h1>
-                                                <p class="wptb-item--description">{!! $item->description !!} </p>
-                                                    <div class="wptb-item--button"> <a class="btn-readmore style-default" href="{{$item->link}}"> <span class="btn-readmore--text"> Get Started </span> </a></div>
+                                                <p class="wptb-item--description w-100">{!! $item->description !!}</p>
+                                                @if ($item->link)
+                                                    <div class="wptb-item--button"><a class="btn-readmore style-default" href="{{$item->link}}"> <span class="btn-readmore--text"> Get Started </span> </a></div>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -38,7 +40,7 @@
                                 <img src="{{ asset($item->file2) }}" alt="{{ $item->subtitle }}">
                             </div>
                             <div class="wptb-item-layer wptb-item-layer-two">
-                                <img src="{{ asset($item->file3) }}" alt="{{ $item->subtitle }}}">
+                                <img src="{{ asset($item->file3) }}" alt="{{ $item->subtitle }}">
                             </div>
                             <div class="wptb-item-layer wptb-item-layer-three">
                                 <img src="{{ asset($item->file4) }}" alt="{{ $item->subtitle }}">
@@ -131,15 +133,10 @@
                             <div class="wptb-image-box1 wow fadeInLeft">
                                 <div class="wptb-item--inner">
                                     <div class="wptb-item--image">
-                                        <a href="#" class="wptb-item-link"><img src="{{ asset($item->file) }}" alt="img"></a>
+                                        <a href="{{ route('essential.detail', $item->id) }}" class="wptb-item-link"><img src="{{ asset($item->file) }}" alt="img"></a>
                                     </div>
                                     <div class="wptb-item--holder">
-                                        {{-- <div class="wptb-item--icon">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 9 9" fill="none"> <path d="M0 9C6 9 8.5 3 9 0V9H0Z"></path> </svg>
-                                            <img src="{{ asset('assets/frontend/assets/img/services/icon-1.png') }}" alt="icon">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 9 9" fill="none"> <path d="M9 9C3 9 0.5 3 0 0V9H9Z"></path> </svg>
-                                        </div> --}}
-                                        <h4 class="wptb-item--title"><a href="#">{{$item->title}}</a></h4>
+                                        <h4 class="wptb-item--title"><a href="{{ route('essential.detail', $item->id) }}">{{$item->title}}</a></h4>
                                         <div class="wptb-line-paper"></div>
                                         <p class="wptb-item--description"> {{$item->subtitle}}</p>
                                         
@@ -223,6 +220,7 @@
                             {!! $about->description !!}
                         </div>
 
+                        @if ($about->link)
                         <div class="wptb-item--button">
                             <a href="{{$about->link}}" class="btn">
                                 <span class="btn-wrap">
@@ -231,6 +229,8 @@
                                 </span>
                             </a>
                         </div>
+                        @endif
+
                     </div>
                 </div>
             </div>
@@ -291,7 +291,7 @@
                                 </div>
 
                                 <div class="wptb-item--button">
-                                    <a class="btn--readmore" href="#">
+                                    <a class="btn--readmore" href="{{route('contact')}}">
                                         <span class="btn-readmore--text"> Contact Us </span>
                                     </a>
                                 </div>
@@ -336,7 +336,7 @@
             </div>
 
             <div class="row">
-                <div class="col-md-4 pe-md-5">
+                {{-- <div class="col-md-4 pe-md-5">
                     <div class="wptb-client-review bg-white wow skewIn">
                         <div class="wptb-item--inner">
                             <div class="wptb-heading">
@@ -377,9 +377,10 @@
                             
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
-                <div class="col-md-8">
+                <div class="col-md-12">
+                {{-- <div class="col-md-8"> --}}
                     <div class="wptb-why-choose--inner">
                          <div class="row g-0">
                               <!-- Iconbox -->
@@ -744,171 +745,6 @@
         </div>
     </div>
 
-    <!-- Pricing Packages -->
-    {{-- <section class="wptb-pricing-package-one">
-        <div class="container">
-            <div class="wptb-heading">
-                <div class="wptb-item--inner text-center">
-                    <h6 class="wptb-item--subtitle">
-                        <span>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                <path d="M14.9119 2.10726L0.787131 7.08487C0.559931 7.16487 0.509531 7.36087 0.779131 7.46806L3.81593 8.68486L5.61593 9.40566L14.4031 2.95286C14.5215 2.86646 14.6575 3.02886 14.5719 3.12166L8.27513 9.93207V9.93366L7.91353 10.3361L8.39273 10.5937L12.3783 12.7393C12.6111 12.8641 12.9127 12.7609 12.9799 12.4721L15.3047 2.45206C15.3679 2.17766 15.1863 2.01046 14.9119 2.10726ZM5.59993 13.7297C5.59993 13.9265 5.71113 13.9817 5.86473 13.8425C6.06553 13.6593 8.14473 11.7937 8.14473 11.7937L5.59993 10.4785V13.7297Z" fill="#E13833"/>
-                            </svg>
-                        </span>
-                        Pricing Packages
-                    </h6>
-                    <h1 class="wptb-item--title"> <span>Get the best packages For every <br>
-                        Exam preparation</span></h1>
-                </div>
-            </div>
-
-            <div class="wptb-packages1 active highlight wow fadeInLeft">
-                <div class="wptb-item--inner">
-                    <div class="wptb-item--left-part">
-                        <div class="wptb-item--holder">
-                            <h6 class="wptb-item--category"><a href="#">IELTS</a></h6>
-                            <h4 class="wptb-item--title"><a href="#">IELTS Exam Preparation</a></h4>
-                            <p class="wptb-item--description"> Let's Go ChinaVisa Consultancy takes great
-                                pride in its commitment for helping interna
-                                tional students from all over...</p>
-                        </div>
-
-                        <div class="wptb-item--image">
-                            <a href="#" class="wptb-item-link"><img src="{{ asset('assets/frontend/assets/img/packages/1.jpg') }}" alt="img"></a>
-                        </div>
-                    </div>
-
-                    <div class="wptb-item--right-part">
-                        <div class="wptb-list1">
-                            <div class="wptb--item wow skewIn animated">
-                                <div class="wptb-item--icon"><i class="bi bi-check"></i></div>
-                                <div class="wptb-item--text">IELTS Exam Preparation Manual</div>
-                            </div>
-                            <div class="wptb--item wow skewIn animated">
-                                <div class="wptb-item--icon"><i class="bi bi-check"></i></div>
-                                <div class="wptb-item--text">IELTS Exam Preparation Mock Test</div>
-                            </div>
-                            <div class="wptb--item wow skewIn animated">
-                                <div class="wptb-item--icon"><i class="bi bi-check"></i></div>
-                                <div class="wptb-item--text">IELTS Preparation Consultation</div>
-                            </div>
-                            <div class="wptb--item wow skewIn animated">
-                                <div class="wptb-item--icon"><i class="bi bi-check"></i></div>
-                                <div class="wptb-item--text">IELTS Exam Venue & Arrangement</div>
-                            </div>
-                        </div>
-
-                        <div class="wptb-item--price">
-                            <span class="wptb-service-price">$645.00</span> <span class="wptb-service-price-for">Per Attempt</span>
-                            <div class="wptb-item--button">
-                                
-                                <a class="btn--readmore" href="contact-1.html"> 
-                                    <span class="btn-readmore--text"> Get Started </span> 
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="wptb-packages1 wow fadeInLeft">
-                <div class="wptb-item--inner">
-                    <div class="wptb-item--left-part">
-                        <div class="wptb-item--holder">
-                            <h6 class="wptb-item--category"><a href="#">TOEFL</a></h6>
-                            <h4 class="wptb-item--title"><a href="#">TOEFL Exam Preparation</a></h4>
-                            <p class="wptb-item--description"> Let's Go ChinaVisa Consultancy takes great
-                                pride in its commitment for helping interna
-                                tional students from all over...</p>
-                        </div>
-
-                        <div class="wptb-item--image">
-                            <a href="#" class="wptb-item-link"><img src="{{ asset('assets/frontend/assets/img/packages/2.jpg') }}" alt="img"></a>
-                        </div>
-                    </div>
-
-                    <div class="wptb-item--right-part">
-                        <div class="wptb-list1">
-                            <div class="wptb--item wow skewIn animated">
-                                <div class="wptb-item--icon"><i class="bi bi-check"></i></div>
-                                <div class="wptb-item--text">IELTS Exam Preparation Manual</div>
-                            </div>
-                            <div class="wptb--item wow skewIn animated">
-                                <div class="wptb-item--icon"><i class="bi bi-check"></i></div>
-                                <div class="wptb-item--text">IELTS Exam Preparation Mock Test</div>
-                            </div>
-                            <div class="wptb--item wow skewIn animated">
-                                <div class="wptb-item--icon"><i class="bi bi-check"></i></div>
-                                <div class="wptb-item--text">IELTS Preparation Consultation</div>
-                            </div>
-                            <div class="wptb--item wow skewIn animated">
-                                <div class="wptb-item--icon"><i class="bi bi-check"></i></div>
-                                <div class="wptb-item--text">IELTS Exam Venue & Arrangement</div>
-                            </div>
-                        </div>
-
-                        <div class="wptb-item--price">
-                            <span class="wptb-service-price">$645.00</span> <span class="wptb-service-price-for">Per Attempt</span>
-                            <div class="wptb-item--button"> 
-                                <a class="btn--readmore" href="contact-1.html"> 
-                                    <span class="btn-readmore--text"> Get Started </span> 
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="wptb-packages1 wow fadeInLeft">
-                <div class="wptb-item--inner">
-                    <div class="wptb-item--left-part">
-                        <div class="wptb-item--holder">
-                            <h6 class="wptb-item--category"><a href="#">PTE</a></h6>
-                            <h4 class="wptb-item--title"><a href="#">PTE Exam Preparation</a></h4>
-                            <p class="wptb-item--description"> Let's Go ChinaVisa Consultancy takes great
-                                pride in its commitment for helping interna
-                                tional students from all over...</p>
-                        </div>
-
-                        <div class="wptb-item--image">
-                            <a href="#" class="wptb-item-link"><img src="{{ asset('assets/frontend/assets/img/packages/3.jpg') }}" alt="img"></a>
-                        </div>
-                    </div>
-
-                    <div class="wptb-item--right-part">
-                        <div class="wptb-list1">
-                            <div class="wptb--item wow skewIn animated">
-                                <div class="wptb-item--icon"><i class="bi bi-check"></i></div>
-                                <div class="wptb-item--text">IELTS Exam Preparation Manual</div>
-                            </div>
-                            <div class="wptb--item wow skewIn animated">
-                                <div class="wptb-item--icon"><i class="bi bi-check"></i></div>
-                                <div class="wptb-item--text">IELTS Exam Preparation Mock Test</div>
-                            </div>
-                            <div class="wptb--item wow skewIn animated">
-                                <div class="wptb-item--icon"><i class="bi bi-check"></i></div>
-                                <div class="wptb-item--text">IELTS Preparation Consultation</div>
-                            </div>
-                            <div class="wptb--item wow skewIn animated">
-                                <div class="wptb-item--icon"><i class="bi bi-check"></i></div>
-                                <div class="wptb-item--text">IELTS Exam Venue & Arrangement</div>
-                            </div>
-                        </div>
-
-                        <div class="wptb-item--price">
-                            <span class="wptb-service-price">$645.00</span> <span class="wptb-service-price-for">Per Attempt</span>
-                            <div class="wptb-item--button"> 
-                                <a class="btn--readmore" href="contact-1.html"> 
-                                    <span class="btn-readmore--text"> Get Started </span> 
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section> --}}
-
     <!-- Testimonial -->
     @php $testimonial = $sections->where('type', 'testimonial')->first(); @endphp
     <section class="wptb-testimonial-one bg-image" style="background-image: url('{{asset('assets/frontend/assets/img/background/bg-4.jpg')}}');">
@@ -1032,7 +868,7 @@
                         <div class="wptb-blog-grid1 active highlight wow fadeInLeft">
                             <div class="wptb-item--inner">
                                 <div class="wptb-item--image">
-                                    <a href="blog-details.html" class="wptb-item-link"><img src="{{ asset($item->file) }}" alt="{{$item->title}}"></a>
+                                    <a href="{{ route('blog.detail', $item->id) }}" class="wptb-item-link"><img src="{{ asset($item->file) }}" alt="{{$item->title}}"></a>
                                 </div>
                                 <div class="wptb-item--holder">
                                     <div class="wptb-item--meta">
@@ -1040,11 +876,11 @@
                                         <div class="wptb-item-comment"><a href="#comments">0</a></div>
                                     </div>
                                     
-                                    <h5 class="wptb-item--title"><a href="blog-details.html">{{$item->title}}</a></h5>
+                                    <h5 class="wptb-item--title"><a href="{{ route('blog.detail', $item->id) }}">{{$item->title}}</a></h5>
                                     <p class="wptb-item--description"> {{$item->short_description}}</p>
                                     
                                     <div class="wptb-item--button"> 
-                                        <a class="btn--readmore" href="blog-details.html"> 
+                                        <a class="btn--readmore" href="{{ route('blog.detail', $item->id) }}"> 
                                             <span class="btn-readmore--text"> Read More </span> 
                                             <span class="btn-readmore--icon"> <i class="bi bi-arrow-right"></i> </span> 
                                         </a>
@@ -1058,6 +894,18 @@
                         <p class="wptb-item--description">No Data Found</p>
                     </div>
                 @endforelse
+
+                @if ($blogs->count() > 4)
+                    <div class="col-sm-12 text-center">
+                        <a href="{{route('blogs')}}" class="btn mt-4">
+                            <span class="btn-wrap">
+                                <span class="text-first">View More</span>
+                                <span class="text-second">View More</span>
+                            </span>
+                        </a>
+                    </div>
+                @endif
+
             </div>
         </div>
     </section>

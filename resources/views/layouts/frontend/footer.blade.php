@@ -3,7 +3,7 @@
             <div class="footer-top">
                 <div class="container">
                     <div class="footer-upper-contact">
-                        <div class="row">
+                        <div class="row align-center">
                             <!-- Left Box -->
                             <div class="col-lg-3 col-sm-6 mb-4 mb-sm-0">
                                 <div class="logo">
@@ -12,7 +12,7 @@
                             </div>
                             
                             <!-- Right Box -->
-                            <div class="col-lg-3 col-sm-6 mb-4 mb-sm-0">
+                            <div class="col-lg-6 col-sm-6 mb-4 mb-sm-0">
                                 <div class="wptb-icon-box1 wow fadeInLeft">
                                     <div class="wptb-item--inner flex-start">
                                         <div class="wptb-item--icon"><i class="bi bi-buildings"></i></div>
@@ -21,9 +21,6 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            
-                            <div class="col-lg-3 col-sm-6 mb-4 mb-sm-0">
                                 <div class="wptb-icon-box1 wow fadeInLeft">
                                     <div class="wptb-item--inner flex-start">
                                         <div class="wptb-item--icon"><i class="bi bi-telephone-fill"></i></div>

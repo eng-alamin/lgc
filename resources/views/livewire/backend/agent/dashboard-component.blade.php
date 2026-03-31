@@ -194,7 +194,7 @@
             <div class="card card-flush h-md-100">
                 <div class="card-header pt-5 mb-6">
                     <h3 class="card-title align-items-start flex-column">
-                        <span class="card-label fw-bold text-gray-800">Applications</span>
+                        <span class="card-label fw-bold text-gray-800">Forms</span>
                         <span class="fs-6 fw-semibold text-gray-400">Pending - {{$forms->where('status', 'pending')->count()}}</span>
                     </h3>
                 </div>
@@ -212,7 +212,7 @@
                                 @foreach ($forms->where('status', 'pending')->take(6) as $item)
                                     <tr>
                                         <td>
-                                            <a href="{{route('receptionist.application.view', $item->id)}}" target="_blank"><span class="text-gray-800 fw-bold fs-6 me-1">{{$item->number}}</span></a>
+                                            <a href="{{route('agent.application.view', $item->id)}}" target="_blank"><span class="text-gray-800 fw-bold fs-6 me-1">{{$item->number}}</span></a>
                                         </td>
                                         <td class="pe-0 text-end">
                                             <span class="badge badge-light-primary fs-7">{{ucfirst($item->status)}}</span>
@@ -233,7 +233,7 @@
             <div class="card card-flush h-md-100">
                 <div class="card-header pt-7">
                     <h3 class="card-title align-items-start flex-column">
-                        <span class="card-label fw-bold text-gray-800">Applications</span>
+                        <span class="card-label fw-bold text-gray-800">Forms</span>
                         <span class="text-gray-400 mt-1 fw-semibold fs-6">{{ucfirst($applicationFilter)}} {{$forms->count()}} Data</span>
                     </h3>
                     <div class="card-toolbar">
@@ -268,11 +268,19 @@
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <div class="symbol symbol-50px me-3">
-                                                    <img src="{{asset('assets/backend/media/stock/600x600/img-49.jpg')}}" class="" alt="" />
+                                                    <a href="{{route('agent.client.overview', $item->client?->id)}}" target="_blank">
+                                                        @if($item->client?->user?->avatar)
+                                                            <div class="symbol-label">
+                                                                <img src="{{asset($item->client?->user?->avatar)}}" alt="{{$item->client?->user?->name}}" class="w-100" />
+                                                            </div>
+                                                        @else
+                                                            <div class="symbol-label fs-3 bg-light-danger text-danger"> {{substr($item->client?->user?->name ?? 'N',0,1)}} </div>
+                                                        @endif
+                                                    </a>
                                                 </div>
                                                 <div class="d-flex justify-content-start flex-column">
-                                                    <a href="#" class="text-gray-800 fw-bold text-hover-primary mb-1 fs-6">{{$item->user?->name ?? 'N/L'}}</a>
-                                                    <span class="text-gray-400 fw-semibold d-block fs-7">{{$item->user?->email ?? 'N/A'}}</span>
+                                                    <a href="{{route('agent.client.overview', $item->client?->id)}}" target="_blank" class="text-gray-800 fw-bold text-hover-primary mb-1 fs-6">{{$item->client?->user?->name ?? 'N/A'}}</a>
+                                                    <span class="text-gray-400 fw-semibold d-block fs-7">{{$item->client?->user?->email ?? 'N/A'}}</span>
                                                 </div>
                                             </div>
                                         </td>
@@ -296,7 +304,7 @@
                                             @endif
                                         </td>
                                         <td class="text-end">
-                                            <a href="{{route('receptionist.application.view', $item->id)}}" target="_blank" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary w-30px h-30px">
+                                            <a href="{{route('agent.application.view', $item->id)}}" target="_blank" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary w-30px h-30px">
                                                 <i class="ki-duotone ki-black-right fs-2 text-gray-500"></i>
                                             </a>
                                         </td>

@@ -65,7 +65,7 @@
                                 <div>{{$item->form?->client?->user->phone}}</div>
                             </div>
                         </td>
-                        <td><a href="{{ route('agent.invoices.print', $item->id) }}" target="_blank">{{$item->number}}</a></td>
+                        <td><a href="{{ route('invoices.view', $item->id) }}" target="_blank">{{$item->number}}</a></td>
                         <td>{{$item->total_amount}}</td>
                         <td>{{$item->paid_amount}}</td>
                         <td>{{$item->due_amount}}</td>
@@ -112,7 +112,7 @@
                             <a href="#" class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Actions</a>
                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4 dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                 <div class="menu-item px-3">
-                                    <a href="{{ route('agent.invoices.print', $item->id) }}" target="_blank"  class="menu-link px-3">Print</a>
+                                    <a href="{{ route('invoices.view', $item->id) }}" target="_blank"  class="menu-link px-3">Print</a>
                                 </div>
                                 <div class="menu-item px-3">
                                     <a href="javascript:;" wire:click="edit({{ $item->id }})" data-bs-toggle="modal" data-bs-target="#editModal" class="menu-link px-3">Edit</a>

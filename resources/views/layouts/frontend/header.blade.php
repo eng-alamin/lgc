@@ -22,7 +22,7 @@
                 <div class="right-box d-flex align-items-center">
                     <ul class="info-list">
                         <li><a href="mailto:{{ config('setting.email') }}"><span class="icon bi bi-envelope-fill"></span>{{ config('setting.email') }}</a></li>
-                        <li><a href="#"><span class="icon bi bi-geo-alt-fill"></span>{{ strip_tags(config('setting.address')) }}</a></li>
+                        <li><a href="https://www.google.com/maps/place/Let's+Go+China/@23.8295222,90.4161189,17z/data=!3m1!4b1!4m6!3m5!1s0x3755c5cc72d78abd:0x4f1be648df2048e7!8m2!3d23.8295222!4d90.4186938!16s%2Fg%2F11yz5ml_3p?entry=ttu&g_ep=EgoyMDI2MDMyNC4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer"><span class="icon bi bi-geo-alt-fill"></span>{{ strip_tags(config('setting.address')) }}</a></li>
                     </ul>
 
                     <!-- Button Box -->

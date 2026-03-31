@@ -433,7 +433,7 @@
             <div wire:ignore.self class="modal fade" id="addDocument" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered mw-650px">
                     <div class="modal-content">
-                        <form class="form">
+                        <form class="form" wire:submit.prevent="storeDocument">
                             <div class="modal-header border-0">
                                 <h2 class="fw-bold">Upload files</h2>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -450,7 +450,7 @@
                             </div>
 
                             <div class="modal-footer flex-end border-0">
-                                <button wire:click="storeDocument" class="btn btn-sm btn-primary">Save</button>
+                                <button type="submit" class="btn btn-sm btn-primary">Save</button>
                             </div>
                         </form>
                     </div>

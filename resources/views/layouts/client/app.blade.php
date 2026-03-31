@@ -148,6 +148,35 @@
         <a href="#"><i class="bi bi-chevron-up"></i></a>
     </div>
         
+    <script>
+        // Close Modal
+        window.addEventListener('closeModal', event => {
+            $('#addModal').modal('hide');
+            $('#editModal').modal('hide');
+            $('#addDocument').modal('hide');
+        });
+        // Open Modal
+        window.addEventListener('openModal', event => {
+            $('#addModal').modal('show');
+            $('#editModal').modal('show');
+        })
+        // selectpicker
+        window.addEventListener('render-selectpicker', event => {
+            $('.selectpicker').selectpicker();
+        });
+
+        //Side menu active hack
+        $('a').click(function(){
+            $('a.menu-item-active').each(function(){
+                $(this).removeClass('menu-item-active');
+            });
+            $(this).addClass('menu-item-active');
+        });
+
+        $(function() {
+            bsCustomFileInput.init();
+        });
+    </script>
 
     <!-- Core JS -->
     <script src="{{ asset('assets/frontend/assets/js/jquery-3.6.0.min.js') }}"></script>

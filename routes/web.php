@@ -31,7 +31,6 @@ Route::middleware('guest')->group(function () {
     Route::post('forget-password', [App\Livewire\Auth\ForgotPasswordComponent::class, 'store'])->name('forget.password');
     Route::get('reset-password/{id}', App\Livewire\Auth\ResetPasswordComponent ::class)->name('reset.password');
     Route::post('reset-password', [App\Livewire\Auth\ResetPasswordComponent::class, 'store'])->name('reset.password');
-    Route::get('agent', App\Livewire\Auth\AgentComponent::class)->name('agent');
 });
 
 Route::middleware('auth')->group(function () {
@@ -43,7 +42,6 @@ Route::middleware('auth')->group(function () {
     Route::get('email-verification-verify/{token}', App\Livewire\Auth\EmailVerificationVerifyComponent::class)->name('email.verification.verify');
 
     Route::get('logout', [App\Livewire\Auth\LoginComponent::class, 'logout'])->name('logout');
-
     
     Route::get('personalinfo', \App\Livewire\Frontend\Client\PersonalInformationComponent::class)->name('personalinfo');
     Route::get('academicinfo', \App\Livewire\Frontend\Client\AcademicInformationComponent::class)->name('academicinfo');
@@ -71,6 +69,7 @@ Route::middleware('auth')->group(function () {
 });
 
 // Start Frontend
+Route::get('agent', App\Livewire\Auth\AgentComponent::class)->name('agent');
 Route::get('/', \App\Livewire\Frontend\Home::class)->name('home');
 Route::get('workprocess', \App\Livewire\Frontend\Workprocess::class)->name('workprocess');
 Route::get('essentials', \App\Livewire\Frontend\Essential::class)->name('essential');

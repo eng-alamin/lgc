@@ -114,7 +114,7 @@ class DashboardComponent extends Component
     }
 
     
-    // Applications
+    // Forms
     public $applicationFilter = 'today';
     public function setFilterApplication($value)
     {

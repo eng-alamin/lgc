@@ -27,7 +27,7 @@
                     <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" class="menu-item me-0 me-lg-2">
                         <!--begin:Menu link-->
                         <span class="menu-link">
-                            <span class="menu-title"> <a href="{{ route('admin.dashboard') }}"> Dashboard </a></span>
+                            <span class="menu-title"> <a href="{{ route('agent.dashboard') }}"> Dashboard </a></span>
                             {{-- <span class="menu-arrow d-lg-none"></span> --}}
                         </span>
                         <!--end:Menu link-->
@@ -46,7 +46,7 @@
                             <!--begin:Menu item-->
                             <div class="menu-item">
                                 <!--begin:Menu link-->
-                                <a class="menu-link" href="{{ route('admin.account.overview') }}" target="_blank" title="Check out over 200 in-house components, plugins and ready for use solutions" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+                                <a class="menu-link" href="{{ route('agent.account.overview') }}" target="_blank">
                                     <span class="menu-title">Overview</span>
                                 </a>
                                 <!--end:Menu link-->
@@ -55,7 +55,7 @@
                             <!--begin:Menu item-->
                             <div class="menu-item">
                                 <!--begin:Menu link-->
-                                <a class="menu-link" href="{{ route('admin.account.setting') }}" target="_blank" title="Check out the complete documentation" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+                                <a class="menu-link" href="{{ route('agent.account.setting') }}" target="_blank">
                                     <span class="menu-title">Setting</span>
                                 </a>
                                 <!--end:Menu link-->
@@ -64,7 +64,7 @@
                             <!--begin:Menu item-->
                             <div class="menu-item">
                                 <!--begin:Menu link-->
-                                <a class="menu-link" href="{{ route('admin.account.activity') }}" target="_blank">
+                                <a class="menu-link" href="{{ route('agent.account.activity') }}" target="_blank">
                                     <span class="menu-title">Activity</span>
                                 </a>
                                 <!--end:Menu link-->
@@ -119,7 +119,7 @@
                         <!--end::Menu separator-->
                         <!--begin::Menu item-->
                         <div class="menu-item px-5">
-                            <a href="{{route('admin.account.overview')}}" class="menu-link px-5">My Profile</a>
+                            <a href="{{route('agent.account.overview')}}" class="menu-link px-5">My Profile</a>
                         </div>
                         <!--end::Menu item-->
                         <!--begin::Menu separator-->
@@ -205,7 +205,7 @@
                         <!--end::Menu item-->
                         <!--begin::Menu item-->
                         <div class="menu-item px-5 my-1">
-                            <a href="{{route('admin.account.setting')}}" class="menu-link px-5">Account Settings</a>
+                            <a href="{{route('agent.account.setting')}}" class="menu-link px-5">Account Settings</a>
                         </div>
                         <!--end::Menu item-->
                         <!--begin::Menu item-->
