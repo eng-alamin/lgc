@@ -12,7 +12,7 @@
                             </div>
                             
                             <!-- Right Box -->
-                            <div class="col-lg-6 col-sm-6 mb-4 mb-sm-0">
+                            <div class="col-lg-5 col-sm-6 ms-4 mb-4 mb-sm-0">
                                 <div class="wptb-icon-box1 wow fadeInLeft">
                                     <div class="wptb-item--inner flex-start">
                                         <div class="wptb-item--icon"><i class="bi bi-buildings"></i></div>
