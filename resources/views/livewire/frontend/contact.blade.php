@@ -69,8 +69,10 @@
             </div>
 
             <div class="gmapbox mr-top-20 wow fadeInUp">
-                {{-- <div id="googleMap" class="map"></div> --}}
-                <div id="map" style='height:400px'></div>
+                <iframe 
+                    src="https://www.google.com/maps?q=Let's+Go+China&output=embed"
+                    width="100%" height="400">
+                </iframe>
             </div>
 
             @php $contact = $sections->where('type', 'contact')->first(); @endphp
@@ -182,31 +184,3 @@
         </div>
     </div>
 </div>
-
-@push('scripts')
-<script type="text/javascript">
-    function initializeMap() {
-        const locations = <?php echo json_encode($locations) ?>;
-
-        const map = new google.maps.Map(document.getElementById("map"));
-        var infowindow = new google.maps.InfoWindow();
-        var bounds = new google.maps.LatLngBounds();
-        for (var location of locations) {
-            var marker = new google.maps.Marker({
-                position: new google.maps.LatLng(location.lat, location.lng),
-                map: map
-            });
-            bounds.extend(marker.position);
-            google.maps.event.addListener(marker, 'click', (function(marker, location) {
-                return function() {
-                    infowindow.setContent(location.lat + " & " + location.lng);
-                    infowindow.open(map, marker);
-                }
-            })(marker, location));
-
-        }
-        map.fitBounds(bounds);
-    }
-</script>
-<script type="text/javascript" src="https://maps.google.com/maps/api/js?key={{ config('setting.other.google_maps_api_key') }}&callback=initializeMap"></script>
-@endpush

@@ -102,7 +102,6 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasOne(Employee::class);
     }
-
     public function client()
     {
         return $this->hasOne(Client::class);
@@ -110,5 +109,9 @@ class User extends Authenticatable implements MustVerifyEmail
     public function agent()
     {
         return $this->hasOne(Agent::class);
+    }
+    public function counselor()
+    {
+        return $this->hasOne(Counselor::class);
     }
 }

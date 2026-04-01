@@ -1,10 +1,10 @@
-@section('page-title') Payrolls @endsection
+@section('page-title') Services  @endsection
 @section('breadcrumb')
     <li class="breadcrumb-item text-muted"><a href="#" class="text-muted text-hover-primary">Home</a></li>
     <li class="breadcrumb-item"><span class="bullet bg-gray-400 w-5px h-2px"></span></li>
-    <li class="breadcrumb-item text-muted">Human Resource</li>
+    <li class="breadcrumb-item text-muted">Services</li>
     <li class="breadcrumb-item"><span class="bullet bg-gray-400 w-5px h-2px"></span></li>
-    <li class="breadcrumb-item text-muted">Payrolls</li>
+    <li class="breadcrumb-item text-muted">List</li>
 @endsection
 
 
@@ -22,7 +22,7 @@
             </div>
             <div class="card-toolbar">
                 <div class="d-flex justify-content-end">
-                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">Add Payroll</button>
+                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">Add Service</button>
                 </div>
             </div>
         </div>
@@ -31,45 +31,24 @@
                 <thead>
                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                         <th class="w-10px pe-2">SL</th>
-                        <th class="min-w-125px">Employee</th>
-                        <th class="min-w-125px">Month</th>
-                        <th class="min-w-125px">Basic</th>
-                        <th class="min-w-125px">Bonus</th>
-                        <th class="min-w-125px">Deduction</th>
-                        <th class="min-w-125px">Net Salary</th>
-                        <th class="min-w-125px">Status</th>
+                        <th class="min-w-125px">Slug</th>
+                        <th class="min-w-125px">Name</th>
                         <th class="text-end min-w-70px">Actions</th>
                     </tr>
                 </thead>
                 <tbody class="fw-semibold text-gray-600">
-                    @forelse ($payrolls as $key => $item)
+                    @forelse ($services as $key => $item)
                     <tr>
-                    <td>{{$key+1}}</td>
-                        <td><a href="{{route('admin.user.overview', $item->employee->user->id)}}" target="_blank">{{$item->employee->user->name}}</a></td>
-                        <td>{{$item->month}}</td>
-                        <td>{{$item->basic_salary }}</td>
-                        <td>{{$item->bonus}}</td>
-                        <td>{{$item->deduction}}</td>
-                        <td><b>{{ $item->net_salary }}</b></td>
-                        <td>
-                            @if($item->status == 'paid')
-                                <span class="badge badge-light-success">Paid</span>
-                            @else
-                                <span class="badge badge-light-warning">Unpaid</span>
-                            @endif
-                        </td>
+                        <td>{{$key+1}}</td>
+                        <td>{{$item->slug}}</td>
+                        <td>{{$item->name}}</td>
                         <td class="text-end">
                             <a href="#" class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
                             <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                @if($item->status=='unpaid')
-                                    <div class="menu-item px-3">
-                                        <a href="javascript:;" wire:click="markPaid({{ $item->id }})" class="menu-link px-3">Mark Paid</a>
-                                    </div>
-                                @endif
-                                {{-- <div class="menu-item px-3">
+                                <div class="menu-item px-3">
                                     <a href="javascript:;" wire:click="edit({{ $item->id }})" data-bs-toggle="modal" data-bs-target="#editModal" class="menu-link px-3">Edit</a>
-                                </div> --}}
+                                </div>
                                 <div class="menu-item px-3">
                                     <a href="javascript:;" wire:click="deleteConfirmation({{ $item->id }})" class="menu-link px-3">Delete</a>
                                 </div>
@@ -88,7 +67,7 @@
             <div class="modal-content">
                 <form wire:submit="store" class="form" action="#">
                     <div class="modal-header">
-                        <h2 class="fw-bold">Add Leave</h2>
+                        <h2 class="fw-bold">Add Service</h2>
                         <div wire:click="close" class="btn btn-icon btn-sm btn-active-icon-primary"  data-bs-dismiss="modal">
                             <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
                         </div>
@@ -96,31 +75,14 @@
                     <div class="modal-body py-10 px-lg-17">
                         <div class="scroll-y me-n7 pe-7">
                             <div class="fv-row mb-7">
-                                <div wire:ignore>
-                                    <label class="required fs-6 fw-semibold mb-2">Select Employee</label>
-                                    <select class="form-select form-select-solid employee_id" data-control="select2" data-placeholder="Select Employee" wire:model="employee_id">
-                                        <option value="">Select Employee...</option>
-                                        @foreach ($employees as $item)
-                                            <option value="{{$item->id}}">{{$item->user->name}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                @error('employee_id') <span class="text-danger">{{ $message }}</span> @enderror
-                            </div>
-                            <div class="fv-row mb-7">
-                                <label class="required fs-6 fw-semibold mb-2">Month</label>
-                                <input type="month" wire:model="month" class="form-control form-control-solid">
-                                @error('month') <span class="text-danger">{{ $message }}</span> @enderror
-                            </div>
-                            <div class="fv-row mb-7">
-                                <label class="required fs-6 fw-semibold mb-2">Bonus</label>
-                                <input type="number" wire:model="bonus" class="form-control form-control-solid" placeholder="Bonus">
-                                @error('bonus') <span class="text-danger">{{ $message }}</span> @enderror
+                                <label class="required fs-6 fw-semibold mb-2">Name</label>
+                                <input type="text" wire:model="name" class="form-control form-control-solid" placeholder="Name" />
+                                @error('name') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer flex-end">
-                        <button type="submit" class="btn btn-sm btn-primary">Generate</button>
+                        <button type="submit" class="btn btn-sm btn-primary">Save</button>
                     </div>
                 </form>
             </div>
@@ -133,7 +95,7 @@
             <div class="modal-content">
                 <form wire:submit="update" class="form" action="#">
                     <div class="modal-header">
-                        <h2 class="fw-bold">Edit Leave</h2>
+                        <h2 class="fw-bold">Edit Service</h2>
                         <div wire:click="close" class="btn btn-icon btn-sm btn-active-icon-primary"  data-bs-dismiss="modal">
                             <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
                         </div>
@@ -141,26 +103,9 @@
                     <div class="modal-body py-10 px-lg-17">
                         <div class="scroll-y me-n7 pe-7">
                             <div class="fv-row mb-7">
-                                <div wire:ignore>
-                                    <label class="required fs-6 fw-semibold mb-2">Select Employee</label>
-                                    <select class="form-select form-select-solid employee_id" data-control="select2" data-placeholder="Select Employee" wire:model="employee_id">
-                                        <option value="">Select Employee...</option>
-                                        @foreach ($employees as $item)
-                                            <option value="{{$item->id}}">{{$item->user->name}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                @error('employee_id') <span class="text-danger">{{ $message }}</span> @enderror
-                            </div>
-                            <div class="fv-row mb-7">
-                                <label class="required fs-6 fw-semibold mb-2">Month</label>
-                                <input type="month" wire:model="month" class="form-control form-control-solid">
-                                @error('month') <span class="text-danger">{{ $message }}</span> @enderror
-                            </div>
-                            <div class="fv-row mb-7">
-                                <label class="required fs-6 fw-semibold mb-2">Bonus</label>
-                                <input type="number" wire:model="bonus" class="form-control form-control-solid" placeholder="Bonus">
-                                @error('bonus') <span class="text-danger">{{ $message }}</span> @enderror
+                                <label class="required fs-6 fw-semibold mb-2">Name</label>
+                                <input type="text" wire:model="name" class="form-control form-control-solid" placeholder="Name" />
+                                @error('name') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                         </div>
                     </div>
@@ -175,20 +120,6 @@
 </div>
 
 @push('scripts')
-    <script>
-        document.addEventListener('livewire:init', () => {
-            $('.employee_id').on('change', function () {
-                @this.set('employee_id', $(this).val());
-            });
-
-            Livewire.on('refreshSelect', () => {
-                setTimeout(() => {
-                    $('.employee_id').val(@this.get('employee_id')).trigger('change');
-                }, 100);
-            });
-        });
-    </script>
-
     <script>
         "use strict";
         var KTDatatable = function () {
@@ -205,7 +136,7 @@
                     "lengthChange": false,
                     'columnDefs': [
                     { orderable: false, targets: 0 },
-                    { orderable: false, targets: 4 },
+                    { orderable: false, targets: 3 },
                     ],
                     'dom': `<'row'<'col-sm-12'tr>><'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
                     'language': {
@@ -243,3 +174,4 @@
         });
     </script>
 @endpush
+

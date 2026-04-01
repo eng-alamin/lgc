@@ -47,7 +47,7 @@
                         <td>{{$key+1}}</td>
                         <td>{{ \Carbon\Carbon::parse($item->date)->format('d M, Y') }}</td>
                         <td>
-                            {{$item->employee->user->name}}
+                            <a href="{{route('admin.user.overview', $item->employee->user->id)}}" target="_blank">{{$item->employee->user->name}}</a>
                             @if ($item->is_late == TRUE)
                                 <br>
                                 <span class="badge badge-light-danger">Late {{$item->late_minutes}} Minutes</span>

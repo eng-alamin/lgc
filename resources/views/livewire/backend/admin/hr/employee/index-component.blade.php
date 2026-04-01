@@ -43,7 +43,7 @@
                             <td>{{ $index + 1 }}</td>
                             <td class="d-flex align-items-center border-0">
                                 <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
-                                    <a href="#">
+                                    <a href="{{route('admin.user.overview', $item->user->id)}}" target="_blank">
                                         @if($item->user->avatar)
                                             <div class="symbol-label">
                                                 <img src="{{asset($item->user->avatar)}}" alt="{{$item->user->name}}" class="w-100" />
@@ -60,7 +60,7 @@
                                 </div>
                                 <div class="d-flex flex-column">
                                     <div>
-                                        <a href="#" class="text-gray-800 text-hover-primary mb-1">{{$item->user->name}}</a>
+                                        <a href="{{route('admin.user.overview', $item->user->id)}}" target="_blank" class="text-gray-800 text-hover-primary mb-1">{{$item->user->name}}</a>
                                         @if ($item->user->account_status == 0)
                                             <a wire:click="approved({{$item->user->id}})" href="javascript:;" class="menu-link badge badge-light-warning"> Approved </a>
                                         @endif
@@ -75,18 +75,35 @@
                             <td>@if($item->user->last_seen) {{ \Carbon\Carbon::parse($item->user->last_seen)->diffForHumans() }} @else N/L @endif</td>
                             <td>
                                 @if ($item->user->account_status == 0)
-                                    Pending
-                                @elseif($item->user->account_status == 1)
-                                    Approved
-                                @elseif($item->user->account_status == 2)
-                                    Deactive
-                                @elseif($item->user->account_status == 3)
-                                    Suspended
-                                @elseif($item->user->account_status == 4)
-                                    Banned
+                                    <a href="#" class="btn btn-sm btn-warning btn-flex btn-center btn-active-light-warning dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Pending</a>
+                                @elseif ($item->user->account_status == 1)
+                                    <a href="#" class="btn btn-sm btn-success btn-flex btn-center btn-active-light-success dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Approved</a>
+                                @elseif ($item->user->account_status == 2)
+                                    <a href="#" class="btn btn-sm btn-danger btn-flex btn-center btn-active-light-danger dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Deactive</a>
+                                @elseif ($item->user->account_status == 3)
+                                    <a href="#" class="btn btn-sm btn-danger btn-flex btn-center btn-active-light-danger dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Suspended</a>
+                                @elseif ($item->user->account_status == 4)
+                                    <a href="#" class="btn btn-sm btn-danger btn-flex btn-center btn-active-light-danger dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Banned</a>
                                 @else
-                                    Deleted
+                                    <a href="#" class="btn btn-sm btn-danger btn-flex btn-center btn-active-light-danger dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Deleted</a>
                                 @endif
+                                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4 dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <div class="menu-item px-3">
+                                        <a href="javascript:;"  wire:click="statusClick({{ $item->user->id }}, 0)" class="menu-link px-3">Pending</a>
+                                    </div>
+                                    <div class="menu-item px-3">
+                                        <a href="javascript:;"  wire:click="statusClick({{ $item->user->id }}, 1)" class="menu-link px-3">Approved</a>
+                                    </div>
+                                    <div class="menu-item px-3">
+                                        <a href="javascript:;"  wire:click="statusClick({{ $item->user->id }}, 2)" class="menu-link px-3">Deactive</a>
+                                    </div>
+                                    <div class="menu-item px-3">
+                                        <a href="javascript:;"  wire:click="statusClick({{ $item->user->id }}, 3)" class="menu-link px-3">Suspended</a>
+                                    </div>
+                                    <div class="menu-item px-3">
+                                        <a href="javascript:;"  wire:click="statusClick({{ $item->user->id }}, 4)" class="menu-link px-3">Banned</a>
+                                    </div>
+                                </div>
                             </td>
                             <td class="text-end">
                                 <a href="#" class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Actions</a>

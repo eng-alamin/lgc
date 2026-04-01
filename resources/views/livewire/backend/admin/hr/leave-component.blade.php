@@ -45,7 +45,7 @@
                     @forelse ($data as $key => $item)
                     <tr>
                     <td>{{$key+1}}</td>
-                        <td>{{$item->employee->user->name}}</td>
+                        <td><a href="{{route('admin.user.overview', $item->employee->user->id)}}" target="_blank">{{$item->employee->user->name}}</a></td>
                         <td>{{$item->leaveType->name}}</td>
                         <td>{{$item->start_date}}</td>
                         <td>{{$item->end_date}}</td>

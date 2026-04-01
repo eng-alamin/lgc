@@ -24,14 +24,8 @@ class Contact extends Component
     {
         $sections = Section::get();
 
-        $locations = [
-            ["lat" => 23.8295439928878, "lng" => 90.41870238759184],
-            // ["lat" => 22.5539568, "lng" => 113.429923],
-          ];
-
         return view('livewire.frontend.contact', [
             'sections' => $sections,
-            'locations' => $locations,
             ])
             ->layout('layouts.frontend.app', [
                 'title' => "Contact Us | Let's Go China"

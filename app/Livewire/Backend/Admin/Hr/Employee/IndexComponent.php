@@ -212,6 +212,19 @@ class IndexComponent extends Component
         }
     }
 
+    public function statusClick($id, $status)
+    {
+        try{
+            $data = User::find($id);
+            $data->account_status = $status;
+            $data->save();
+
+            return redirect()->route('admin.hr.employees')->with('success', 'Consignee is successfully status!');
+        }catch(\Exception $e){
+            return redirect()->back()->with('error', 'Consignee updated failed: ' . $e->getMessage());
+        }
+    }
+
     public function approved($id)
     {
         try{

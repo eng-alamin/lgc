@@ -14,11 +14,10 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->string('phone')->nullable()->after('email');
             $table->string('avatar')->nullable()->after('password');
-            $table->enum('type', ['client', 'agent', 'receptionist', 'employee', 'counselor', 'admin', 'ceo', 'cfo', 'coo', 'super_admin'])->default('client')->after('avatar');
+            $table->enum('type', ['client', 'agent', 'writer', 'receptionist', 'employee', 'counselor', 'admin', 'ceo', 'cfo', 'coo', 'super_admin'])->default('client')->after('avatar');
             $table->json('data')->nullable()->after('type');
             $table->boolean('toc')->default(false)->after('data');
             $table->string('last_login_ip')->nullable()->after('toc');
-            $table->bigInteger('agent_id')->nullable();
             $table->timestamp('last_seen')->nullable()->after('last_login_ip');
             $table->tinyInteger('account_status')->default(0)->comment('0=pending,1=approved,2=deactive,3=suspended,4=banned,5=deleted')->after('last_seen');
         });

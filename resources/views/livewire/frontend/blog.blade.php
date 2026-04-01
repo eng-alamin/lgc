@@ -64,7 +64,6 @@
                                 </div>
                             </form>
                         </div>
-                        <!-- end widget -->
 
                         {{-- <div class="widget widget_block widget_custom">
                             <h2 class="widget-title">About Author</h2>
@@ -104,7 +103,9 @@
                                 </ul>
                             </div>
                         </div>
-                        <!-- end widget -->
+                        <div class="widget widget_block">
+                            <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FLetsgochinaofficial%2F&tabs=timeline&width=370&height=548&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId" width="370" height="548" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+                        </div>
 
                         {{-- <div class="widget widget_block">
                             <div class="wp-block-group__inner-container">

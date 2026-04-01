@@ -18,14 +18,14 @@ return [
 
         'processing' => [
             'approved',
-            'declined',
+            'cancelled',
         ],
 
         'approved' => [
             // No further changes allowed
         ],
 
-        'declined' => [
+        'cancelled' => [
             // Locked state
         ],
 

@@ -1,8 +1,8 @@
-@section('page-title') Agents @endsection
+@section('page-title') Users @endsection
 @section('breadcrumb')
     <li class="breadcrumb-item text-muted"><a href="#" class="text-muted text-hover-primary">Home</a></li>
     <li class="breadcrumb-item"><span class="bullet bg-gray-400 w-5px h-2px"></span></li>
-    <li class="breadcrumb-item text-muted">Agents</li>
+    <li class="breadcrumb-item text-muted">Users</li>
     <li class="breadcrumb-item"><span class="bullet bg-gray-400 w-5px h-2px"></span></li>
     <li class="breadcrumb-item text-muted">List</li>
 @endsection
@@ -21,7 +21,7 @@
             </div>
             <div class="card-toolbar">
                 <div class="d-flex justify-content-end">
-                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">Add Agent</button>
+                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">Add User</button>
                 </div>
             </div>
         </div>
@@ -39,21 +39,21 @@
                     </tr>
                 </thead>
                 <tbody class="fw-semibold text-gray-600">
-                    @forelse ($data as $index => $item)
+                    @forelse ($users as $index => $item)
                     <tr>
                         <td>{{ $index + 1 }}</td>
                         <td class="d-flex align-items-center border-0">
                             <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
-                                <a href="{{route('admin.user.overview', $item->user->id)}}" target="_blank">
-                                    @if($item->user->avatar)
+                                <a href="{{route('admin.user.overview', $item->id)}}" target="_blank">
+                                    @if($item->avatar)
                                         <div class="symbol-label">
-                                            <img src="{{asset($item->user->avatar)}}" alt="{{$item->user->name}}" class="w-100" />
+                                            <img src="{{asset($item->avatar)}}" alt="{{$item->name}}" class="w-100" />
                                         </div>
                                     @else
-                                        <div class="symbol-label fs-3 bg-light-danger text-danger"> {{substr($item->user->name,0,1)}} </div>
+                                        <div class="symbol-label fs-3 bg-light-danger text-danger"> {{substr($item->name,0,1)}} </div>
                                     @endif
                                 </a>
-                                @if($item->user->isOnline())
+                                @if($item->isOnline())
                                     <div class="bg-success position-absolute border border-4 border-body h-15px w-15px rounded-circle translate-middle start-100 top-100 ms-n3 mt-n3"></div>
                                 @else
                                     <div class="bg-danger position-absolute border border-4 border-body h-15px w-15px rounded-circle translate-middle start-100 top-100 ms-n3 mt-n3"></div>
@@ -61,63 +61,63 @@
                             </div>
                             <div class="d-flex flex-column">
                                 <div>
-                                    <a href="{{route('admin.user.overview', $item->user->id)}}" target="_blank" class="text-gray-800 text-hover-primary mb-1">{{$item->user->name}}</a>
-                                    @if ($item->user->account_status == 0)
-                                        <a wire:click="approved({{$item->user->id}})" href="javascript:;" class="menu-link badge badge-light-warning"> Approved </a>
+                                    <a href="{{route('admin.user.overview', $item->id)}}" target="_blank" class="text-gray-800 text-hover-primary mb-1">{{$item->name}}</a>
+                                    @if ($item->account_status == 0)
+                                        <a wire:click="approved({{$item->id}})" href="javascript:;" class="menu-link badge badge-light-warning"> Approved </a>
                                     @endif
                                 </div>
-                                <div>{{$item->user->email}}</div>
-                                <div>{{$item->user->phone}}</div>
+                                <div>{{$item->email}}</div>
+                                <div>{{$item->phone}}</div>
                             </div>
                         </td>
                         <td>{{ucfirst($item->type)}}</td>
-                        <td><i class="fa fa-check-circle {{$item->user->email_verified_at ? 'text-success' : 'text-danger'}}"></i></td>
-                        <td>@if($item->user->last_seen) {{ \Carbon\Carbon::parse($item->user->last_seen)->diffForHumans() }} @else N/L @endif</td>
-                        <td>
-                            @if ($item->user->account_status == 0)
+                        <td><i class="fa fa-check-circle {{$item->email_verified_at ? 'text-success' : 'text-danger'}}"></i></td>
+                        <td>@if($item->last_seen) {{ \Carbon\Carbon::parse($item->last_seen)->diffForHumans() }} @else N/L @endif</td>
+                         <td>
+                            @if ($item->account_status == 0)
                                 <a href="#" class="btn btn-sm btn-warning btn-flex btn-center btn-active-light-warning dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Pending</a>
-                            @elseif ($item->user->account_status == 1)
+                            @elseif ($item->account_status == 1)
                                 <a href="#" class="btn btn-sm btn-success btn-flex btn-center btn-active-light-success dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Approved</a>
-                            @elseif ($item->user->account_status == 2)
+                            @elseif ($item->account_status == 2)
                                 <a href="#" class="btn btn-sm btn-danger btn-flex btn-center btn-active-light-danger dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Deactive</a>
-                            @elseif ($item->user->account_status == 3)
+                            @elseif ($item->account_status == 3)
                                 <a href="#" class="btn btn-sm btn-danger btn-flex btn-center btn-active-light-danger dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Suspended</a>
-                            @elseif ($item->user->account_status == 4)
+                            @elseif ($item->account_status == 4)
                                 <a href="#" class="btn btn-sm btn-danger btn-flex btn-center btn-active-light-danger dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Banned</a>
                             @else
                                 <a href="#" class="btn btn-sm btn-danger btn-flex btn-center btn-active-light-danger dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Deleted</a>
                             @endif
                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4 dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                 <div class="menu-item px-3">
-                                    <a href="javascript:;"  wire:click="statusClick({{ $item->user->id }}, 0)" class="menu-link px-3">Pending</a>
+                                    <a href="javascript:;"  wire:click="statusClick({{ $item->id }}, 0)" class="menu-link px-3">Pending</a>
                                 </div>
                                 <div class="menu-item px-3">
-                                    <a href="javascript:;"  wire:click="statusClick({{ $item->user->id }}, 1)" class="menu-link px-3">Approved</a>
+                                    <a href="javascript:;"  wire:click="statusClick({{ $item->id }}, 1)" class="menu-link px-3">Approved</a>
                                 </div>
                                 <div class="menu-item px-3">
-                                    <a href="javascript:;"  wire:click="statusClick({{ $item->user->id }}, 2)" class="menu-link px-3">Deactive</a>
+                                    <a href="javascript:;"  wire:click="statusClick({{ $item->id }}, 2)" class="menu-link px-3">Deactive</a>
                                 </div>
                                 <div class="menu-item px-3">
-                                    <a href="javascript:;"  wire:click="statusClick({{ $item->user->id }}, 3)" class="menu-link px-3">Suspended</a>
+                                    <a href="javascript:;"  wire:click="statusClick({{ $item->id }}, 3)" class="menu-link px-3">Suspended</a>
                                 </div>
                                 <div class="menu-item px-3">
-                                    <a href="javascript:;"  wire:click="statusClick({{ $item->user->id }}, 4)" class="menu-link px-3">Banned</a>
+                                    <a href="javascript:;"  wire:click="statusClick({{ $item->id }}, 4)" class="menu-link px-3">Banned</a>
                                 </div>
                             </div>
                         </td>
                         <td class="text-end">
                             <a href="#" class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Actions</a>
                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4 dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                @if ($item->user->account_status == 0)
+                                @if ($item->account_status == 0)
                                     <div class="menu-item px-3">
-                                        <a href="javascript:;" wire:click="approved({{ $item->user->id }})" class="menu-link px-3">Approved</a>
+                                        <a href="javascript:;" wire:click="approved({{ $item->id }})" class="menu-link px-3">Approved</a>
                                     </div>
                                 @endif
                                 <div class="menu-item px-3">
                                     <a href="javascript:;" wire:click="edit({{ $item->id }})" data-bs-toggle="modal" data-bs-target="#editModal" class="menu-link px-3">Edit</a>
                                 </div>
                                 <div class="menu-item px-3">
-                                    <a href="javascript:;"  wire:click="deleteConfirmation({{ $item->user->id }})" class="menu-link px-3">Delete</a>
+                                    <a href="javascript:;"  wire:click="deleteConfirmation({{ $item->id }})" class="menu-link px-3">Delete</a>
                                 </div>
                             </div>
                         </td>
@@ -134,7 +134,7 @@
             <div class="modal-content">
                 <form wire:submit="store" class="form" action="#">
                     <div class="modal-header">
-                        <h2 class="fw-bold">Add Agent</h2>
+                        <h2 class="fw-bold">Add User</h2>
                         <div wire:click="close" class="btn btn-icon btn-sm btn-active-icon-primary"  data-bs-dismiss="modal">
                             <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
                         </div>
@@ -143,18 +143,35 @@
                         <div class="scroll-y me-n7 pe-7">
                             <div class="fv-row mb-7">
                                 <label class="required fs-6 fw-semibold mb-2">Name</label>
-                                <input type="text" wire:model="name" name="name" class="form-control form-control-solid" placeholder="Enter Name" />
+                                <input type="text" wire:model="name" class="form-control form-control-solid" placeholder="Enter Name" />
                                 @error('name') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                             <div class="fv-row mb-7">
                                 <label class="required fs-6 fw-semibold mb-2">Email</label>
-                                <input type="email" wire:model="email" name="email" class="form-control form-control-solid" placeholder="Enter Email" />
+                                <input type="email" wire:model="email" class="form-control form-control-solid" placeholder="Enter Email" />
                                 @error('email') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                             <div class="fv-row mb-7">
                                 <label class="fs-6 fw-semibold mb-2">Phone</label>
-                                <input type="tel" wire:model="phone" name="phone" class="form-control form-control-solid" placeholder="Enter Phone" />
+                                <input type="tel" wire:model="phone" class="form-control form-control-solid" placeholder="Enter Phone" />
                                 @error('phone') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+                            <div class="fv-row mb-7">
+                                <label class="fs-6 fw-semibold mb-2">Select Type</label>
+                                <select class="form-select p-0 w-100 border-0 selectpicker" wire:model="type" title="Select Type">
+                                    <option value="">Select Type...</option>
+                                    <option value="client">Client</option>
+                                    <option value="agent">Agent</option>
+                                    <option value="receptionist">Receptionist</option>
+                                    <option value="employee">Employee</option>
+                                    <option value="counselor">Counselor</option>
+                                    <option value="admin">admin</option>
+                                    <option value="ceo">CEO</option>
+                                    <option value="cfo">CFO</option>
+                                    <option value="coo">COO</option>
+                                    <option value="super_admin">Super Admin</option>
+                                </select>
+                                @error('type') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                         </div>
                     </div>
@@ -172,7 +189,7 @@
             <div class="modal-content">
                 <form wire:submit="update" class="form" action="#">
                     <div class="modal-header">
-                        <h2 class="fw-bold">Edit Agent</h2>
+                        <h2 class="fw-bold">Edit User</h2>
                         <div wire:click="close" class="btn btn-icon btn-sm btn-active-icon-primary"  data-bs-dismiss="modal">
                             <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
                         </div>
@@ -181,18 +198,35 @@
                         <div class="scroll-y me-n7 pe-7">
                             <div class="fv-row mb-7">
                                 <label class="required fs-6 fw-semibold mb-2">Name</label>
-                                <input type="text" wire:model="name" name="name" class="form-control form-control-solid" placeholder="Enter Name" />
+                                <input type="text" wire:model="name" class="form-control form-control-solid" placeholder="Enter Name" />
                                 @error('name') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                             <div class="fv-row mb-7">
                                 <label class="required fs-6 fw-semibold mb-2">Email</label>
-                                <input type="email" wire:model="email" name="email" class="form-control form-control-solid" placeholder="Enter Email" />
+                                <input type="email" wire:model="email" class="form-control form-control-solid" placeholder="Enter Email" />
                                 @error('email') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                             <div class="fv-row mb-7">
                                 <label class="fs-6 fw-semibold mb-2">Phone</label>
-                                <input type="tel" wire:model="phone" name="phone" class="form-control form-control-solid" placeholder="Enter Phone" />
+                                <input type="tel" wire:model="phone" class="form-control form-control-solid" placeholder="Enter Phone" />
                                 @error('phone') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+                            <div class="fv-row mb-7">
+                                <label class="fs-6 fw-semibold mb-2">Select Type</label>
+                                <select class="form-select p-0 w-100 border-0 selectpicker" wire:model="type" title="Select Type">
+                                    <option value="">Select Type...</option>
+                                    <option value="client">Client</option>
+                                    <option value="agent">Agent</option>
+                                    <option value="receptionist">Receptionist</option>
+                                    <option value="employee">Employee</option>
+                                    <option value="counselor">Counselor</option>
+                                    <option value="admin">admin</option>
+                                    <option value="ceo">CEO</option>
+                                    <option value="cfo">CFO</option>
+                                    <option value="coo">COO</option>
+                                    <option value="super_admin">Super Admin</option>
+                                </select>
+                                @error('type') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                         </div>
                     </div>

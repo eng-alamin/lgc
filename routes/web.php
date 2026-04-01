@@ -178,6 +178,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     
     Route::get('admin/documents', App\Livewire\Backend\Admin\DocumentComponent::class)->name('admin.documents');
     Route::get('admin/stages', App\Livewire\Backend\Admin\StageComponent::class)->name('admin.stages');
+    Route::get('admin/services', App\Livewire\Backend\Admin\ServiceComponent::class)->name('admin.services');
     Route::get('admin/notices', App\Livewire\Backend\Admin\NoticeComponent::class)->name('admin.notices');
 
     Route::get('admin/followups', \App\Livewire\Backend\Admin\FollowUpComponent::class)->name('admin.followups');
@@ -198,6 +199,20 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin/hr/leavetypes', App\Livewire\Backend\Admin\Hr\LeaveTypeComponent::class)->name('admin.hr.leavetypes');
     Route::get('admin/hr/departments', App\Livewire\Backend\Admin\Hr\DepartmentComponent::class)->name('admin.hr.departments');
     
+    Route::get('admin/users', App\Livewire\Backend\Admin\User\ListComponent::class)->name('admin.users');
+    Route::get('admin/user/overview/{id}', App\Livewire\Backend\Admin\User\Overview::class)->name('admin.user.overview');
+    Route::get('admin/user/setting/{id}', App\Livewire\Backend\Admin\User\Setting::class)->name('admin.user.setting');
+    Route::patch('admin/user/setting/update/{id}', [App\Livewire\Backend\Admin\User\Setting::class, 'updateSetting'])->name('admin.user.setting.update');
+    Route::put('admin/user/setting/password/update/{id}', [App\Livewire\Backend\Admin\User\Setting::class, 'updatePassword'])->name('admin.user.setting.password.update');
+    Route::post('admin/user/setting/deactivate/{id}', [App\Livewire\Backend\Admin\User\Setting::class, 'deactivate'])->name('admin.user.setting.deactivate');
+    Route::get('admin/user/activity/{id}', App\Livewire\Backend\Admin\User\Activity::class)->name('admin.user.activity');
+    Route::get('admin/user/agent-forms/{id}', App\Livewire\Backend\Admin\User\AgentFormList::class)->name('admin.user.agent.forms');
+    Route::get('admin/user/agent-commissions/{id}', App\Livewire\Backend\Admin\User\AgentCommissionList::class)->name('admin.user.agent.commissions');
+    Route::get('admin/user/counselor-forms/{id}', App\Livewire\Backend\Admin\User\CounselorFormList::class)->name('admin.user.counselor.forms');
+    Route::get('admin/user/employee-attendances/{id}', App\Livewire\Backend\Admin\User\EmployeeAttendanceList::class)->name('admin.user.employee.attendances');
+    Route::get('admin/user/employee-leaves/{id}', App\Livewire\Backend\Admin\User\EmployeeLeaveList::class)->name('admin.user.employee.leaves');
+    Route::get('admin/user/employee-payrolls/{id}', App\Livewire\Backend\Admin\User\EmployeePayrollList::class)->name('admin.user.employee.payrolls');
+
     // Setting
     Route::get('admin/setting/app', App\Livewire\Backend\Admin\Setting\App::class)->name('admin.setting.app');
     Route::post('admin/setting/app', [App\Livewire\Backend\Admin\Setting\App::class, 'update'])->name('admin.setting.app.update');

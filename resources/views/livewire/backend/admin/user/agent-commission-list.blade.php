@@ -1,12 +1,18 @@
 @section('page-title') Commission @endsection
-@section('page-breadcrumb') Commission @endsection
-@section('breadcrumb-slah-one') <span class="bullet bg-gray-400 w-5px h-2px"></span> @endsection
-@section('breadcrumb-name-one') Commissions @endsection
+@section('breadcrumb')
+    <li class="breadcrumb-item text-muted"><a href="#" class="text-muted text-hover-primary">Home</a></li>
+    <li class="breadcrumb-item"><span class="bullet bg-gray-400 w-5px h-2px"></span></li>
+    <li class="breadcrumb-item text-muted">Users</li>
+    <li class="breadcrumb-item"><span class="bullet bg-gray-400 w-5px h-2px"></span></li>
+    <li class="breadcrumb-item text-muted">Commission</li>
+@endsection
 
-<div id="kt_app_content_container" class="app-container container-fluid">
-    <div class="card">
-        <div class="card-header border-0 pt-6">
-            <div class="card-title">
+    <div id="kt_app_content_container" class="app-container container-xxl">
+
+        @include('livewire.backend.admin.user.navbar')
+
+        <div class="card">
+             <div class="card-title">
                 <div class="d-flex align-items-center position-relative my-1">
                     <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-5">
                         <span class="path1"></span>
@@ -15,24 +21,11 @@
                     <input type="text" datatable-filter="search" class="form-control form-control-solid w-250px ps-13" placeholder="Search" />
                 </div>
             </div>
-            <div class="card-toolbar">
-                <div class="d-flex justify-content-end">
-                    {{-- <select wire:model="statusFilter" class="form-select mb-3">
-                        <option value="">All</option>
-                        <option value="pending">Pending</option>
-                        <option value="approved">Approved</option>
-                        <option value="paid">Paid</option>
-                    </select> --}}
-                    {{-- <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">Add Commission Rule</button> --}}
-                </div>
-            </div>
-        </div>
-        <div wire:ignore class="card-body pt-0">
+           <div wire:ignore class="card-body pt-0">
             <table class="table align-middle table-row-dashed fs-6 gy-5" id="datatable">
                 <thead>
                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                         <th class="w-10px pe-2">SL</th>
-                        <th class="min-w-125px">Agent</th>
                         <th class="min-w-125px">Number</th>
                         <th class="min-w-125px">Service</th>
                         <th class="min-w-125px">Total</th>
@@ -45,7 +38,6 @@
                     @forelse ($data as $item)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td><a href="{{route('admin.user.overview', $item->agent->user->id)}}" target="_blank">{{ $item->agent->user->name ?? 'N/L' }}</a></td>
                         <td><a href="{{route('admin.application.view', $item->form?->id)}}" target="_blank">{{ $item->form?->number ?? 'N/L' }}</a></td>
                         <td>{{ ucfirst($item->form?->type ?? 'N/L') }}</td>
                         <td>{{ $item->total_amount  }}</td>
@@ -62,18 +54,20 @@
 
                         <td class="text-end">
                             <a href="#" class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Actions</a>
-                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4 dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                @if($item->status == 'pending')
-                                    <div class="menu-item px-3">
-                                        <a href="javascript:;"  wire:click="approve({{ $item->id }})" class="menu-link px-3">Approve</a>
-                                    </div>
-                                @endif
-                                @if($item->status == 'approved')
-                                    <div class="menu-item px-3">
-                                        <a href="javascript:;"  wire:click="markPaid({{ $item->id }})" class="menu-link px-3"> Mark Paid</a>
-                                    </div>
-                                @endif
-                            </div>
+                            @if ($item->status != 'paid')
+                                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4 dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    @if($item->status == 'pending')
+                                        <div class="menu-item px-3">
+                                            <a href="javascript:;"  wire:click="approve({{ $item->id }})" class="menu-link px-3">Approve</a>
+                                        </div>
+                                    @endif
+                                    @if($item->status == 'approved')
+                                        <div class="menu-item px-3">
+                                            <a href="javascript:;"  wire:click="markPaid({{ $item->id }})" class="menu-link px-3"> Mark Paid</a>
+                                        </div>
+                                    @endif
+                                </div>
+                            @endif
                         </td>
                     </tr>
                     @empty
@@ -81,10 +75,11 @@
                 </tbody>
             </table>
         </div>
+        </div>
     </div>
-</div>
 
-@push('scripts')
+
+    @push('scripts')
     <script>
         "use strict";
         var KTDatatable = function () {
@@ -101,7 +96,6 @@
                     "lengthChange": false,
                     'columnDefs': [
                     { orderable: false, targets: 0 },
-                    { orderable: false, targets: 7 },
                     ],
                     'dom': `<'row'<'col-sm-12'tr>><'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
                     'language': {
@@ -139,4 +133,3 @@
         });
     </script>
 @endpush
-

@@ -40,7 +40,9 @@ class Client extends Model
     
     public function form()
     {
-        return $this->hasOne(Form::class);
+        return $this->hasOne(Form::class)->whereIn('status', ['processing', 'approved'])->latest();
+        // return $this->hasOne(Form::class)->whereNotIn('status', ['declined', 'pending'])->latest();
+        // return $this->hasOne(Form::class)->whereIn('status', ['processing', 'approved'])->latestOfMany();
     }
 
     public function forms()

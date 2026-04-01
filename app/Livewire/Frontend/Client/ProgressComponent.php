@@ -15,6 +15,8 @@ use App\Models\Flight;
 use App\Models\Stage;
 use App\Models\StageHistory;
 
+use App\Models\CommissionRule;
+
 use Livewire\WithFileUploads;
 use Carbon\Carbon;
 
@@ -26,10 +28,14 @@ class ProgressComponent extends Component
 
     public $form;
 
+    public $rule;
+
     public function mount()
     {
         $this->client = auth()->user()->client;
         $this->form = $this->client->form;
+
+        $this->rule = CommissionRule::where('service_type', $this->form?->type)->where('status', true)->first();
     }
 
     public function render()

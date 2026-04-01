@@ -277,6 +277,18 @@
 
                     </div>
 
+                    <div class="menu-item">
+                        <a class="menu-link {{ str_contains(request()->url(), 'admin/user') == true ? 'active' : '' }}" href="{{route('admin.users')}}">
+                            <span class="menu-icon">
+                                <i class="ki-duotone ki-user fs-2">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                </i>
+                            </span>
+                            <span class="menu-title">Users</span>
+                        </a>
+                    </div>
+
                     <div class="menu-item pt-5">
                         <div class="menu-content">
                             <span class="menu-heading fw-bold text-uppercase fs-7">Frontend Development</span>

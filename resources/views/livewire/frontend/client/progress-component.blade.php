@@ -56,16 +56,15 @@
                                         <!-- Stats -->
                                         <div class="d-flex flex-wrap">
                                             @php
-                                                $total_amount = $this->form?->invoices->sum('total_amount') ?? 0;
-                                                $due_amount = $this->form?->invoices->sum('due_amount') ?? 0;
+                                                $service_amount = $this->rule->service_value ?? 0;
                                                 $paid_amount = $this->form?->invoices->sum('paid_amount') ?? 0;
-                                                $paidPercent = $total_amount > 0 ? ($paid_amount / $total_amount) * 100 : 0;
+                                                $due_amount = $service_amount - $paid_amount;
                                             @endphp
 
                                             <!-- Price -->
                                             <div class="border rounded p-1 me-3 mb-3 text-center" style="min-width:120px;">
-                                                <div class="mb-1 fs-4 fw-bold text-success">৳ {{ $total_amount }}</div>
-                                                <div class="fw-semibold fs-6 text-gray">Price</div>
+                                                <div class="mb-1 fs-4 fw-bold text-success">৳ {{ $service_amount }}</div>
+                                                <div class="fw-semibold fs-6 text-gray">Service</div>
                                             </div>
 
                                             <!-- Due -->
@@ -76,7 +75,7 @@
 
                                             <!-- Paid -->
                                             <div class="border rounded p-1 me-3 mb-3 text-center" style="min-width:120px;">
-                                                <div class="mb-1 fs-4 fw-bold text-success">{{(int) $paidPercent}}%</div>
+                                                <div class="mb-1 fs-4 fw-bold text-success">৳ {{$paid_amount}}</div>
                                                 <div class="fw-semibold fs-6 text-gray">Paid</div>
                                             </div>
 

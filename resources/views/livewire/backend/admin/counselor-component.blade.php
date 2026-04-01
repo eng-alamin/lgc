@@ -43,7 +43,7 @@
                         <td>{{ $index + 1 }}</td>
                         <td class="d-flex align-items-center border-0">
                             <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
-                                <a href="#" target="_blank">
+                                <a href="{{route('admin.user.overview', $item->user->id)}}" target="_blank">
                                     @if($item->user->avatar)
                                         <div class="symbol-label">
                                             <img src="{{asset($item->user->avatar)}}" alt="{{$item->user->name}}" class="w-100" />
@@ -60,7 +60,7 @@
                             </div>
                             <div class="d-flex flex-column">
                                 <div>
-                                    <a href="#" target="_blank" class="text-gray-800 text-hover-primary mb-1">{{$item->user->name}}</a>
+                                    <a href="{{route('admin.user.overview', $item->user->id)}}" target="_blank" class="text-gray-800 text-hover-primary mb-1">{{$item->user->name}}</a>
                                     @if ($item->user->account_status == 0)
                                         <a wire:click="approved({{$item->user->id}})" href="javascript:;" class="menu-link badge badge-light-warning"> Approved </a>
                                     @endif

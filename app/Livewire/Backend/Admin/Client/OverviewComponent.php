@@ -16,6 +16,8 @@ use App\Models\Flight;
 use App\Models\Stage;
 use App\Models\StageHistory;
 
+use App\Models\CommissionRule;
+
 use Livewire\WithFileUploads;
 use Carbon\Carbon;
 
@@ -26,6 +28,7 @@ class OverviewComponent extends Component
     public $client;
     public $form;
     public $timelineLast;
+    public $rule;
 
     public $stage_id;
     public $title;
@@ -49,8 +52,11 @@ class OverviewComponent extends Component
         } else {
             $this->number = str_pad($code->serial + 1, 3, "0", STR_PAD_LEFT);
         }
+
         $this->date = now()->format('Y-m-d');
+
         $this->method = 'cash';
+
         $this->items = [
             [
                 'name' => '',
@@ -64,6 +70,7 @@ class OverviewComponent extends Component
         $this->dispatch('render-selectpicker');
 
         $this->timelineLast = $this->form?->stageHistories()->with('stage')->get();
+        $this->rule = CommissionRule::where('service_type', $this->form?->type)->where('status', true)->first();
 
         return view('livewire.backend.admin.client.overview-component',[
             'stages' => Stage::orderBy('order')->get(),

@@ -43,8 +43,8 @@ class Attendance extends Model
                     $attendance->overtime_hours = 0;
                 }
 
-                // Late check (Office Start 9 AM)
-                $officeStart = \Carbon\Carbon::parse($attendance->date.' 09:00:00');
+                // Late check (Office Start 10 AM)
+                $officeStart = \Carbon\Carbon::parse($attendance->date.' 10:00:00');
 
                 if($checkIn->gt($officeStart)){
                     $attendance->is_late = true;
