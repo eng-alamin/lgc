@@ -31,7 +31,8 @@ class CasestudyDetail extends Component
              'banners' => $banners,
         ])
         ->layout('layouts.frontend.app', [
-            'title' => "Case Study Details | Let's Go China"
+            'title' => "Case Study Details | Let's Go China",
+            'seo' => $this->case->seo,
         ]);
     }
 }

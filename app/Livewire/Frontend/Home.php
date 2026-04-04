@@ -50,7 +50,14 @@ class Home extends Component
             'banners' => $banners,
         ])
         ->layout('layouts.frontend.app', [
-            'title' => "Home | Let's Go China"
+            'title' => "Home | Let's Go China",
+            'seo' => [
+                'title' => "Home | Let's Go China",
+                'description' => config('setting.detail'),
+                'image' => asset(config('setting.logo')),
+                'url' => url('/'),
+                'type' => 'website',
+            ],
         ]);
     }
 

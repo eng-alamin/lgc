@@ -15,7 +15,14 @@ class Appointment extends Component
     {
         return view('livewire.frontend.appointment')
         ->layout('layouts.frontend.app', [
-            'title' => "Appointment | Let's Go China"
+            'title' => "Appointment | Let's Go China",
+            'seo' => [
+                'title' => "Appointment | Let's Go China",
+                'description' => config('setting.detail'),
+                'image' => asset(config('setting.logo')),
+                'url' => url('/'),
+                'type' => 'website',
+            ],
         ]);
     }
 

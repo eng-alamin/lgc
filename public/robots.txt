@@ -1,2 +1,7 @@
 User-agent: *
-Disallow:
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /password
+Disallow: /forget-password
+
+Sitemap: https://letsgochinaofficial.com/sitemap.xml

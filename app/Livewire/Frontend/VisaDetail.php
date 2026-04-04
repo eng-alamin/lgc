@@ -31,7 +31,8 @@ class VisaDetail extends Component
              'banners' => $banners,
         ])
         ->layout('layouts.frontend.app', [
-            'title' => "Visa Details | Let's Go China"
+            'title' => "Visa Details | Let's Go China",
+            'seo' => $this->essential->seo,
         ]);
     }
 }

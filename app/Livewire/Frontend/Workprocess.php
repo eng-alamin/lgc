@@ -18,7 +18,14 @@ class Workprocess extends Component
              'data' => $data,
         ])
         ->layout('layouts.frontend.app', [
-            'title' => "Work process | Let's Go China"
+            'title' => "Work process | Let's Go China",
+            'seo' => [
+                'title' => "Universities | Let's Go China",
+                'description' => config('setting.detail'),
+                'image' => asset(config('setting.logo')),
+                'url' => url('/'),
+                'type' => 'website',
+            ],
         ]);
     }
 }

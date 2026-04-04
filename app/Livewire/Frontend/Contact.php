@@ -28,7 +28,14 @@ class Contact extends Component
             'sections' => $sections,
             ])
             ->layout('layouts.frontend.app', [
-                'title' => "Contact Us | Let's Go China"
+                'title' => "Contact Us | Let's Go China",
+                'seo' => [
+                'title' => "Contact Us | Let's Go China",
+                'description' => config('setting.detail'),
+                'image' => asset(config('setting.logo')),
+                'url' => url('/'),
+                'type' => 'website',
+            ],
             ]);
     }
 

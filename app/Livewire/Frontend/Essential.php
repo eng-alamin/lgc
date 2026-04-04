@@ -18,7 +18,14 @@ class Essential extends Component
             'data' => $data,
         ])
         ->layout('layouts.frontend.app', [
-            'title' => "Essentials | Let's Go China"
+            'title' => "Essentials | Let's Go China",
+            'seo' => [
+                'title' => "Essentials | Let's Go China",
+                'description' => config('setting.detail'),
+                'image' => asset(config('setting.logo')),
+                'url' => url('/'),
+                'type' => 'website',
+            ],
         ]);
     }
 }

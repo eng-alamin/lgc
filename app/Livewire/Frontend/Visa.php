@@ -23,7 +23,14 @@ class Visa extends Component
              'data' => $data,
         ])
         ->layout('layouts.frontend.app', [
-            'title' => "Visa | Let's Go China"
+            'title' => "Visa | Let's Go China",
+            'seo' => [
+                'title' => "Visa | Let's Go China",
+                'description' => config('setting.detail'),
+                'image' => asset(config('setting.logo')),
+                'url' => url('/'),
+                'type' => 'website',
+            ],
         ]);
     }
 

@@ -8,6 +8,26 @@
     <meta name="author" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    {{-- Open Graph --}}
+    <meta property="og:title" content="{{ $seo['title'] ?? config('app.name') }}">
+    <meta property="og:description" content="{{ $seo['description'] ?? '' }}">
+    <meta property="og:image" content="{{ $seo['image'] ?? '' }}">
+    <meta property="og:url" content="{{ $seo['url'] ?? url()->current() }}">
+    <meta property="og:type" content="{{ $seo['type'] ?? 'website' }}">
+
+    @if(($seo['type'] ?? '') === 'article')
+        <meta property="article:published_time" content="{{ $seo['published_at'] ?? '' }}">
+        <meta property="article:author" content="{{ $seo['author'] ?? '' }}">
+    @endif
+
+    {{-- Twitter Card --}}
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $seo['title'] ?? '' }}">
+    <meta name="twitter:description" content="{{ $seo['description'] ?? '' }}">
+    <meta name="twitter:image" content="{{ $seo['image'] ?? '' }}">
+    {{-- <meta name="twitter:site" content="@yourusername">
+    <meta name="twitter:creator" content="@yourusername"> --}}
+
     <!-- Favicon and touch Icons -->
     <link href="{{ asset(config('setting.favicon')) }}" rel="shortcut icon" type="image/png">
     <link href="{{ asset('assets/frontend/assets/img/apple-touch-icon.html') }}" rel="apple-touch-icon">

@@ -28,7 +28,8 @@ class BlogDetail extends Component
              'faqs' => $faqs,
         ])
         ->layout('layouts.frontend.app', [
-            'title' => "Blog Details | Let's Go China"
+            'title' => "Blog Details | Let's Go China",
+            'seo' => $this->blog->seo,
         ]);
     }
 }

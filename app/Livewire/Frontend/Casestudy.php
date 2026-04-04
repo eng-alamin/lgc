@@ -21,7 +21,14 @@ class Casestudy extends Component
             'data' => $data,
         ])
         ->layout('layouts.frontend.app', [
-            'title' => "Case Studies | Let's Go China"
+            'title' => "Case Studies | Let's Go China",
+            'seo' => [
+                'title' => "Case Studies | Let's Go China",
+                'description' => config('setting.detail'),
+                'image' => asset(config('setting.logo')),
+                'url' => url('/'),
+                'type' => 'website',
+            ],
         ]);
     }
 

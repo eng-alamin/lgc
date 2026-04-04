@@ -23,7 +23,14 @@ class Team extends Component
              'data' => $data,
         ])
         ->layout('layouts.frontend.app', [
-            'title' => "Teams | Let's Go China"
+            'title' => "Teams | Let's Go China",
+            'seo' => [
+                'title' => "Teams | Let's Go China",
+                'description' => config('setting.detail'),
+                'image' => asset(config('setting.logo')),
+                'url' => url('/'),
+                'type' => 'website',
+            ],
         ]);
     }
 

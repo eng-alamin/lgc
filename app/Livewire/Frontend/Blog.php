@@ -23,7 +23,14 @@ class Blog extends Component
             
         ])
         ->layout('layouts.frontend.app', [
-            'title' => "Blog | Let's Go China"
+            'title' => "Blogs | Let's Go China",
+            'seo' => [
+                'title' => "Blogs | Let's Go China",
+                'description' => config('setting.detail'),
+                'image' => asset(config('setting.logo')),
+                'url' => url('/'),
+                'type' => 'website',
+            ],
         ]);
     }
 }

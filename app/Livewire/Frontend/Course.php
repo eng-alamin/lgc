@@ -18,7 +18,14 @@ class Course extends Component
              'data' => $data,
         ])
         ->layout('layouts.frontend.app', [
-            'title' => "Courses | Let's Go China"
+            'title' => "Courses | Let's Go China",
+            'seo' => [
+                'title' => "Course | Let's Go China",
+                'description' => config('setting.detail'),
+                'image' => asset(config('setting.logo')),
+                'url' => url('/'),
+                'type' => 'website',
+            ],
         ]);
 
     }

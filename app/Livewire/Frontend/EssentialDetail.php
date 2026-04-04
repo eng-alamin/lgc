@@ -31,7 +31,8 @@ class EssentialDetail extends Component
              'banners' => $banners,
         ])
         ->layout('layouts.frontend.app', [
-            'title' => "Essential Details | Let's Go China"
+            'title' => "Essential Details | Let's Go China",
+            'seo' => $this->essential->seo,
         ]);
     }
 }

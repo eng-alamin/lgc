@@ -31,7 +31,14 @@ class About extends Component
             'banners' => $banners,
         ])
         ->layout('layouts.frontend.app', [
-            'title' => "About Us | Let's Go China"
+            'title' => "About Us | Let's Go China",
+            'seo' => [
+                'title' => "About Us | Let's Go China",
+                'description' => config('setting.detail'),
+                'image' => asset(config('setting.logo')),
+                'url' => url('/'),
+                'type' => 'website',
+            ],
         ]);
     }
 }

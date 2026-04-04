@@ -25,7 +25,14 @@ class AttendanceComponent extends Component
     {
         return view('livewire.frontend.attendance-component')
         ->layout('layouts.app', [
-            'title' => "Attendance | Let's Go China"
+            'title' => "Attendance | Let's Go China",
+            'seo' => [
+                'title' => "Attendance | Let's Go China",
+                'description' => config('setting.detail'),
+                'image' => asset(config('setting.logo')),
+                'url' => url('/'),
+                'type' => 'website',
+            ],
         ]);
     }
 
