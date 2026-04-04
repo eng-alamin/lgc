@@ -36,9 +36,9 @@ class Attendance extends Model
 
                 $attendance->work_hours = $hours;
 
-                // Office time = 8 hours
-                if($hours > 8){
-                    $attendance->overtime_hours = round($hours - 8, 2);
+                // Office time = 9 hours
+                if($hours > 9){
+                    $attendance->overtime_hours = round($hours - 9, 2);
                 } else {
                     $attendance->overtime_hours = 0;
                 }
