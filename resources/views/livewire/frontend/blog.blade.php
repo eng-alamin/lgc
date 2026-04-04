@@ -90,10 +90,10 @@
                                     @forelse ($latest_blogs as $item)
                                         <li>
                                             <div class="latest-posts-image">
-                                                <img src="{{asset($item->file)}}" alt="{{$item->title}}">
+                                                <img src="{{asset($item->file)}}" alt="{{$item->title}}" style="max-width: 60px;">
                                             </div>
                                             <div class="latest-posts-content">
-                                                <h5><a href="{{ route('blog.detail', $item->id) }}">{{$item->title}}</a></h5>
+                                                <h5><a href="{{ route('blog.detail', $item->id) }}">{{ \Illuminate\Support\Str::limit($item->title, 60, '...') }}</a></h5>
                                                 <h6>{{ \Carbon\Carbon::parse($item->created_at)->format('F d, Y') }}</h6>
                                             </div>
                                         </li>
