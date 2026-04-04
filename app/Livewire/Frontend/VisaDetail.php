@@ -32,7 +32,7 @@ class VisaDetail extends Component
         ])
         ->layout('layouts.frontend.app', [
             'title' => "Visa Details | Let's Go China",
-            'seo' => $this->essential->seo,
+            'seo' => $this->visa->seo,
         ]);
     }
 }
