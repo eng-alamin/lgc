@@ -89,8 +89,8 @@
                                 <ul class="wp-block-latest-posts__list wp-block-latest-posts">
                                     @forelse ($latest_blogs as $item)
                                         <li>
-                                            <div class="latest-posts-image">
-                                                <img src="{{asset($item->file)}}" alt="{{$item->title}}" style="max-width: 60px;">
+                                            <div class="latest-posts-image" style="max-width: 60px">
+                                                <img src="{{asset($item->file)}}" alt="{{$item->title}}">
                                             </div>
                                             <div class="latest-posts-content">
                                                 <h5><a href="{{ route('blog.detail', $item->id) }}">{{ \Illuminate\Support\Str::limit($item->title, 60, '...') }}</a></h5>
