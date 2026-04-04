@@ -18,8 +18,8 @@
                                                 <div class="wptb-item-comment"><a href="#comments">0</a></div>
                                             </div> --}}
                                             
-                                            <h5 class="wptb-item--title"><a href="{{ route('blog.detail', $item->id) }}">{{$item->title}}</a></h5>
-                                            <p class="wptb-item--description">  {{$item->short_description}} </p>
+                                            <h5 class="wptb-item--title"><a href="{{ route('blog.detail', $item->id) }}">{{ \Illuminate\Support\Str::limit($item->title, 60, '...') }}</a></h5>
+                                            <p class="wptb-item--description">{{$item->short_description}} </p>
                                             
                                             <div class="wptb-item--button"> 
                                                 <a class="btn--readmore" href="{{ route('blog.detail', $item->id) }}"> 

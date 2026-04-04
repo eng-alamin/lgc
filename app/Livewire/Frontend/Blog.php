@@ -13,7 +13,7 @@ class Blog extends Component
     public function render()
     {
         $sections = Section::get();
-        $data = BlogModel::get();
+        $data = BlogModel::latest()->get();
         $latest_blogs = BlogModel::latest()->get();
 
         return view('livewire.frontend.blog',[

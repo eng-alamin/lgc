@@ -57,7 +57,9 @@
                         <td>{{$item->check_out}}</td>
                         <td>{{$item->work_hours}}</td>
                         <td>{{$item->overtime_hours}}</td>
-                        <td>{{$item->status}}</td>
+                        <td>
+                            {{ucfirst($item->status)}}
+                        </td>
                         <td class="text-end">
                             <a href="#" class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
                             <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
