@@ -40,7 +40,7 @@ class AttendanceComponent extends Component
     {
         $this->dispatch('refreshSelect');
 
-        $data = Attendance::get();
+        $data = Attendance::latest()->get();
 
         return view('livewire.backend.admin.hr.attendance-component', [
             'data' => $data,
