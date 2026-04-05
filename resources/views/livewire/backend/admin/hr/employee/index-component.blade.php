@@ -236,6 +236,12 @@
                             </div>
 
                              <div class="fv-row mb-7">
+                                <label class="fs-6 fw-semibold mb-2">ID Number</label>
+                                <input type="text" wire:model="id_number" name="id_number" class="form-control form-control-solid" placeholder="ID Number" />
+                                @error('id_number') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+
+                             <div class="fv-row mb-7">
                                 <div wire:ignore>
                                     <label class="required fs-6 fw-semibold mb-2">Select Department</label>
                                     <select class="form-select form-select-solid department_id" data-control="select2" data-placeholder="Select Department" wire:model="department_id">

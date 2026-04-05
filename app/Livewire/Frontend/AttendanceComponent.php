@@ -46,24 +46,38 @@ class AttendanceComponent extends Component
 
     public function attendanceAction()
     {
+        $currentTime = now();
+        $timeNow = $currentTime->format('H:i');
+
+        // Distance check
         $distance = $this->distance(
             $this->latitude,
             $this->longitude,
             $this->officeLat,
             $this->officeLng
         );
-
         if ($distance > $this->officeRadius) {
             $this->dispatch('error', message: 'Outside Office Area');
             return;
         }
 
+        // Employee check
         $employee = Employee::where('id_number', $this->id_number)->first();
+        if (!$employee) {
+            $this->dispatch('error', message: 'Employee not found');
+            return;
+        }
 
+        // Today attendance
         $attendance = Attendance::where('employee_id', $employee->id)->whereDate('date', now()->toDateString())->first();
 
-        // Check In
+        // CHECK IN (ONLY BEFORE 1 PM)
         if (!$attendance) {
+
+            if ($timeNow >= '13:00') {
+                $this->dispatch('error', message: 'Check In is closed after 1:00 PM');
+                return;
+            }
 
             Attendance::create([
                 'employee_id' => $employee->id,
@@ -78,13 +92,18 @@ class AttendanceComponent extends Component
             return;
         }
 
-        // Check Out
+        // CHECK OUT (ONLY AFTER 1 PM)
         if (!$attendance->check_out) {
+
+            if ($timeNow < '13:00') {
+                $this->dispatch('error', message: 'Check Out is allowed only after 1:00 PM');
+                return;
+            }
 
             $attendance->update([
                 'check_out' => now()->format('H:i:s'),
             ]);
-
+            
             $this->dispatch('success', message: 'Check Out Successful');
             return;
         }

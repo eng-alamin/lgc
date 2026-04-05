@@ -16,7 +16,7 @@ class IndexComponent extends Component
     public $delete_id;
 
     public $name, $email, $phone, $password;
-    public $department_id, $designation;
+    public $id_number, $department_id, $designation;
     public $basic_salary, $allowance;
     public $employment_type = 'full_time';
     public $status = 'active';
@@ -49,6 +49,7 @@ class IndexComponent extends Component
         $this->email = '';
         $this->phone = '';
         $this->password = '';
+        $this->id_number = '';
         $this->department_id = '';
         $this->designation = '';
         $this->basic_salary = '';
@@ -99,7 +100,7 @@ class IndexComponent extends Component
 
              $employee = Employee::create([
                 'user_id'=>$user->id,
-                'id_number'=>'L3G6CEMP-'.str_pad(Employee::count()+1,3,'0',STR_PAD_LEFT),
+                'id_number'=>'L3G6CE'.str_pad(Employee::count()+1,3,'0',STR_PAD_LEFT),
                 'department_id'=>$this->department_id,
                 'designation'=>$this->designation,
                 'basic_salary'=>$this->basic_salary ?? 0,
@@ -131,6 +132,7 @@ class IndexComponent extends Component
         $this->name = $edit->user->name;
         $this->email = $edit->user->email;
         $this->phone = $edit->user->phone;
+        $this->id_number = $edit->id_number;
         $this->department_id = $edit->department_id;
         $this->designation = $edit->designation;
         $this->basic_salary = $edit->basic_salary;
@@ -143,6 +145,7 @@ class IndexComponent extends Component
         $this->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email',
+            'id_number' => 'required',
             'department_id' => 'required',
             'designation' => 'required',
             'basic_salary' => 'nullable|numeric',
@@ -164,6 +167,7 @@ class IndexComponent extends Component
             }
 
             $employee->update([
+                'id_number'=>$this->id_number,
                 'department_id'=>$this->department_id,
                 'designation'=>$this->designation,
                 'basic_salary'=>$this->basic_salary ?? 0,
