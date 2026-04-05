@@ -46,6 +46,12 @@
     })(window,document,'script','dataLayer','GTM-5GJXFX7P');</script>
     <!-- End Google Tag Manager -->
 
+    <style>
+        .blog-details .blog-details-inner .fulltext {
+            font-size: 16px !important;
+        }
+    </style>
+
     @stack('styles')
     @livewireStyles
 </head>

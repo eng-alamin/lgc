@@ -226,11 +226,3 @@
     </section>
     <!-- End Details Content -->
 </div>
-
-@push('styles')
-    <style>
-        .blog-details .blog-details-inner .intro, .blog-details .blog-details-inner .fulltext {
-            font-size: 16px !important;
-        }
-    </style>
-@endpush
