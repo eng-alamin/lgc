@@ -5,8 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
     <meta name="description" content='{{ $seo['description'] ?? config('setting.detail') }}'>
-    <meta name="author" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ $title ?? config('app.name') }}</title>
+    <link rel="canonical" href="{{ url()->current() }}" />
 
     {{-- Open Graph --}}
     <meta property="og:title" content="{{ $seo['title'] ?? config('app.name') }}">
@@ -28,9 +30,6 @@
     {{-- <meta name="twitter:site" content="@yourusername">
     <meta name="twitter:creator" content="@yourusername"> --}}
 
-    {{-- Canonical --}}
-    <link rel="canonical" href="{{ url()->current() }}" />
-
     <!-- Favicon and touch Icons -->
     <link href="{{ asset(config('setting.favicon')) }}" rel="shortcut icon" type="image/png">
     <link href="{{ asset('assets/frontend/assets/img/apple-touch-icon.html') }}" rel="apple-touch-icon">
@@ -38,8 +37,14 @@
     <link href="{{ asset('assets/frontend/assets/img/apple-touch-icon-114x114.html') }}" rel="apple-touch-icon" sizes="114x114">
     <link href="{{ asset('assets/frontend/assets/img/apple-touch-icon-144x144.html') }}" rel="apple-touch-icon" sizes="144x144">
 
-    <title>{{ $title ?? config('app.name') }}</title>
+    {{-- CSS File  --}}
     <link rel="stylesheet" href="{{ asset('assets/frontend/assets/css/main.css') }}">
+
+    <!-- Schema -->
+    <x-schema :data="\App\Helpers\SchemaHelper::organization()" />
+    <x-schema :data="\App\Helpers\SchemaHelper::website()" />
+    <x-schema :data="\App\Helpers\SchemaHelper::webpage($title ?? null)" />
+    @stack('schemas')
 
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':

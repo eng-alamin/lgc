@@ -1,4 +1,14 @@
 <div>
+
+    @push('schemas')
+        <x-schema :data="\App\Helpers\SchemaHelper::blog($blog)" />
+        <x-schema :data="\App\Helpers\SchemaHelper::breadcrumb([
+            ['name' => 'Home', 'url' => url('/')],
+            ['name' => 'Blog', 'url' => url('/blogs')],
+            ['name' => $blog->title, 'url' => url()->current()],
+        ])" />
+    @endpush
+
     <!-- Details Content -->
     <section class="blog-details mt-5">
         <div class="container">
