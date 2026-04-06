@@ -3,7 +3,11 @@
 namespace App\Livewire\Frontend;
 
 use Livewire\Component;
+use App\Models\Section;
 use App\Models\Appointment as AppointmentModel;
+use App\Models\Subscriber;
+use App\Mail\SendSubscribeMail;
+use Mail;
 
 class Appointment extends Component
 {
@@ -11,9 +15,15 @@ class Appointment extends Component
     public $name, $email, $phone, $address, $message;
     public $service;
 
+    public $subscribe_email;
+
     public function render()
     {
-        return view('livewire.frontend.appointment')
+        $sections = Section::get();
+
+        return view('livewire.frontend.appointment',[
+            'sections' => $sections,
+        ])
         ->layout('layouts.frontend.app', [
             'title' => "Appointment | Let's Go China",
             'seo' => [
@@ -45,6 +55,8 @@ class Appointment extends Component
         $this->address = '';
         $this->message = '';
         $this->service = '';
+
+        $this->subscribe_email = '';
     }
 
     public function store()
@@ -63,5 +75,22 @@ class Appointment extends Component
 
         $this->resetInputFields();
         session()->flash('success', 'Appointment request submitted successfully!');
+    }
+
+    public function subscribe()
+    {
+        $this->validate([
+            'subscribe_email' => 'required|email|unique:subscribers,email',
+        ]);
+
+        $maildata = Subscriber::create([
+            'email' => $this->subscribe_email,
+        ]);
+
+        // Send confirmation mail
+        Mail::to($this->subscribe_email)->send(new SendSubscribeMail($maildata));
+
+       $this->resetInputFields();
+        session()->flash('success', 'Subscribed successfully!');
     }
 }

@@ -144,29 +144,40 @@
         </div>
     </section>
 
-    <!-- Newsletter -->
-    <div class="wptb-newsletter bg-image" style="background-image: url('{{asset('assets/frontend/assets/img/background/bg-16.jpg')}}');">
-        <div class="container">
-            <div class="wptb-item--inner">
-                <div class="row align-items-center">
-                    <div class="col-md-6 mb-4 mb-md-0">
-                        <h1 class="wptb-item--title wow fadeInLeft">Subscribe To Immigway
-                            For All the offers</h1>
-                    </div>
-                    <div class="col-md-6">
-                        <form class="newsletter-form" method="post">
-                            <div class="form-group">
-                                <input type="email" name="email" class="form-control" placeholder="Enter your email" required>
-                            </div>
-                            <button type="submit" class="btn-readmore style-icon">
-                                <span class="btn-readmore--icon"> <i class="bi bi-send"></i> </span>
-                            </button>
-                        </form>
+        <!-- Newsletter -->
+        @php $subscriber = $sections->where('type', 'subscriber')->first(); @endphp
+        <div class="wptb-newsletter bg-image" style="background-image: url('{{ asset('assets/frontend/assets/img/background/bg-16.jpg') }}');">
+            <div class="container">
+                <div class="wptb-item--inner">
+                    <div class="row align-items-center">
+                        <div class="col-md-6 mb-4 mb-md-0">
+                            <h1 class="wptb-item--title wow fadeInLeft">{{$subscriber->title}}</h1>
+                        </div>
+                        <div class="col-md-6">
+                            <form wire:submit.prevent="subscribe" class="newsletter-form">
+                                <div class="form-group">
+                                    <input type="email" wire:model.defer="subscribe_email" class="form-control" placeholder="Enter your email" required>
+                                </div>
+                                <button type="submit" class="btn-readmore style-icon" wire:loading.attr="disabled">
+                                    <span wire:loading.remove class="btn-readmore--icon"> <i class="bi bi-send"></i> </span>
+                                    <span wire:loading>Subscribing...</span>
+                                </button>
+                            </form>
+
+                            @error('subscribe_email')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+
+                            @if (session()->has('success'))
+                                <div class="alert alert-success mt-2">
+                                    {{ session('success') }}
+                                </div>
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
         <!-- Full Calendar -->
         <script src="{{ asset('assets/frontend/plugins/fullcalendar/fullcalendar.js') }}"></script>

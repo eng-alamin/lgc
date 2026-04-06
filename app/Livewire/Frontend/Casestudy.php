@@ -11,6 +11,8 @@ use Mail;
 
 class Casestudy extends Component
 {
+    public $subscribe_email;
+
     public function render()
     {
         $sections = Section::get();
@@ -30,6 +32,11 @@ class Casestudy extends Component
                 'type' => 'website',
             ],
         ]);
+    }
+
+    private function resetInputFields()
+    {
+        $this->subscribe_email = '';
     }
 
     public function subscribe()
