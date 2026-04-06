@@ -83,6 +83,16 @@
                                 <a href="{{ route('contact') }}">Contact</a>
                             </li>
 
+                            @guest
+                                <li class="menu-item {{ request()->routeIs('login') ? 'active' : '' }} d-block d-md-none">
+                                    <a href="{{ route('login') }}">Signup / Signin</a>
+                                </li>
+                            @else
+                                <li class="menu-item d-block d-md-none">
+                                    <a href="{{ url(auth()->user()->getRedirectRoute()) }}">{{auth()->user()->name}}</a>
+                                </li>
+                            @endguest
+
                             {{-- <li class="menu-item menu-item-has-children"><a href="#">Visa</a>
                                 <ul class="sub-menu">
                                     <li class="menu-item"><a href="visa-list.html">Visa List</a></li>

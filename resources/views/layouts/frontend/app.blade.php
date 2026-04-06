@@ -28,6 +28,9 @@
     {{-- <meta name="twitter:site" content="@yourusername">
     <meta name="twitter:creator" content="@yourusername"> --}}
 
+    {{-- Canonical --}}
+    <link rel="canonical" href="{{ url()->current() }}" />
+
     <!-- Favicon and touch Icons -->
     <link href="{{ asset(config('setting.favicon')) }}" rel="shortcut icon" type="image/png">
     <link href="{{ asset('assets/frontend/assets/img/apple-touch-icon.html') }}" rel="apple-touch-icon">
