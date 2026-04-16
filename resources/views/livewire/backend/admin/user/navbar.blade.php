@@ -32,7 +32,7 @@
                                     <span class="path1"></span>
                                     <span class="path2"></span>
                                     <span class="path3"></span>
-                                </i> {{ucfirst($this->user->type)}} </a>
+                                </i> {{ucfirst($this->user->type)}} @if($this->user->type == "agent") (<span class="fw-bold text-primary">{{ucfirst($this->user->agent->type)}}</span>) @endif </a>
                             <a href="#" class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2">
                                 <i class="ki-duotone ki-phone fs-4 me-1">
                                     <span class="path1"></span>
@@ -46,6 +46,18 @@
                                 </i> {{$this->user->email}}
                             </a>
                         </div>
+                        @if($this->user->type == "agent")
+                            <div class="d-flex flex-wrap fw-semibold fs-6 mb-4 pe-2">
+                                <a href="#" class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2">
+                                    <i class="ki-duotone ki-bucket fs-2">
+                                        <span class="path1"></span>
+                                        <span class="path2"></span>
+                                        <span class="path3"></span>
+                                        <span class="path4"></span>
+                                    </i> Commission Rate - {{($this->user->agent->commission_rate)}}% 
+                                </a>
+                            </div>
+                        @endif
                         <!--end::Info-->
                     </div>
                     <!--end::User-->

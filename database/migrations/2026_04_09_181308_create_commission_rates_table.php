@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('agents', function (Blueprint $table) {
+        Schema::create('commission_rates', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-             $table->string('type')->nullable();
-             $table->decimal('commission_rate', 10, 2)->default(10.00);
+            $table->enum('type', ['individual', 'company']);
+            $table->decimal('value', 10, 2)->default(10.00);
             $table->timestamps();
         });
     }
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('agents');
+        Schema::dropIfExists('commission_rates');
     }
 };

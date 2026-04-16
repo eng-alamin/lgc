@@ -32,6 +32,7 @@
                         <th class="w-10px pe-2">SL</th>
                         <th class="min-w-125px">Name</th>
                         <th class="min-w-125px">Type</th>
+                        <th class="min-w-125px">Rate</th>
                         <th class="min-w-125px">Verified</th>
                         <th class="min-w-125px">Last Active</th>
                         <th class="min-w-125px">Account Status</th>
@@ -71,6 +72,7 @@
                             </div>
                         </td>
                         <td>{{ucfirst($item->type)}}</td>
+                        <td>{{$item->commission_rate}} %</td>
                         <td><i class="fa fa-check-circle {{$item->user->email_verified_at ? 'text-success' : 'text-danger'}}"></i></td>
                         <td>@if($item->user->last_seen) {{ \Carbon\Carbon::parse($item->user->last_seen)->diffForHumans() }} @else N/L @endif</td>
                         <td>
@@ -156,6 +158,20 @@
                                 <input type="tel" wire:model="phone" name="phone" class="form-control form-control-solid" placeholder="Enter Phone" />
                                 @error('phone') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
+                            <div class="fv-row mb-7">
+                                <label class="fs-6 fw-semibold mb-2">Select Type</label>
+                                <select wire:ignore class="form-select p-0 w-100 border-0 selectpicker" wire:model="type" title="Select a type">
+                                    <option value="">Select type...</option>
+                                        <option value="individual" selected>Individual</option>
+                                        <option value="company">Company</option>
+                                </select>
+                                @error('type') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+                            <div class="fv-row mb-7">
+                                <label class="fs-6 fw-semibold mb-2">Commission Rate</label>
+                                <input type="text" wire:model="commission_rate" name="commission_rate" class="form-control form-control-solid" placeholder="Enter commission rate" />
+                                @error('commission_rate') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer flex-end">
@@ -194,6 +210,20 @@
                                 <input type="tel" wire:model="phone" name="phone" class="form-control form-control-solid" placeholder="Enter Phone" />
                                 @error('phone') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
+                            <div class="fv-row mb-7">
+                                <label class="fs-6 fw-semibold mb-2">Select Type</label>
+                                <select wire:ignore class="form-select p-0 w-100 border-0 selectpicker" wire:model="type" title="Select a type">
+                                    <option value="">Select type...</option>
+                                        <option value="individual">Individual</option>
+                                        <option value="company">Company</option>
+                                </select>
+                                @error('type') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+                            <div class="fv-row mb-7">
+                                <label class="fs-6 fw-semibold mb-2">Commission Rate</label>
+                                <input type="text" wire:model="commission_rate" name="commission_rate" class="form-control form-control-solid" placeholder="Enter commission rate" />
+                                @error('commission_rate') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer flex-end">
@@ -223,7 +253,7 @@
                     "lengthChange": false,
                     'columnDefs': [
                     { orderable: false, targets: 0 },
-                    { orderable: false, targets: 5 },
+                    { orderable: false, targets: 7 },
                     ],
                     'dom': `<'row'<'col-sm-12'tr>><'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
                     'language': {

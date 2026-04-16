@@ -15,13 +15,22 @@ class AgentComponent extends Component
     public $name;
     public $phone;
     public $email;
+    public $type;
+    public $commission_rate;
 
     protected $listeners = [
         'deleteConfirmed' => 'deleteAgent',
     ];
 
+    public function mount()
+    {
+        $this->type = "individual";
+        $this->commission_rate = 10;
+    }
     public function render()
     {
+        $this->dispatch('render-selectpicker');
+
         $data = Agent::latest()->get();
 
         return view('livewire.backend.admin.agent', [
@@ -39,6 +48,8 @@ class AgentComponent extends Component
         $this->name = '';
         $this->phone = '';
         $this->email = '';
+        $this->type = '';
+        $this->commission_rate = '';
     }
 
     public function close()
@@ -74,6 +85,8 @@ class AgentComponent extends Component
 
             Agent::create([
                'user_id' => $data->id,
+               'type' => $this->type,
+               'commission_rate' => $this->commission_rate,
             ]);
 
             // Log the activity
@@ -97,6 +110,8 @@ class AgentComponent extends Component
         $this->name = $edit->user->name;
         $this->email = $edit->user->email;
         $this->phone = $edit->user->phone;
+        $this->type = $edit->type;
+        $this->commission_rate = $edit->commission_rate;
     }
     public function update()
     {
@@ -117,6 +132,10 @@ class AgentComponent extends Component
                 $data->user->account_status = 1;
                 $data->user->save();
             }
+
+            $data->type = $this->type;
+            $data->commission_rate = $this->commission_rate;
+            $data->save();
 
             // Log the activity
             activity()

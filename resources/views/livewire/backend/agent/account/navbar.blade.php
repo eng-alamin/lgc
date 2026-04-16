@@ -32,7 +32,7 @@
                                     <span class="path1"></span>
                                     <span class="path2"></span>
                                     <span class="path3"></span>
-                                </i> {{auth()->user()->type}} </a>
+                                </i> {{ucfirst(auth()->user()->type)}} - (<span class="fw-bold text-primary">{{ucfirst(auth()->user()->agent->type)}}</span>) </a>
                             <a href="#" class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2">
                                 <i class="ki-duotone ki-sms fs-4 me-1">
                                     <span class="path1"></span>
@@ -44,6 +44,16 @@
                                     <span class="path1"></span>
                                     <span class="path2"></span>
                                 </i> {{auth()->user()->phone}}
+                            </a>
+                        </div>
+                        <div class="d-flex flex-wrap fw-semibold fs-6 mb-4 pe-2">
+                            <a href="#" class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2">
+                                <i class="ki-duotone ki-bucket fs-2">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                    <span class="path3"></span>
+                                    <span class="path4"></span>
+                                </i> Commission Rate - {{(auth()->user()->agent->commission_rate)}}% 
                             </a>
                         </div>
                         <!--end::Info-->
